@@ -1,23 +1,129 @@
 [gd_scene format=3 uid="uid://b1yjcowccdgc2"]
 
 [ext_resource type="Script" uid="uid://kwwdtf82vdtx" path="res://scripts/zombie.gd" id="1_fk42m"]
-[ext_resource type="Texture2D" uid="uid://nuye377dfia" path="res://sprites/enemy/zombie-test.png" id="1_v4s4g"]
+[ext_resource type="Texture2D" uid="uid://c3b4y1cl3dbaa" path="res://sprites/enemy/idle-front.png" id="2_4wk1i"]
+[ext_resource type="Texture2D" uid="uid://g844hgh7wj2u" path="res://sprites/enemy/idle-left.png" id="3_6nedx"]
+[ext_resource type="Texture2D" uid="uid://bur2nog4h1dfk" path="res://sprites/enemy/idle-right.png" id="4_w465y"]
+[ext_resource type="Texture2D" uid="uid://cihnhbcs08tyr" path="res://sprites/enemy/idle-back.png" id="5_u7vxm"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7fncv"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"attack_down",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"attack_left",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"attack_right",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"attack_up",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"dead",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"hurt_down",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"hurt_left",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"hurt_right",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"hurt_up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_4wk1i")
+}],
+"loop": true,
+"name": &"idle_down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_6nedx")
+}],
+"loop": true,
+"name": &"idle_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_w465y")
+}],
+"loop": true,
+"name": &"idle_right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_u7vxm")
+}],
+"loop": true,
+"name": &"idle_up",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"move_down",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"move_left",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"move_right",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"move_up",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_idork"]
-size = Vector2(344, 977)
+size = Vector2(419, 977)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fk42m"]
-size = Vector2(392, 1062)
+size = Vector2(477, 1062)
 
 [node name="Zombie" type="CharacterBody2D" unique_id=493500758 groups=["zombie"]]
 collision_layer = 2
 script = ExtResource("1_fk42m")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=43690495]
-texture = ExtResource("1_v4s4g")
+[node name="Body" type="Node2D" parent="." unique_id=873943492]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Body" unique_id=1680198091]
+sprite_frames = SubResource("SpriteFrames_7fncv")
+animation = &"idle_up"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=140206386]
-position = Vector2(1, 9.5)
+position = Vector2(-14.5, 9.5)
 shape = SubResource("RectangleShape2D_idork")
 
 [node name="Hitbox" type="Area2D" parent="." unique_id=1802076305]
@@ -25,6 +131,6 @@ collision_layer = 2
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=116142332]
-position = Vector2(-6, 12)
+position = Vector2(-28.5, 12)
 shape = SubResource("RectangleShape2D_fk42m")
 debug_color = Color(0.90031755, 0.24198616, 0.50627273, 0.41960785)

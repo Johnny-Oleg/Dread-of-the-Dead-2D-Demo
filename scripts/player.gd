@@ -10,6 +10,8 @@ extends CharacterBody2D
 # Timers
 @onready var reload_timer = $ReloadTimer
 @onready var hurt_timer = $HurtTimer
+@onready var fire_timer = $FireTimer # shoot_cooldown_timer
+
 
 # =========================
 # MOVEMENT
@@ -17,12 +19,16 @@ extends CharacterBody2D
 @export var walk_speed: float = 140.0
 @export var run_speed: float = 260.0
 
-
 # SHOOTING
 @onready var shoot_ray: RayCast2D = $ShootRay
 
 @export var fire_rate: float = 0.4
 var can_shoot: bool = true
+
+# RELOAD
+var is_reloading: bool = false
+var reload_time_full: float = 2.4
+var reload_time_partial: float = 1.4
 
 # =========================
 # STATE
@@ -88,6 +94,14 @@ func handle_input():
 	# Shooting
 	if Input.is_action_pressed("shoot") and can_shoot:
 		shoot()
+		
+	# Reload input
+	if Input.is_action_just_pressed("reload"):
+		start_reload()
+		
+	# Cancel reload if moving (RE style)
+	if is_reloading and is_moving and not is_aiming:
+		cancel_reload()
 
 # =========================
 # MOVEMENT
@@ -109,6 +123,10 @@ func handle_movement():
 		speed *= 0.9
 	
 	velocity = move_dir * speed
+	
+	if is_aiming or is_reloading:
+		velocity = Vector2.ZERO
+		return
 
 # =========================
 # AIMING (8-direction)
@@ -117,7 +135,10 @@ func handle_aiming():
 
 	if not is_aiming:
 		return
-
+	
+	if is_reloading:
+		return
+	
 	var mouse_pos = get_global_mouse_position()
 	aim_dir = (mouse_pos - global_position).normalized()
 
@@ -133,12 +154,19 @@ func shoot():
 
 	if not is_aiming:
 		return
-
 	if not can_shoot:
+		return
+	if is_reloading:
+		return
+
+	if global.current_ammo <= 0:
+		print("EMPTY MAG")
 		return
 
 	can_shoot = false
-	reload_timer.start(fire_rate)
+	fire_timer.start(fire_rate)
+
+	global.current_ammo -= 1
 
 	# Rotate ray toward aim
 	var target_global = global_position + aim_dir * 500
@@ -168,6 +196,15 @@ func update_animation():
 	# 3. Idle
 
 	if is_aiming:
+		play_aim_animation()
+	elif is_moving:
+		play_move_animation()
+	else:
+		play_idle_animation()
+		
+	if is_reloading:
+		return # animation already playing
+	elif is_aiming:
 		play_aim_animation()
 	elif is_moving:
 		play_move_animation()
@@ -268,4 +305,52 @@ func debug_print():
 
 
 func _on_reload_timer_timeout() -> void:
+	finish_reload()
+	
+func play_reload_animation():
+	var dir_name = get_4_direction_name(last_facing_dir)
+	sprite.play("reload_" + dir_name)	
+
+func start_reload():
+		
+	# Block conditions
+	if is_reloading:
+		return
+	if global.current_ammo == global.pistol_stats["mag_size"]:
+		return
+	if global.reserve_ammo <= 0:
+		return
+	# (later add: if is_hurt or dead)
+
+	is_reloading = true
+	can_shoot = false
+
+	# Choose reload time
+	var reload_time = global.pistol_stats["reload_time"]
+
+	if global.current_ammo == 0:
+		reload_time = 2.4 # empty reload override
+
+	reload_timer.start(reload_time)
+
+	play_reload_animation()
+	
+func cancel_reload():
+	is_reloading = false
+	reload_timer.stop()
+	can_shoot = true
+	
+func finish_reload():
+
+	is_reloading = false
+	can_shoot = true
+
+	var needed = global.pistol_stats["mag_size"] - global.current_ammo
+	var to_reload = min(needed, global.reserve_ammo)
+
+	global.current_ammo += to_reload
+	global.reserve_ammo -= to_reload
+
+
+func _on_fire_timer_timeout() -> void:
 	can_shoot = true

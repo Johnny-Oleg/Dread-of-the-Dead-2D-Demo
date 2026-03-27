@@ -167,6 +167,26 @@ animations = [{
 "name": &"idle_up",
 "speed": 5.0
 }, {
+"frames": [],
+"loop": true,
+"name": &"reload_down",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"reload_left",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"reload_right",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"reload_up",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("7_kn8w6")
@@ -232,14 +252,14 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Player" type="CharacterBody2D" unique_id=883593765]
+[node name="Player" type="CharacterBody2D" unique_id=883593765 groups=["player"]]
 script = ExtResource("1_qe8hj")
 
 [node name="Body" type="Node2D" parent="." unique_id=766899656]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Body" unique_id=1403885371]
 sprite_frames = SubResource("SpriteFrames_qe8hj")
-animation = &"aim_down"
+animation = &"reload_left"
 
 [node name="Sprite2D" type="Sprite2D" parent="Body" unique_id=1075862568]
 visible = false
@@ -271,4 +291,7 @@ one_shot = true
 [node name="HurtTimer" type="Timer" parent="." unique_id=1705732813]
 one_shot = true
 
+[node name="FireTimer" type="Timer" parent="." unique_id=1874956591]
+
 [connection signal="timeout" from="ReloadTimer" to="." method="_on_reload_timer_timeout"]
+[connection signal="timeout" from="FireTimer" to="." method="_on_fire_timer_timeout"]
