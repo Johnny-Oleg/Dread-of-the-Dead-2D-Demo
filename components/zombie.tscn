@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://b1yjcowccdgc2"]
 
 [ext_resource type="Script" uid="uid://kwwdtf82vdtx" path="res://scripts/zombie.gd" id="1_fk42m"]
-[ext_resource type="Texture2D" uid="uid://c3b4y1cl3dbaa" path="res://sprites/enemy/idle-front.png" id="2_4wk1i"]
-[ext_resource type="Texture2D" uid="uid://g844hgh7wj2u" path="res://sprites/enemy/idle-left.png" id="3_6nedx"]
-[ext_resource type="Texture2D" uid="uid://bur2nog4h1dfk" path="res://sprites/enemy/idle-right.png" id="4_w465y"]
-[ext_resource type="Texture2D" uid="uid://cihnhbcs08tyr" path="res://sprites/enemy/idle-back.png" id="5_u7vxm"]
+[ext_resource type="Texture2D" uid="uid://b0jig5r76eepy" path="res://sprites/enemy/idle_front.png" id="2_4wk1i"]
+[ext_resource type="Texture2D" uid="uid://cuesevw0c7ju" path="res://sprites/enemy/idle_left.png" id="3_6nedx"]
+[ext_resource type="Texture2D" uid="uid://c36aw3wp5iqq" path="res://sprites/enemy/idle_right.png" id="4_w465y"]
+[ext_resource type="Texture2D" uid="uid://mjsr4uhnan5c" path="res://sprites/enemy/idle_back.png" id="5_u7vxm"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_7fncv"]
 animations = [{

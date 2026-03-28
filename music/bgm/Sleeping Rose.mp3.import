@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://w2pn72acws2c"
+path="res://.godot/imported/Sleeping Rose.mp3-0e3ce39770e7b5c29686ddeb314e5826.mp3str"
+
+[deps]
+
+source_file="res://music/bgm/Sleeping Rose.mp3"
+dest_files=["res://.godot/imported/Sleeping Rose.mp3-0e3ce39770e7b5c29686ddeb314e5826.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

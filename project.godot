@@ -27,6 +27,7 @@ global="*uid://bkselok1hufca"
 
 folder_colors={
 "res://components/": "yellow",
+"res://music/": "purple",
 "res://scenes/": "blue",
 "res://scripts/": "red",
 "res://sprites/": "green"
