@@ -1,54 +1,196 @@
 [gd_scene format=3 uid="uid://di3if1iwu4h4e"]
 
 [ext_resource type="Texture2D" uid="uid://dtt8srcx63rxb" path="res://sprites/locations/dining_room.png" id="1_0wfyh"]
+[ext_resource type="Script" uid="uid://dorssy5ahx0j5" path="res://scripts/main.gd" id="1_tipki"]
 [ext_resource type="PackedScene" uid="uid://drx0iakt15xe7" path="res://components/player.tscn" id="2_sugp2"]
 [ext_resource type="PackedScene" uid="uid://b1yjcowccdgc2" path="res://components/zombie.tscn" id="3_sugp2"]
 [ext_resource type="Script" uid="uid://e3x7aatwxw1q" path="res://scripts/info.gd" id="4_jyhfs"]
+[ext_resource type="Texture2D" uid="uid://d4mysx0c0gb2j" path="res://sprites/images/title_screen_image.jpeg" id="4_o6xl0"]
+[ext_resource type="Texture2D" uid="uid://bnadyck8i75mc" path="res://sprites/images/dotd_logo.png" id="5_tipki"]
+[ext_resource type="AudioStream" uid="uid://clphmkgyxq8vr" path="res://music/bgm/title_bgm.mp3" id="6_85g3d"]
+[ext_resource type="Script" uid="uid://cemc815284ffv" path="res://scripts/title_screen.gd" id="6_choun"]
 
-[node name="main" type="Node2D" unique_id=1971646971]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_o6xl0"]
+texture = ExtResource("4_o6xl0")
 
-[node name="gameWorld" type="Node2D" parent="." unique_id=1451950881]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_choun"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_size = 5
+shadow_offset = Vector2(0, 4)
 
-[node name="Sprite2D" type="Sprite2D" parent="gameWorld" unique_id=1234915614]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ya4ey"]
+bg_color = Color(0.19881245, 0.04387869, 0.029060487, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_size = 5
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eb6dy"]
+bg_color = Color(0.5609549, 0.5609549, 0.5609549, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_size = 5
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_trceg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o6xl0"]
+bg_color = Color(0.19881245, 0.04387869, 0.029060487, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_size = 5
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tipki"]
+bg_color = Color(0.5609549, 0.5609549, 0.5609549, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_size = 5
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_85g3d"]
+
+[node name="Main" type="Node2D" unique_id=1971646971]
+script = ExtResource("1_tipki")
+
+[node name="GameWorld" type="Node2D" parent="." unique_id=1451950881]
+visible = false
+
+[node name="Sprite2D" type="Sprite2D" parent="GameWorld" unique_id=1234915614]
 position = Vector2(574.64996, 320.69998)
 scale = Vector2(0.4152253, 0.41315106)
 texture = ExtResource("1_0wfyh")
 
 [node name="Player" parent="." unique_id=883593765 instance=ExtResource("2_sugp2")]
+visible = false
 position = Vector2(121, 451)
 scale = Vector2(0.1, 0.1)
 
 [node name="Zombie" parent="." unique_id=493500758 instance=ExtResource("3_sugp2")]
+visible = false
 position = Vector2(508.99997, 555.99994)
 scale = Vector2(0.1, 0.1)
 
 [node name="UI" type="Node2D" parent="." unique_id=1537198464]
 
-[node name="uiScreen" type="CanvasLayer" parent="UI" unique_id=812862399]
+[node name="GameUITest" type="CanvasLayer" parent="UI" unique_id=812862399]
+visible = false
 
-[node name="NinePatchRect" type="NinePatchRect" parent="UI/uiScreen" unique_id=837781954]
-offset_left = -73.0
-offset_top = -75.0
-offset_right = 1245.0
-offset_bottom = 712.0
+[node name="NinePatchRect" type="NinePatchRect" parent="UI/GameUITest" unique_id=837781954]
+offset_left = -81.0
+offset_top = -63.0
+offset_right = 1237.0
+offset_bottom = 724.0
 
-[node name="Info" type="Node2D" parent="UI/uiScreen" unique_id=2061244454]
+[node name="Info" type="Node2D" parent="UI/GameUITest" unique_id=2061244454]
 script = ExtResource("4_jyhfs")
 
-[node name="HealthLabel" type="Label" parent="UI/uiScreen/Info" unique_id=707213427]
+[node name="HealthLabel" type="Label" parent="UI/GameUITest/Info" unique_id=707213427]
 offset_left = 29.0
 offset_top = 582.0
 offset_right = 143.0
 offset_bottom = 613.0
 
-[node name="AmmoLabel" type="Label" parent="UI/uiScreen/Info" unique_id=482432021]
+[node name="AmmoLabel" type="Label" parent="UI/GameUITest/Info" unique_id=482432021]
 offset_left = 154.0
 offset_top = 575.0
 offset_right = 275.0
 offset_bottom = 614.0
 
-[node name="EnemyLabel" type="Label" parent="UI/uiScreen/Info" unique_id=693189218]
+[node name="EnemyLabel" type="Label" parent="UI/GameUITest/Info" unique_id=693189218]
 offset_left = 998.0
 offset_top = 569.0
 offset_right = 1111.0
 offset_bottom = 607.0
+
+[node name="TitleScreen" type="Node2D" parent="UI" unique_id=1900309350]
+script = ExtResource("6_choun")
+
+[node name="Title" type="CanvasLayer" parent="UI/TitleScreen" unique_id=1720640475]
+
+[node name="GameStart" type="Control" parent="UI/TitleScreen/Title" unique_id=1797696930]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Panel" type="Panel" parent="UI/TitleScreen/Title/GameStart" unique_id=1526054411]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1115.0
+offset_bottom = 608.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_o6xl0")
+
+[node name="TitleLogo" type="TextureRect" parent="UI/TitleScreen/Title/GameStart" unique_id=860316630]
+layout_mode = 0
+offset_left = 290.0
+offset_top = 57.0
+offset_right = 872.48157
+offset_bottom = 359.0
+texture = ExtResource("5_tipki")
+expand_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/TitleScreen/Title/GameStart" unique_id=1090351949]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 415.0
+offset_top = 399.0
+offset_right = 741.0
+offset_bottom = 561.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+
+[node name="StartGame" type="Button" parent="UI/TitleScreen/Title/GameStart/VBoxContainer" unique_id=596394795]
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_choun")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ya4ey")
+theme_override_styles/hover = SubResource("StyleBoxFlat_eb6dy")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_trceg")
+text = "Start Game"
+
+[node name="ExitButton" type="Button" parent="UI/TitleScreen/Title/GameStart/VBoxContainer" unique_id=330631871]
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_choun")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_o6xl0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_tipki")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_85g3d")
+text = "Exit"
+
+[node name="TitleMusic" type="AudioStreamPlayer2D" parent="UI/TitleScreen" unique_id=568060281]
+stream = ExtResource("6_85g3d")
+autoplay = true

@@ -12,6 +12,10 @@ extends CharacterBody2D
 @onready var hurt_timer = $HurtTimer
 @onready var fire_timer = $FireTimer # shoot_cooldown_timer
 
+# Sound Effects
+@onready var pistol_shot = $SoundEffects/PistolShot
+@onready var pistol_reload = $SoundEffects/PistolReload
+
 
 # =========================
 # MOVEMENT
@@ -151,7 +155,6 @@ func handle_aiming():
 # SHOOTING (8-direction)
 # =========================
 func shoot():
-
 	if not is_aiming:
 		return
 	if not can_shoot:
@@ -163,6 +166,7 @@ func shoot():
 		print("EMPTY MAG")
 		return
 
+	pistol_shot.play()
 	can_shoot = false
 	fire_timer.start(fire_rate)
 
@@ -192,30 +196,47 @@ func update_animation():
 
 	# PRIORITY:
 	# 1. Aim
-	# 2. Move
-	# 3. Idle
+	# 2. Reload
+	# 3. Move
+	# 4. Idle
+
+	#if is_aiming:
+		#play_aim_animation()
+	#elif is_moving:
+		#play_move_animation()
+	#elif is_reloading:
+		#play_reload_animation()
+	#else:
+		#play_idle_animation()
+		#
+	#if is_reloading:
+		#return # animation already playing
+	#elif is_aiming:
+		#play_aim_animation()
+	#elif is_moving:
+		#play_move_animation()
+	#else:
+		#play_idle_animation()
+		# PRIORITY SYSTEM (TOP = strongest)
+
+	if is_reloading:
+		play_reload_animation()
+		return
 
 	if is_aiming:
 		play_aim_animation()
-	elif is_moving:
+		return
+
+	if is_moving:
 		play_move_animation()
-	else:
-		play_idle_animation()
-		
-	if is_reloading:
-		return # animation already playing
-	elif is_aiming:
-		play_aim_animation()
-	elif is_moving:
-		play_move_animation()
-	else:
-		play_idle_animation()
+		return
+
+	play_idle_animation()
 
 # =========================
 # AIM ANIMATIONS (8-dir)
 # =========================
 func play_aim_animation():
-
 	var dir_name = get_8_direction_name(aim_dir)
 	sprite.play("aim_" + dir_name)
 
@@ -223,7 +244,6 @@ func play_aim_animation():
 # MOVE ANIMATIONS (4-dir)
 # =========================
 func play_move_animation():
-
 	var dir_name = get_4_direction_name(move_dir)
 	sprite.play("walk_" + dir_name)
 	
@@ -234,7 +254,6 @@ func play_move_animation():
 # IDLE ANIMATIONS (4-dir)
 # =========================
 func play_idle_animation():
-
 	#var dir_name = get_4_direction_name(move_dir if move_dir != Vector2.ZERO else aim_dir)
 	#
 	#if global.is_player_in_danger():
@@ -309,7 +328,7 @@ func _on_reload_timer_timeout() -> void:
 	
 func play_reload_animation():
 	var dir_name = get_4_direction_name(last_facing_dir)
-	sprite.play("reload_" + dir_name)	
+	sprite.play("reload_" + dir_name)
 
 func start_reload():
 		
@@ -324,6 +343,7 @@ func start_reload():
 
 	is_reloading = true
 	can_shoot = false
+	pistol_reload.play()
 
 	# Choose reload time
 	var reload_time = global.pistol_stats["reload_time"]
@@ -339,11 +359,13 @@ func cancel_reload():
 	is_reloading = false
 	reload_timer.stop()
 	can_shoot = true
+	pistol_reload.stop()
 	
 func finish_reload():
 
 	is_reloading = false
 	can_shoot = true
+	pistol_reload.stop()
 
 	var needed = global.pistol_stats["mag_size"] - global.current_ammo
 	var to_reload = min(needed, global.reserve_ammo)

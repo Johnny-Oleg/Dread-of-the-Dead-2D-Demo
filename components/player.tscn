@@ -5,14 +5,30 @@
 [ext_resource type="Texture2D" uid="uid://cii8dujub7je1" path="res://sprites/player/aim_down.png" id="2_eju5v"]
 [ext_resource type="Texture2D" uid="uid://bk5a06cmu1ku5" path="res://sprites/player/aim_down_left.png" id="3_7ta67"]
 [ext_resource type="Texture2D" uid="uid://bgwnb57uqlwui" path="res://sprites/player/aim_left.png" id="4_jhk7o"]
+[ext_resource type="Texture2D" uid="uid://cybswn8uaxu5q" path="res://sprites/player/aim_down_right.png" id="4_me566"]
 [ext_resource type="Texture2D" uid="uid://bhpn6tued7l53" path="res://sprites/player/aim_right.png" id="5_1wqow"]
 [ext_resource type="Texture2D" uid="uid://dld8qr5oljhel" path="res://sprites/player/aim_up.png" id="6_6qb5m"]
 [ext_resource type="Texture2D" uid="uid://n0fr8xxpn2l7" path="res://sprites/player/default.png" id="7_kn8w6"]
+[ext_resource type="Texture2D" uid="uid://bddj6g8nn1w5p" path="res://sprites/player/aim_up_left.png" id="8_v4ynn"]
 [ext_resource type="Texture2D" uid="uid://bnfdninewdvwf" path="res://sprites/player/idle_left.png" id="9_eaetu"]
+[ext_resource type="Texture2D" uid="uid://dni2yn4wgr0yu" path="res://sprites/player/aim_up_right.png" id="9_wi073"]
 [ext_resource type="Texture2D" uid="uid://br4kp1dhgsl3" path="res://sprites/player/idle_right.png" id="10_1dyya"]
+[ext_resource type="Texture2D" uid="uid://cel5js1vh3he5" path="res://sprites/player/danger_front.png" id="10_7knsb"]
+[ext_resource type="Texture2D" uid="uid://q7dusjnyhae0" path="res://sprites/player/danger_front_2.png" id="11_0bs3g"]
 [ext_resource type="Texture2D" uid="uid://dr61iadx5la0r" path="res://sprites/player/idle_back.png" id="11_t8b0b"]
 [ext_resource type="Texture2D" uid="uid://btosjfc02c16" path="res://sprites/player/walk_front.png" id="12_7ta67"]
 [ext_resource type="Texture2D" uid="uid://dqgduxpjvslu8" path="res://sprites/player/walk_up.png" id="13_jhk7o"]
+[ext_resource type="Texture2D" uid="uid://c2wjo40shmus7" path="res://sprites/player/reload_front_1.png" id="17_3vary"]
+[ext_resource type="Texture2D" uid="uid://wlgevp5jk3v8" path="res://sprites/player/reload_front_2.png" id="18_xu3tp"]
+[ext_resource type="Texture2D" uid="uid://bh6lmagv27j24" path="res://sprites/player/reload_front_3.png" id="19_8wdui"]
+[ext_resource type="Texture2D" uid="uid://bx1ywqeojreq8" path="res://sprites/player/run_down.png" id="20_q7md3"]
+[ext_resource type="Texture2D" uid="uid://2y7utbffi021" path="res://sprites/player/walk_front_2.png" id="22_23deo"]
+[ext_resource type="Texture2D" uid="uid://dgeeekgf7eir1" path="res://sprites/player/walk_left.png" id="23_4jyp0"]
+[ext_resource type="Texture2D" uid="uid://bbplyswds3uoa" path="res://sprites/player/walk_left_2.png" id="24_maee5"]
+[ext_resource type="Texture2D" uid="uid://bpmhu4kvadshg" path="res://sprites/player/walk_right.png" id="25_avuod"]
+[ext_resource type="Texture2D" uid="uid://da2av7lfrcwdl" path="res://sprites/player/walk_up_2.png" id="27_vs8kn"]
+[ext_resource type="AudioStream" uid="uid://crp25gu5bvwbe" path="res://music/sfx/player_sfx/pistol_shot_sfx.WAV" id="28_v4ynn"]
+[ext_resource type="AudioStream" uid="uid://ureud55pn7uw" path="res://music/sfx/player_sfx/pistol_reload_sfx.WAV" id="29_wi073"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_qe8hj"]
 animations = [{
@@ -32,7 +48,10 @@ animations = [{
 "name": &"aim_down_left",
 "speed": 5.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_me566")
+}],
 "loop": true,
 "name": &"aim_down_right",
 "speed": 5.0
@@ -61,27 +80,36 @@ animations = [{
 "name": &"aim_up",
 "speed": 5.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_v4ynn")
+}],
 "loop": true,
 "name": &"aim_up_left",
 "speed": 5.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_wi073")
+}],
 "loop": true,
 "name": &"aim_up_right",
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
-"texture": ExtResource("7_kn8w6")
+"duration": 30.0,
+"texture": ExtResource("10_7knsb")
+}, {
+"duration": 10.0,
+"texture": ExtResource("11_0bs3g")
 }],
 "loop": true,
 "name": &"danger_idle_down",
-"speed": 5.0
+"speed": 30.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("7_kn8w6")
+"texture": ExtResource("10_7knsb")
 }],
 "loop": true,
 "name": &"danger_idle_left",
@@ -89,7 +117,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("7_kn8w6")
+"texture": ExtResource("10_7knsb")
 }],
 "loop": true,
 "name": &"danger_idle_right",
@@ -97,7 +125,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("7_kn8w6")
+"texture": ExtResource("10_7knsb")
 }],
 "loop": true,
 "name": &"danger_idle_up",
@@ -167,33 +195,69 @@ animations = [{
 "name": &"idle_up",
 "speed": 5.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 8.0,
+"texture": ExtResource("17_3vary")
+}, {
+"duration": 8.0,
+"texture": ExtResource("18_xu3tp")
+}, {
+"duration": 8.0,
+"texture": ExtResource("19_8wdui")
+}],
 "loop": true,
 "name": &"reload_down",
-"speed": 5.0
-}, {
-"frames": [],
-"loop": true,
-"name": &"reload_left",
-"speed": 5.0
-}, {
-"frames": [],
-"loop": true,
-"name": &"reload_right",
-"speed": 5.0
-}, {
-"frames": [],
-"loop": true,
-"name": &"reload_up",
-"speed": 5.0
+"speed": 30.0
 }, {
 "frames": [{
-"duration": 1.0,
-"texture": ExtResource("7_kn8w6")
+"duration": 8.0,
+"texture": ExtResource("17_3vary")
+}, {
+"duration": 8.0,
+"texture": ExtResource("18_xu3tp")
+}, {
+"duration": 8.0,
+"texture": ExtResource("19_8wdui")
+}],
+"loop": true,
+"name": &"reload_left",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 8.0,
+"texture": ExtResource("17_3vary")
+}, {
+"duration": 8.0,
+"texture": ExtResource("18_xu3tp")
+}, {
+"duration": 8.0,
+"texture": ExtResource("19_8wdui")
+}],
+"loop": true,
+"name": &"reload_right",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 8.0,
+"texture": ExtResource("17_3vary")
+}, {
+"duration": 8.0,
+"texture": ExtResource("18_xu3tp")
+}, {
+"duration": 8.0,
+"texture": ExtResource("19_8wdui")
+}],
+"loop": true,
+"name": &"reload_up",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 8.0,
+"texture": ExtResource("20_q7md3")
 }],
 "loop": true,
 "name": &"run_down",
-"speed": 5.0
+"speed": 30.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -220,36 +284,45 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 8.0,
 "texture": ExtResource("12_7ta67")
+}, {
+"duration": 8.0,
+"texture": ExtResource("22_23deo")
 }],
 "loop": true,
 "name": &"walk_down",
-"speed": 5.0
+"speed": 30.0
 }, {
 "frames": [{
-"duration": 1.0,
-"texture": ExtResource("7_kn8w6")
+"duration": 8.0,
+"texture": ExtResource("23_4jyp0")
+}, {
+"duration": 8.0,
+"texture": ExtResource("24_maee5")
 }],
 "loop": true,
 "name": &"walk_left",
-"speed": 5.0
+"speed": 30.0
 }, {
 "frames": [{
-"duration": 1.0,
-"texture": ExtResource("7_kn8w6")
+"duration": 4.0,
+"texture": ExtResource("25_avuod")
 }],
 "loop": true,
 "name": &"walk_right",
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 8.0,
 "texture": ExtResource("13_jhk7o")
+}, {
+"duration": 8.0,
+"texture": ExtResource("27_vs8kn")
 }],
 "loop": true,
 "name": &"walk_up",
-"speed": 5.0
+"speed": 30.0
 }]
 
 [node name="Player" type="CharacterBody2D" unique_id=883593765 groups=["player"]]
@@ -258,8 +331,10 @@ script = ExtResource("1_qe8hj")
 [node name="Body" type="Node2D" parent="." unique_id=766899656]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Body" unique_id=1403885371]
+position = Vector2(0, -1)
 sprite_frames = SubResource("SpriteFrames_qe8hj")
-animation = &"reload_left"
+animation = &"reload_up"
+frame_progress = 0.6669096
 
 [node name="Sprite2D" type="Sprite2D" parent="Body" unique_id=1075862568]
 visible = false
@@ -292,6 +367,14 @@ one_shot = true
 one_shot = true
 
 [node name="FireTimer" type="Timer" parent="." unique_id=1874956591]
+
+[node name="SoundEffects" type="Node2D" parent="." unique_id=739632259]
+
+[node name="PistolShot" type="AudioStreamPlayer2D" parent="SoundEffects" unique_id=942744514]
+stream = ExtResource("28_v4ynn")
+
+[node name="PistolReload" type="AudioStreamPlayer2D" parent="SoundEffects" unique_id=2093997597]
+stream = ExtResource("29_wi073")
 
 [connection signal="timeout" from="ReloadTimer" to="." method="_on_reload_timer_timeout"]
 [connection signal="timeout" from="FireTimer" to="." method="_on_fire_timer_timeout"]
