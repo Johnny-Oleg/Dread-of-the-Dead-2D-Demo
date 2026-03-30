@@ -1,14 +1,22 @@
 [gd_scene format=3 uid="uid://di3if1iwu4h4e"]
 
-[ext_resource type="Texture2D" uid="uid://dtt8srcx63rxb" path="res://sprites/locations/dining_room.png" id="1_0wfyh"]
 [ext_resource type="Script" uid="uid://dorssy5ahx0j5" path="res://scripts/main.gd" id="1_tipki"]
+[ext_resource type="Texture2D" uid="uid://c87kmg5sl2xot" path="res://sprites/locations/dining_room_bg.png" id="2_choun"]
 [ext_resource type="PackedScene" uid="uid://drx0iakt15xe7" path="res://components/player.tscn" id="2_sugp2"]
 [ext_resource type="PackedScene" uid="uid://b1yjcowccdgc2" path="res://components/zombie.tscn" id="3_sugp2"]
 [ext_resource type="Script" uid="uid://e3x7aatwxw1q" path="res://scripts/info.gd" id="4_jyhfs"]
 [ext_resource type="Texture2D" uid="uid://d4mysx0c0gb2j" path="res://sprites/images/title_screen_image.jpeg" id="4_o6xl0"]
 [ext_resource type="Texture2D" uid="uid://bnadyck8i75mc" path="res://sprites/images/dotd_logo.png" id="5_tipki"]
+[ext_resource type="Texture2D" uid="uid://dg41xp5bcqtcu" path="res://sprites/locations/dining_room_fg.png" id="5_ya4ey"]
 [ext_resource type="AudioStream" uid="uid://clphmkgyxq8vr" path="res://music/bgm/title_bgm.mp3" id="6_85g3d"]
 [ext_resource type="Script" uid="uid://cemc815284ffv" path="res://scripts/title_screen.gd" id="6_choun"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_85g3d"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_eb6dy"]
+vertices = PackedVector2Array(1150.9375, 298.97656, 1149.0469, 647.96875, -0.96875, 645.02344, -0.0234375, 297.0078)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-10, 287, 1161, 289, 1159, 658, -11, 655)])
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_o6xl0"]
 texture = ExtResource("4_o6xl0")
@@ -66,22 +74,56 @@ shadow_offset = Vector2(0, 4)
 script = ExtResource("1_tipki")
 
 [node name="GameWorld" type="Node2D" parent="." unique_id=1451950881]
-visible = false
 
-[node name="Sprite2D" type="Sprite2D" parent="GameWorld" unique_id=1234915614]
-position = Vector2(574.64996, 320.69998)
-scale = Vector2(0.4152253, 0.41315106)
-texture = ExtResource("1_0wfyh")
+[node name="NinePatchRect" type="NinePatchRect" parent="GameWorld" unique_id=729810784]
+offset_left = -924.0
+offset_top = -774.0
+offset_right = 2071.0
+offset_bottom = 1192.0
+texture = SubResource("CanvasTexture_85g3d")
 
-[node name="Player" parent="." unique_id=883593765 instance=ExtResource("2_sugp2")]
-visible = false
-position = Vector2(121, 451)
-scale = Vector2(0.1, 0.1)
+[node name="DiningRoom" type="Node2D" parent="GameWorld" unique_id=895196018]
 
-[node name="Zombie" parent="." unique_id=493500758 instance=ExtResource("3_sugp2")]
-visible = false
+[node name="Background" type="Sprite2D" parent="GameWorld/DiningRoom" unique_id=1234915614]
+position = Vector2(574.5812, 323.7125)
+scale = Vector2(0.83781797, 0.84189457)
+texture = ExtResource("2_choun")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="GameWorld/DiningRoom" unique_id=1098320719]
+navigation_polygon = SubResource("NavigationPolygon_eb6dy")
+
+[node name="YSort" type="Node2D" parent="GameWorld/DiningRoom" unique_id=71053416]
+
+[node name="Player" parent="GameWorld/DiningRoom/YSort" unique_id=883593765 instance=ExtResource("2_sugp2")]
+position = Vector2(307, 347)
+scale = Vector2(0.15, 0.15)
+
+[node name="Zombie" parent="GameWorld/DiningRoom/YSort" unique_id=493500758 instance=ExtResource("3_sugp2")]
 position = Vector2(508.99997, 555.99994)
-scale = Vector2(0.1, 0.1)
+scale = Vector2(0.15, 0.15)
+
+[node name="Foreground" type="Sprite2D" parent="GameWorld/DiningRoom" unique_id=371830311]
+position = Vector2(575, 323)
+scale = Vector2(0.9031094, 0.90514517)
+texture = ExtResource("5_ya4ey")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="GameWorld/DiningRoom" unique_id=550991531]
+
+[node name="Table" type="CollisionPolygon2D" parent="GameWorld/DiningRoom/StaticBody2D" unique_id=1154440367]
+position = Vector2(281, 399)
+polygon = PackedVector2Array(-6, 13, 617, 12, 617, 84, -5, 84)
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="GameWorld/DiningRoom" unique_id=953583090]
+
+[node name="Table" type="CollisionPolygon2D" parent="GameWorld/DiningRoom/StaticBody2D2" unique_id=592362257]
+position = Vector2(230, 421)
+polygon = PackedVector2Array(-6, 14, 44, 14, 44, 43, -6, 43)
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="GameWorld/DiningRoom" unique_id=795509098]
+
+[node name="Table2" type="CollisionPolygon2D" parent="GameWorld/DiningRoom/StaticBody2D3" unique_id=238173693]
+position = Vector2(905, 414)
+polygon = PackedVector2Array(-6, 16, 44, 16, 44, 43, -6, 43)
 
 [node name="UI" type="Node2D" parent="." unique_id=1537198464]
 
@@ -119,6 +161,7 @@ offset_bottom = 607.0
 script = ExtResource("6_choun")
 
 [node name="Title" type="CanvasLayer" parent="UI/TitleScreen" unique_id=1720640475]
+visible = false
 
 [node name="GameStart" type="Control" parent="UI/TitleScreen/Title" unique_id=1797696930]
 layout_mode = 3

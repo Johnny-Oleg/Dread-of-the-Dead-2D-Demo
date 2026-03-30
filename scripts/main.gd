@@ -1,8 +1,8 @@
 extends Node2D
 
 @onready var game_world = $GameWorld
-@onready var player = $Player
-@onready var zombie = $Zombie
+@onready var player = $GameWorld/DiningRoom/YSort/Player # $Player
+@onready var zombie =  $GameWorld/DiningRoom/YSort/Zombie # $Zombie
 @onready var game_ui = $UI
 @onready var title_screen = $UI/TitleScreen
 @onready var title_layer = $UI/TitleScreen/Title

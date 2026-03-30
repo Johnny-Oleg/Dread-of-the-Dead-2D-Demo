@@ -195,29 +195,11 @@ func shoot():
 func update_animation():
 
 	# PRIORITY:
-	# 1. Aim
-	# 2. Reload
+	# 1. Relaod
+	# 2. Aim
 	# 3. Move
 	# 4. Idle
-
-	#if is_aiming:
-		#play_aim_animation()
-	#elif is_moving:
-		#play_move_animation()
-	#elif is_reloading:
-		#play_reload_animation()
-	#else:
-		#play_idle_animation()
-		#
-	#if is_reloading:
-		#return # animation already playing
-	#elif is_aiming:
-		#play_aim_animation()
-	#elif is_moving:
-		#play_move_animation()
-	#else:
-		#play_idle_animation()
-		# PRIORITY SYSTEM (TOP = strongest)
+	# Reload > Aim > Move > Idle
 
 	if is_reloading:
 		play_reload_animation()
@@ -327,7 +309,14 @@ func _on_reload_timer_timeout() -> void:
 	finish_reload()
 	
 func play_reload_animation():
-	var dir_name = get_4_direction_name(last_facing_dir)
+	#var dir_name = get_4_direction_name(last_facing_dir)
+	var dir = last_facing_dir
+
+	if is_aiming:
+		dir = aim_dir
+
+	var dir_name = get_4_direction_name(dir)
+	sprite.play("reload_" + dir_name)
 	sprite.play("reload_" + dir_name)
 
 func start_reload():

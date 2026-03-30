@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://cel5js1vh3he5" path="res://sprites/player/danger_front.png" id="10_7knsb"]
 [ext_resource type="Texture2D" uid="uid://q7dusjnyhae0" path="res://sprites/player/danger_front_2.png" id="11_0bs3g"]
 [ext_resource type="Texture2D" uid="uid://dr61iadx5la0r" path="res://sprites/player/idle_back.png" id="11_t8b0b"]
+[ext_resource type="Texture2D" uid="uid://bqxgvv5u4oktb" path="res://sprites/player/hurt_down.png" id="12_0bs3g"]
 [ext_resource type="Texture2D" uid="uid://btosjfc02c16" path="res://sprites/player/walk_front.png" id="12_7ta67"]
 [ext_resource type="Texture2D" uid="uid://dqgduxpjvslu8" path="res://sprites/player/walk_up.png" id="13_jhk7o"]
 [ext_resource type="Texture2D" uid="uid://c2wjo40shmus7" path="res://sprites/player/reload_front_1.png" id="17_3vary"]
@@ -26,9 +27,13 @@
 [ext_resource type="Texture2D" uid="uid://dgeeekgf7eir1" path="res://sprites/player/walk_left.png" id="23_4jyp0"]
 [ext_resource type="Texture2D" uid="uid://bbplyswds3uoa" path="res://sprites/player/walk_left_2.png" id="24_maee5"]
 [ext_resource type="Texture2D" uid="uid://bpmhu4kvadshg" path="res://sprites/player/walk_right.png" id="25_avuod"]
+[ext_resource type="Texture2D" uid="uid://4bak7fiv6fw" path="res://sprites/player/walk_right_2.png" id="26_7knsb"]
 [ext_resource type="Texture2D" uid="uid://da2av7lfrcwdl" path="res://sprites/player/walk_up_2.png" id="27_vs8kn"]
 [ext_resource type="AudioStream" uid="uid://crp25gu5bvwbe" path="res://music/sfx/player_sfx/pistol_shot_sfx.WAV" id="28_v4ynn"]
 [ext_resource type="AudioStream" uid="uid://ureud55pn7uw" path="res://music/sfx/player_sfx/pistol_reload_sfx.WAV" id="29_wi073"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0bs3g"]
+size = Vector2(400, 961)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_qe8hj"]
 animations = [{
@@ -133,34 +138,34 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("7_kn8w6")
+"texture": ExtResource("12_0bs3g")
 }],
 "loop": true,
-"name": &"hurting_back",
+"name": &"hurt_back",
 "speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("7_kn8w6")
+"texture": ExtResource("12_0bs3g")
 }],
 "loop": true,
-"name": &"hurting_front",
+"name": &"hurt_front",
 "speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("7_kn8w6")
+"texture": ExtResource("12_0bs3g")
 }],
 "loop": true,
-"name": &"hurting_left",
+"name": &"hurt_left",
 "speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("7_kn8w6")
+"texture": ExtResource("12_0bs3g")
 }],
 "loop": true,
-"name": &"hurting_right",
+"name": &"hurt_right",
 "speed": 5.0
 }, {
 "frames": [{
@@ -306,12 +311,15 @@ animations = [{
 "speed": 30.0
 }, {
 "frames": [{
-"duration": 4.0,
+"duration": 8.0,
 "texture": ExtResource("25_avuod")
+}, {
+"duration": 8.0,
+"texture": ExtResource("26_7knsb")
 }],
 "loop": true,
 "name": &"walk_right",
-"speed": 5.0
+"speed": 30.0
 }, {
 "frames": [{
 "duration": 8.0,
@@ -325,16 +333,24 @@ animations = [{
 "speed": 30.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7knsb"]
+size = Vector2(400, 963)
+
 [node name="Player" type="CharacterBody2D" unique_id=883593765 groups=["player"]]
 script = ExtResource("1_qe8hj")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=1971721090]
+position = Vector2(-16, 6.5)
+shape = SubResource("RectangleShape2D_0bs3g")
 
 [node name="Body" type="Node2D" parent="." unique_id=766899656]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Body" unique_id=1403885371]
-position = Vector2(0, -1)
+texture_filter = 1
+position = Vector2(0, -3)
 sprite_frames = SubResource("SpriteFrames_qe8hj")
-animation = &"reload_up"
-frame_progress = 0.6669096
+animation = &"danger_idle_down"
+frame_progress = 0.627579
 
 [node name="Sprite2D" type="Sprite2D" parent="Body" unique_id=1075862568]
 visible = false
@@ -345,10 +361,15 @@ texture = ExtResource("1_0g4kb")
 [node name="Hitbox" type="Area2D" parent="." unique_id=580650141]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=203561276]
+position = Vector2(-15, 6.5)
+shape = SubResource("RectangleShape2D_7knsb")
+debug_color = Color(0.97529453, 0.11922107, 0.26927754, 0.41960785)
 
 [node name="InteractionArea" type="Area2D" parent="." unique_id=1313784775]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" unique_id=1314798816]
+position = Vector2(-16, 6.5)
+shape = SubResource("RectangleShape2D_0bs3g")
 
 [node name="ShootOrigin" type="Marker2D" parent="." unique_id=1881727627]
 
