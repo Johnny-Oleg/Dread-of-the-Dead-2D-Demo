@@ -65,7 +65,7 @@ func _ready():
 	health = [1000,1500,2000,2500].pick_random()
 	max_health = health
 
-	motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
+	#motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
 	#if not player.is_empty(): 
 		#player = player[0]
 		#nav_agent.target_position = player.global_position
@@ -94,6 +94,8 @@ func _physics_process(delta):
 # STATE CHANGES
 # =========================
 func change_state(new_state: State):
+	if not global.game_started:
+		return
 
 	current_state = new_state
 
@@ -101,20 +103,26 @@ func change_state(new_state: State):
 		State.IDLE:
 			idle_timer = 0.0
 			velocity = Vector2.ZERO
+			sfx_idle.play()
 
 		State.PATROL:
 			set_new_patrol_target()
-
+		
+		State.CHASE:
+			sfx_chase.play()
+		
 		State.ATTACK:
 			attack_timer = 1.0
 			velocity = Vector2.ZERO
+			sfx_attack.play()
 
 		State.HURT:
 			hurt_timer = 2.0
+			sfx_hurt.play()
 
 		State.DEAD:
 			velocity = Vector2.ZERO
-			set_physics_process(false)
+			#set_physics_process(false) need this?
 
 # =========================
 # VISION
@@ -129,6 +137,7 @@ func can_see_player() -> bool:
 		return false
 
 	var angle = rad_to_deg(last_direction.angle_to(to_player.normalized()))
+	
 	return abs(angle) < vision_angle * 0.5
 
 # =========================
@@ -142,7 +151,7 @@ func handle_idle(delta):
 
 	idle_timer += delta
 
-	if idle_timer > 3.0:
+	if idle_timer > 30.0:
 		change_state(State.PATROL)
 
 # =========================
@@ -201,21 +210,29 @@ func handle_chase(delta):
 
 	velocity = dir * speed
 
-	if global_position.distance_to(player.global_position) < 40:
+	# Attack check 
+	var dist = global_position.distance_to(player.global_position)
+	if dist < 70: 
 		change_state(State.ATTACK)
 
 # =========================
 # ATTACK
 # =========================
 func handle_attack(delta):
-
+	velocity = Vector2.ZERO
 	attack_timer -= delta
 
 	if attack_timer <= 0:
+		attack_timer = 1.0
+		#change_state(State.CHASE) # every second changes to chase state. why?
+		
+	# Attack check (chase only if the player is escaping)
+	var dist = global_position.distance_to(player.global_position)
+	if dist > 70: 
 		change_state(State.CHASE)
 
 # =========================
-# HURT
+# HURT TODO
 # =========================
 func handle_hurt(delta):
 
@@ -225,7 +242,7 @@ func handle_hurt(delta):
 		change_state(State.CHASE)
 
 # =========================
-# DAMAGE
+# DAMAGE TODO
 # =========================
 func take_damage(amount: int):
 

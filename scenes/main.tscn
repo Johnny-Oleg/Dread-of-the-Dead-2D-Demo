@@ -110,21 +110,21 @@ scale = Vector2(0.9031094, 0.90514517)
 texture = ExtResource("5_ya4ey")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="GameWorld/DiningRoom" unique_id=550991531]
-collision_layer = 2
+collision_mask = 0
 
 [node name="Table" type="CollisionPolygon2D" parent="GameWorld/DiningRoom/StaticBody2D" unique_id=1154440367]
 position = Vector2(281, 399)
 polygon = PackedVector2Array(-6, 13, 617, 12, 617, 84, -5, 84)
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="GameWorld/DiningRoom" unique_id=953583090]
-collision_layer = 2
+collision_mask = 0
 
 [node name="Table" type="CollisionPolygon2D" parent="GameWorld/DiningRoom/StaticBody2D2" unique_id=592362257]
 position = Vector2(230, 421)
 polygon = PackedVector2Array(-6, 14, 44, 14, 44, 43, -6, 43)
 
 [node name="StaticBody2D3" type="StaticBody2D" parent="GameWorld/DiningRoom" unique_id=795509098]
-collision_layer = 2
+collision_mask = 0
 
 [node name="Table2" type="CollisionPolygon2D" parent="GameWorld/DiningRoom/StaticBody2D3" unique_id=238173693]
 position = Vector2(905, 414)

@@ -33,7 +33,7 @@
 [ext_resource type="AudioStream" uid="uid://crp25gu5bvwbe" path="res://music/sfx/player_sfx/pistol_shot_sfx.WAV" id="28_v4ynn"]
 [ext_resource type="AudioStream" uid="uid://ureud55pn7uw" path="res://music/sfx/player_sfx/pistol_reload_sfx.WAV" id="29_wi073"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0bs3g"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3vary"]
 size = Vector2(400, 961)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_qe8hj"]
@@ -337,17 +337,24 @@ animations = [{
 "speed": 30.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xu3tp"]
+size = Vector2(400, 963)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7knsb"]
 size = Vector2(400, 963)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0bs3g"]
+size = Vector2(400, 961)
+
 [node name="Player" type="CharacterBody2D" unique_id=883593765 groups=["player"]]
-collision_mask = 2
+collision_layer = 2
+collision_mask = 5
 motion_mode = 1
 script = ExtResource("1_qe8hj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1971721090]
 position = Vector2(-16, 6.5)
-shape = SubResource("RectangleShape2D_0bs3g")
+shape = SubResource("RectangleShape2D_3vary")
 
 [node name="Body" type="Node2D" parent="." unique_id=766899656]
 
@@ -355,8 +362,7 @@ shape = SubResource("RectangleShape2D_0bs3g")
 texture_filter = 1
 position = Vector2(0, -3)
 sprite_frames = SubResource("SpriteFrames_qe8hj")
-animation = &"walk_right"
-frame_progress = 0.032402433
+animation = &"idle_down"
 
 [node name="Sprite2D" type="Sprite2D" parent="Body" unique_id=1075862568]
 visible = false
@@ -364,14 +370,19 @@ texture_filter = 1
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("1_0g4kb")
 
-[node name="Hitbox" type="Area2D" parent="." unique_id=580650141 groups=["player"]]
+[node name="Hitbox" type="Area2D" parent="." unique_id=580650141]
+visible = false
+collision_layer = 2
+collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=203561276]
 position = Vector2(-15, 6.5)
-shape = SubResource("RectangleShape2D_7knsb")
-debug_color = Color(0.97529453, 0.11922107, 0.26927754, 0.41960785)
+shape = SubResource("RectangleShape2D_xu3tp")
+debug_color = Color(0.27058825, 0.92941177, 0.047058824, 0.41960785)
 
-[node name="Hurtbox" type="Area2D" parent="." unique_id=64729424 groups=["player"]]
+[node name="Hurtbox" type="Area2D" parent="." unique_id=64729424]
+collision_layer = 8
+collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=1825958253]
 position = Vector2(-15, 6.5)
@@ -379,10 +390,13 @@ shape = SubResource("RectangleShape2D_7knsb")
 debug_color = Color(0.97529453, 0.11922107, 0.26927754, 0.41960785)
 
 [node name="InteractionArea" type="Area2D" parent="." unique_id=1313784775]
+collision_layer = 0
+collision_mask = 64
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" unique_id=1314798816]
 position = Vector2(-16, 6.5)
 shape = SubResource("RectangleShape2D_0bs3g")
+debug_color = Color(0.6509804, 0.5176471, 0.047058824, 0.41960785)
 
 [node name="ShootOrigin" type="Marker2D" parent="." unique_id=1881727627]
 
@@ -390,7 +404,7 @@ shape = SubResource("RectangleShape2D_0bs3g")
 
 [node name="ShootRay" type="RayCast2D" parent="." unique_id=1029114910]
 target_position = Vector2(0, -200)
-collision_mask = 2
+collision_mask = 17
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1695097936]
 

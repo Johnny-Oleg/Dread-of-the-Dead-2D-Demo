@@ -61,8 +61,8 @@ func _physics_process(delta):
 		debug_print()
 	# ====================	
 		
-	#if global.game_over or not global.game_started:
-		#return
+	if global.game_over or not global.game_started:
+		return
 
 	handle_input()
 	handle_movement()
