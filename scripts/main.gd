@@ -47,7 +47,7 @@ func _on_start_game():
 	player.set_physics_process(true)
 	zombie.visible = true
 	game_ui.get_node("GameUITest").visible = true
-
+	player.z_index = int(player.global_position.y)
 
 func _on_exit_game():
 	get_tree().quit()
