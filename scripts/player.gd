@@ -178,11 +178,12 @@ func shoot():
 	shoot_ray.force_raycast_update()
 
 	if shoot_ray.is_colliding():
-		var collider = shoot_ray.get_collider()
-
-		if collider.is_in_group("enemy"):
-			print("HIT ENEMY: ", collider.name)
-			collider.take_damage(1) # we’ll add this next
+		var target = shoot_ray.get_collider()
+		# Remember: player's RayCast mask should hit Layer 5 (EnemyHurtbox)
+		if target.is_in_group("zombie_hurtbox"):
+			var is_crit = randf() < global.pistol_stats["crit_chance"]
+			# Access the zombie script from the hurtbox's owner
+			target.owner.take_damage(is_crit)
 	else:
 		print("MISS")
 	print("Ray target: ", shoot_ray.target_position)
@@ -210,8 +211,12 @@ func update_animation():
 		return
 
 	if is_moving:
-		play_move_animation()
-		return
+		if is_running:
+			play_run_animation()
+			return
+		else:
+			play_move_animation()
+			return
 
 	play_idle_animation()
 
@@ -227,8 +232,17 @@ func play_aim_animation():
 # =========================
 func play_move_animation():
 	var dir_name = get_4_direction_name(move_dir)
+		
 	sprite.play("walk_" + dir_name)
 	
+	# Also update facing while moving
+	last_facing_dir = move_dir
+
+func play_run_animation():
+	var dir_name = get_4_direction_name(move_dir)
+	
+	sprite.play("run_" + dir_name)
+			
 	# Also update facing while moving
 	last_facing_dir = move_dir
 
@@ -236,12 +250,6 @@ func play_move_animation():
 # IDLE ANIMATIONS (4-dir)
 # =========================
 func play_idle_animation():
-	#var dir_name = get_4_direction_name(move_dir if move_dir != Vector2.ZERO else aim_dir)
-	#
-	#if global.is_player_in_danger():
-		#sprite.play("danger_idle_" + dir_name)
-	#else:
-		#sprite.play("idle_" + dir_name)
 	
 	var dir_name = get_4_direction_name(last_facing_dir)
 	

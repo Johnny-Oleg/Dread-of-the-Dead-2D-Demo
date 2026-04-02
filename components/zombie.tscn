@@ -5,11 +5,13 @@
 [ext_resource type="Texture2D" uid="uid://dooyxlcryr55p" path="res://sprites/enemy/attack_right.png" id="2_167r3"]
 [ext_resource type="Texture2D" uid="uid://cuesevw0c7ju" path="res://sprites/enemy/idle_left.png" id="3_6nedx"]
 [ext_resource type="Texture2D" uid="uid://det60yy1uf4e2" path="res://sprites/enemy/attack_right_2.png" id="3_tfd3c"]
+[ext_resource type="Texture2D" uid="uid://sxv02vvdmvw3" path="res://sprites/enemy/fall_forward.png" id="4_evdf1"]
 [ext_resource type="Texture2D" uid="uid://c0m7857lo3et3" path="res://sprites/enemy/dead_face_down.png" id="4_tfd3c"]
 [ext_resource type="Texture2D" uid="uid://c36aw3wp5iqq" path="res://sprites/enemy/idle_right.png" id="4_w465y"]
 [ext_resource type="Texture2D" uid="uid://eigtnib4bnvl" path="res://sprites/enemy/dead_face_up.png" id="5_tfd3c"]
 [ext_resource type="Texture2D" uid="uid://mjsr4uhnan5c" path="res://sprites/enemy/idle_back.png" id="5_u7vxm"]
 [ext_resource type="AudioStream" uid="uid://cocjgco7ms864" path="res://music/sfx/zombie_sfx/zombie_idle_3.WAV" id="6_d12fw"]
+[ext_resource type="Texture2D" uid="uid://djv865rr3byuv" path="res://sprites/enemy/fall_back.png" id="6_hqk3l"]
 [ext_resource type="Texture2D" uid="uid://l78keml353xe" path="res://sprites/enemy/walk_down.png" id="6_jtxwv"]
 [ext_resource type="Texture2D" uid="uid://4yqkywo7cmsb" path="res://sprites/enemy/walk_left.png" id="7_nv8q1"]
 [ext_resource type="AudioStream" uid="uid://bscqgn12h6w57" path="res://music/sfx/zombie_sfx/zombie_attack.WAV" id="7_v5snt"]
@@ -88,22 +90,34 @@ animations = [{
 "name": &"dead_right",
 "speed": 5.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_evdf1")
+}],
 "loop": true,
 "name": &"hurt_down",
 "speed": 5.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_hqk3l")
+}],
 "loop": true,
 "name": &"hurt_left",
 "speed": 5.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_hqk3l")
+}],
 "loop": true,
 "name": &"hurt_right",
 "speed": 5.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_hqk3l")
+}],
 "loop": true,
 "name": &"hurt_up",
 "speed": 5.0
@@ -209,7 +223,8 @@ shape = SubResource("RectangleShape2D_idork")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Body" unique_id=1680198091]
 sprite_frames = SubResource("SpriteFrames_7fncv")
-animation = &"walk_up"
+animation = &"dead_right"
+frame_progress = 0.24505305
 
 [node name="Hitbox" type="Area2D" parent="." unique_id=1802076305 groups=["zombie"]]
 collision_layer = 32
@@ -220,7 +235,7 @@ position = Vector2(8, -148)
 shape = SubResource("RectangleShape2D_fk42m")
 debug_color = Color(0.2784314, 0.6313726, 0.03529412, 0.41960785)
 
-[node name="Hurtbox" type="Area2D" parent="." unique_id=624578128 groups=["zombie"]]
+[node name="Hurtbox" type="Area2D" parent="." unique_id=624578128 groups=["zombie_hurtbox"]]
 collision_layer = 16
 collision_mask = 0
 
@@ -257,3 +272,6 @@ stream = ExtResource("11_nv8q1")
 
 [node name="ZombieBite" type="AudioStreamPlayer2D" parent="SoundEffects" unique_id=1492437204]
 stream = ExtResource("12_4dawi")
+
+[node name="DebugLine" type="Line2D" parent="." unique_id=1105670865]
+width = 5.0

@@ -9,7 +9,8 @@ extends Node2D
 @onready var player = $"../../../GameWorld/DiningRoom/YSort/Player"
 
 func _process(_delta):
-	health_label.text = "HP: %d" % int(global.player_health)
+	#health_label.text = "HP: %d" % int(global.player_health)
+	health_label.text = "HP: - " + str(enemy.collision_layer) + "|" + str(enemy.get_collision_layer())
 	ammo_label.text = "Ammo: %d/%d" % [global.current_ammo, global.reserve_ammo]
 
 	if enemy != null:
