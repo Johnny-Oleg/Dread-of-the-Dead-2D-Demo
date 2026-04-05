@@ -1,22 +1,14 @@
 [gd_scene format=3 uid="uid://di3if1iwu4h4e"]
 
 [ext_resource type="Script" uid="uid://dorssy5ahx0j5" path="res://scripts/main.gd" id="1_tipki"]
-[ext_resource type="Texture2D" uid="uid://c87kmg5sl2xot" path="res://sprites/locations/dining_room_bg.png" id="2_choun"]
-[ext_resource type="PackedScene" uid="uid://drx0iakt15xe7" path="res://components/player.tscn" id="2_sugp2"]
-[ext_resource type="PackedScene" uid="uid://b1yjcowccdgc2" path="res://components/zombie.tscn" id="3_sugp2"]
+[ext_resource type="Texture2D" uid="uid://cpdp1p8f2wc7e" path="res://assets/images/you_died.png" id="2_o6xl0"]
 [ext_resource type="Script" uid="uid://e3x7aatwxw1q" path="res://scripts/info.gd" id="4_jyhfs"]
-[ext_resource type="Texture2D" uid="uid://d4mysx0c0gb2j" path="res://sprites/images/title_screen_image.jpeg" id="4_o6xl0"]
-[ext_resource type="Texture2D" uid="uid://bnadyck8i75mc" path="res://sprites/images/dotd_logo.png" id="5_tipki"]
-[ext_resource type="Texture2D" uid="uid://dg41xp5bcqtcu" path="res://sprites/locations/dining_room_fg.png" id="5_ya4ey"]
-[ext_resource type="AudioStream" uid="uid://clphmkgyxq8vr" path="res://music/bgm/title_bgm.mp3" id="6_85g3d"]
+[ext_resource type="Texture2D" uid="uid://d4mysx0c0gb2j" path="res://assets/images/title_screen_image.jpeg" id="4_o6xl0"]
+[ext_resource type="Texture2D" uid="uid://bnadyck8i75mc" path="res://assets/images/dotd_logo.png" id="5_tipki"]
+[ext_resource type="AudioStream" uid="uid://clphmkgyxq8vr" path="res://assets/audio/bgm/title_bgm.mp3" id="6_85g3d"]
 [ext_resource type="Script" uid="uid://cemc815284ffv" path="res://scripts/title_screen.gd" id="6_choun"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_85g3d"]
-
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_eb6dy"]
-vertices = PackedVector2Array(1153.9219, 7.9921875, 1149.0703, 647.96875, -0.921875, 645.02344, 3.921875, 7)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(-6, -3, 1164, -2, 1159, 658, -11, 655)])
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_o6xl0"]
 texture = ExtResource("4_o6xl0")
@@ -74,63 +66,30 @@ shadow_offset = Vector2(0, 4)
 script = ExtResource("1_tipki")
 
 [node name="GameWorld" type="Node2D" parent="." unique_id=1451950881]
-visible = false
 
 [node name="NinePatchRect" type="NinePatchRect" parent="GameWorld" unique_id=729810784]
-offset_left = -924.0
-offset_top = -774.0
-offset_right = 2071.0
-offset_bottom = 1192.0
+self_modulate = Color(0, 0, 0, 1)
+offset_left = -1101.0
+offset_top = -716.0
+offset_right = 1894.0
+offset_bottom = 1250.0
 texture = SubResource("CanvasTexture_85g3d")
 
-[node name="DiningRoom" type="Node2D" parent="GameWorld" unique_id=895196018]
-
-[node name="Background" type="Sprite2D" parent="GameWorld/DiningRoom" unique_id=1234915614]
-position = Vector2(574.5812, 323.7125)
-scale = Vector2(0.83781797, 0.84189457)
-texture = ExtResource("2_choun")
-
-[node name="NavigationRegion2D" type="NavigationRegion2D" parent="GameWorld/DiningRoom" unique_id=1098320719]
-navigation_polygon = SubResource("NavigationPolygon_eb6dy")
-
-[node name="YSort" type="Node2D" parent="GameWorld/DiningRoom" unique_id=71053416]
-y_sort_enabled = true
-
-[node name="Player" parent="GameWorld/DiningRoom/YSort" unique_id=883593765 instance=ExtResource("2_sugp2")]
-position = Vector2(66, 257)
-scale = Vector2(0.15, 0.15)
-
-[node name="Zombie" parent="GameWorld/DiningRoom/YSort" unique_id=493500758 groups=["zombie"] instance=ExtResource("3_sugp2")]
-position = Vector2(558, 100)
-scale = Vector2(0.15, 0.15)
-
-[node name="Foreground" type="Sprite2D" parent="GameWorld/DiningRoom" unique_id=371830311]
-position = Vector2(575, 323)
-scale = Vector2(0.9031094, 0.90514517)
-texture = ExtResource("5_ya4ey")
-
-[node name="StaticBody2D" type="StaticBody2D" parent="GameWorld/DiningRoom" unique_id=550991531]
-collision_mask = 0
-
-[node name="Table" type="CollisionPolygon2D" parent="GameWorld/DiningRoom/StaticBody2D" unique_id=1154440367]
-position = Vector2(281, 399)
-polygon = PackedVector2Array(-6, 13, 617, 12, 617, 84, -5, 84)
-
-[node name="StaticBody2D2" type="StaticBody2D" parent="GameWorld/DiningRoom" unique_id=953583090]
-collision_mask = 0
-
-[node name="Table" type="CollisionPolygon2D" parent="GameWorld/DiningRoom/StaticBody2D2" unique_id=592362257]
-position = Vector2(230, 421)
-polygon = PackedVector2Array(-6, 14, 44, 14, 44, 43, -6, 43)
-
-[node name="StaticBody2D3" type="StaticBody2D" parent="GameWorld/DiningRoom" unique_id=795509098]
-collision_mask = 0
-
-[node name="Table2" type="CollisionPolygon2D" parent="GameWorld/DiningRoom/StaticBody2D3" unique_id=238173693]
-position = Vector2(905, 414)
-polygon = PackedVector2Array(-6, 16, 44, 16, 44, 43, -6, 43)
-
 [node name="UI" type="Node2D" parent="." unique_id=1537198464]
+
+[node name="Died" type="CanvasLayer" parent="UI" unique_id=1554564802]
+visible = false
+
+[node name="TitleLogo" type="TextureRect" parent="UI/Died" unique_id=922915545]
+offset_left = 302.0
+offset_top = 162.0
+offset_right = 884.48157
+offset_bottom = 464.0
+texture = ExtResource("2_o6xl0")
+expand_mode = 2
+
+[node name="Node2D" type="Node2D" parent="UI" unique_id=861198088]
+visible = false
 
 [node name="GameUITest" type="CanvasLayer" parent="UI" unique_id=812862399]
 visible = false
@@ -151,6 +110,13 @@ offset_right = 143.0
 offset_bottom = 613.0
 theme_override_colors/font_color = Color(0.24003872, 0.74218434, 1.540184e-06, 1)
 
+[node name="AimLabel" type="Label" parent="UI/GameUITest/Info" unique_id=1783502114]
+offset_left = 24.0
+offset_top = 511.0
+offset_right = 138.0
+offset_bottom = 542.0
+theme_override_colors/font_color = Color(0.24003872, 0.74218434, 1.540184e-06, 1)
+
 [node name="AmmoLabel" type="Label" parent="UI/GameUITest/Info" unique_id=482432021]
 offset_left = 154.0
 offset_top = 575.0
@@ -159,17 +125,17 @@ offset_bottom = 614.0
 theme_override_colors/font_color = Color(0.5894365, 0.0025066496, 0.8411051, 1)
 
 [node name="EnemyLabel" type="Label" parent="UI/GameUITest/Info" unique_id=693189218]
-offset_left = 998.0
+offset_left = 840.0
 offset_top = 569.0
-offset_right = 1111.0
+offset_right = 953.0
 offset_bottom = 607.0
 theme_override_colors/font_color = Color(0.85641235, 0, 0.017175939, 1)
 
 [node name="EnemyState" type="Label" parent="UI/GameUITest/Info" unique_id=2001104646]
-offset_left = 765.0
-offset_top = 573.0
-offset_right = 888.0
-offset_bottom = 611.0
+offset_left = 537.0
+offset_top = 574.0
+offset_right = 660.0
+offset_bottom = 612.0
 theme_override_colors/font_color = Color(0.85641235, 0, 0.017175939, 1)
 
 [node name="TitleScreen" type="Node2D" parent="UI" unique_id=1900309350]

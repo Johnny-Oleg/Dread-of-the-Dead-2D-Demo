@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://3r6x6rj4t7dd"]
+
+[ext_resource type="Texture2D" uid="uid://c87kmg5sl2xot" path="res://assets/sprites/locations/dining_room_bg.png" id="1_wx7th"]
+[ext_resource type="PackedScene" uid="uid://drx0iakt15xe7" path="res://scenes/actors/player.tscn" id="2_j37ga"]
+[ext_resource type="Texture2D" uid="uid://dg41xp5bcqtcu" path="res://assets/sprites/locations/dining_room_fg.png" id="2_nrcdl"]
+[ext_resource type="PackedScene" uid="uid://b1yjcowccdgc2" path="res://scenes/actors/zombie.tscn" id="3_45k0p"]
+[ext_resource type="AudioStream" uid="uid://dfmqo8886pfk3" path="res://assets/audio/bgm/castle_bgm_3.mp3" id="3_j37ga"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_45k0p"]
+vertices = PackedVector2Array(960.3281, 419.20313, 1132.25, 12.9375, 1148.7266, 647.96875, 958.6719, 469, 3.921875, 7.046875, 910, 400, 213.67969, 476, 265, 476, 265, 493.02344, -0.921875, 645.02344, 910, 418.1875, 265.40625, 400, 264.40625, 424, 215.3125, 424, 906.1719, 491.9922, 908.1719, 469)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 1, 0, 5), PackedInt32Array(6, 7, 8, 9), PackedInt32Array(0, 10, 5), PackedInt32Array(4, 5, 11), PackedInt32Array(11, 12, 13, 4), PackedInt32Array(9, 4, 13, 6), PackedInt32Array(14, 15, 3, 2), PackedInt32Array(14, 2, 9, 8)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-6, -3, 1142, 3, 1159, 658, -11, 655), PackedVector2Array(950, 429, 900, 428, 900, 410, 275, 410, 274, 434, 225, 434, 224, 466, 275, 466, 275, 483, 897, 482, 899, 459, 949, 459)])
+
+[node name="DiningRoom" type="Node2D" unique_id=1303867405]
+
+[node name="Background" type="Sprite2D" parent="." unique_id=2105247640]
+position = Vector2(574.5812, 323.7125)
+scale = Vector2(0.83781797, 0.84189457)
+texture = ExtResource("1_wx7th")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=1298605851]
+navigation_polygon = SubResource("NavigationPolygon_45k0p")
+
+[node name="YSort" type="Node2D" parent="." unique_id=1050489627]
+y_sort_enabled = true
+
+[node name="Player" parent="YSort" unique_id=883593765 instance=ExtResource("2_j37ga")]
+position = Vector2(66, 257)
+scale = Vector2(0.15, 0.15)
+
+[node name="Zombie" parent="YSort" unique_id=493500758 groups=["zombie"] instance=ExtResource("3_45k0p")]
+position = Vector2(391, 312)
+scale = Vector2(0.15, 0.15)
+
+[node name="Zombie2" parent="YSort" unique_id=1580677081 groups=["zombie"] instance=ExtResource("3_45k0p")]
+position = Vector2(511, 230)
+scale = Vector2(0.15, 0.15)
+
+[node name="Foreground" type="Sprite2D" parent="." unique_id=540954127]
+position = Vector2(575, 323)
+scale = Vector2(0.9031094, 0.90514517)
+texture = ExtResource("2_nrcdl")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1151722788]
+collision_mask = 0
+
+[node name="Table" type="CollisionPolygon2D" parent="StaticBody2D" unique_id=1307684251]
+position = Vector2(281, 399)
+polygon = PackedVector2Array(-6, 13, 617, 12, 617, 84, -5, 84)
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="." unique_id=1420251119]
+collision_mask = 0
+
+[node name="Table" type="CollisionPolygon2D" parent="StaticBody2D2" unique_id=1656351132]
+position = Vector2(230, 421)
+polygon = PackedVector2Array(-6, 14, 44, 14, 44, 43, -6, 43)
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="." unique_id=508426159]
+collision_mask = 0
+
+[node name="Table2" type="CollisionPolygon2D" parent="StaticBody2D3" unique_id=1794579884]
+position = Vector2(905, 414)
+polygon = PackedVector2Array(-6, 16, 44, 16, 44, 43, -6, 43)
+
+[node name="BGM" type="AudioStreamPlayer2D" parent="." unique_id=1341538121]
+stream = ExtResource("3_j37ga")

@@ -10,7 +10,10 @@ enum State {
 	ATTACK,
 	HURT,
 	DOWNED,
-	DEAD
+	DEAD,
+	STUMBLED,
+	SKID,
+	WALL_SIT
 }
 
 const STATE_NAMES = {
@@ -20,7 +23,10 @@ const STATE_NAMES = {
 	State.ATTACK: "ATTACK",
 	State.HURT: "HURT",
 	State.DOWNED: "DOWNED",
-	State.DEAD: "DEAD"
+	State.DEAD: "DEAD",
+	State.STUMBLED: "STUMBLED",
+	State.SKID: "SKID",
+	State.WALL_SIT: "WALL_SIT"
 }
 
 var current_state: State = State.IDLE
@@ -45,6 +51,7 @@ var vision_range := 350.0
 var vision_angle := 90.0
 var voice_cooldown := 0.0
 var downed_cooldown := 0.0
+var recovery_timer: float = 0.0
 
 var last_direction: Vector2 = Vector2.DOWN
 
@@ -89,6 +96,9 @@ func _physics_process(delta):
 		State.CHASE: handle_chase(delta)
 		State.ATTACK: handle_attack(delta)
 		State.HURT: handle_hurt(delta)
+		State.SKID: return # Do nothing! The Tween is moving the zombie.
+		State.STUMBLED: handle_recovery(delta)
+		State.WALL_SIT: handle_recovery(delta)
 		State.DOWNED: return # Stops move_and_slide while on the ground
 		State.DEAD: return # Stops move_and_slide while on the ground
 
@@ -146,12 +156,12 @@ func change_state(new_state: State):
 			body_collision.set_deferred("disabled", false)
 
 		State.ATTACK:
-			attack_timer = 1.0
 			velocity = Vector2.ZERO
 			if voice_cooldown <= 0:
 				sfx_attack.play()
 				voice_cooldown = 8.0 # Wait 8 seconds before making another sound
-
+			sprite.play("attack")
+			
 		State.HURT:
 			hurt_timer = 2.0
 			if voice_cooldown <= 0:
@@ -163,13 +173,12 @@ func change_state(new_state: State):
 		State.DOWNED:
 			velocity = Vector2.ZERO
 			#sprite.play("dead_" + get_dir_string()) # Same as dead, no blood
-			sprite.play("dead_right") # For downed animation
+			sprite.play("downed") # For downed animation
 			
 			# Turn off Layer 3 (Enemy) so a player can walk through
 			body_collision.set_deferred("disabled", true)
-
-			
 			await get_tree().create_timer(10.0).timeout
+			
 			if current_state == State.DOWNED: 
 				change_state(State.IDLE)
 				# Turn Layer 3 back on when standing up naturally
@@ -181,6 +190,68 @@ func change_state(new_state: State):
 			sprite.play("dead_left") # For dead animation
 			body_collision.set_deferred("disabled", true)
 			# TODO: Trigger blood pool sprite/particle here
+			
+		State.SKID:
+			velocity = Vector2.ZERO
+			sprite.play("hurt_up") # Or whichever direction you want for sliding back
+			
+		State.STUMBLED:
+			velocity = Vector2.ZERO
+			sprite.play("downed")
+			recovery_timer = 3.0 # Stand up in 3 seconds
+			
+		State.WALL_SIT:
+			velocity = Vector2.ZERO
+			sprite.play("sit_against_wall") 
+			recovery_timer = 4.0 # Takes a bit longer to stand up from a wall
+		
+func get_shoved(shove_dir: Vector2):
+	
+	## 1. Enter the SKID state immediately so the hurt animation plays
+	change_state(State.SKID)
+
+	var space_state = get_world_2d().direct_space_state
+	var ideal_target = global_position + (shove_dir * 250.0) 
+	var query = PhysicsRayQueryParameters2D.create(global_position, ideal_target)
+	
+	# Look for Walls (Layer 1) AND Enemies (Layer 3). 1 + 4 = 5.
+	query.collision_mask = 5 
+	# CRITICAL: Tell the RayCast to ignore THIS zombie, or it will just hit itself!
+	query.exclude = [self] 
+	
+	var result = space_state.intersect_ray(query)
+	var actual_target = ideal_target
+	var hit_wall = false
+	var hit_zombie: Node2D = null
+	
+	# Analyze the collision
+	if result:
+		actual_target = result.position - (shove_dir * 15.0) 
+		
+		# Did we hit a wall or a zombie?
+		# We check if the thing we hit has the "get_shoved" method
+		if result.collider.has_method("get_shoved"):
+			hit_zombie = result.collider
+		else:
+			hit_wall = true
+
+	# Perform the Tween slide
+	var tween = create_tween()
+	tween.tween_property(self, "global_position", actual_target, 0.4).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	
+	await tween.finished
+	
+	# 5. Decide the final fate
+	if hit_wall:
+		change_state(State.WALL_SIT)
+	elif hit_zombie != null:
+		# We hit a zombie! We stumble, and we pass the shove to them!
+		change_state(State.STUMBLED)
+		hit_zombie.get_shoved(shove_dir) # Chain reaction!
+	elif randf() < 0.5:
+		change_state(State.STUMBLED)
+	else:
+		change_state(State.CHASE)
 
 # =========================
 # VISION
@@ -307,6 +378,7 @@ func handle_chase(delta):
 	if dist_to_player > vision_range * 1.5: 
 		change_state(State.IDLE)
 		return
+		
 	repath_timer -= delta
 
 	if repath_timer <= 0:
@@ -329,7 +401,9 @@ func handle_chase(delta):
 	if dir.length() > 0:
 		last_direction = dir
 
-	velocity = dir * speed
+	# CHANGED: Don't set velocity directly! Feed it to the NavAgent.
+	var intended_velocity = dir * speed
+	nav_agent.set_velocity(intended_velocity)
 
 	# Attack check 
 	var dist = global_position.distance_to(player.global_position)
@@ -341,20 +415,22 @@ func handle_chase(delta):
 # =========================
 func handle_attack(delta):
 	velocity = Vector2.ZERO
-	attack_timer -= delta
-
-	if attack_timer <= 0:
-		attack_timer = 1.0
-		
-	# If a player runs away, immediately go back to chasing
-	var dist = global_position.distance_to(player.global_position)
 	
+	# 1. Tick down the timer FIRST
+	if attack_timer > 0:
+		attack_timer -= delta
+		return # Wait here until the timer is finished
+
+	# 2. Check distance
+	var dist = global_position.distance_to(player.global_position)
 	if dist > 70: 
 		change_state(State.CHASE)
+		return
 		
-	# If a player is still close and the timer is up, bite!
-	if attack_timer <= 0:
-		attack_timer = 1.0 # Reset cooldown
+	# 3. If still close and timer is 0, FORCE THE GRAB
+	if player.has_method("get_grabbed") and not player.is_grabbed:
+		player.get_grabbed(self)
+		attack_timer = 10.0 # Reset cooldown so it doesn't spam every frame
 
 # =========================
 # HURT
@@ -392,13 +468,6 @@ func take_damage(is_crit: bool = false):
 	if health <= 0:
 		die()
 		return
-
-	## If shot while DOWNED, it alerts and stands up immediately
-	#if current_state == State.DOWNED:
-		#change_state(State.CHASE)
-		## Turn Layer 3 (Enemy) back on since it's standing up to attack!
-		##body_collision.set_deferred("disabled", false) # doesnt work
-		#return
 	
 	# If the zombie was just shot while faking death, force it to skip the 
 	# stun/downed rolls below so it can stand up and attack!
@@ -442,7 +511,7 @@ func die():
 			
 func update_animation():
 	# Do not overwrite the animation if we are in these specific states!
-	if current_state in [State.HURT, State.DOWNED, State.DEAD]:
+	if current_state in [State.HURT, State.DOWNED, State.DEAD, State.STUMBLED, State.WALL_SIT]:
 		return
 	
 	var dir_str = get_dir_string()
@@ -458,3 +527,37 @@ func get_dir_string() -> String:
 		return "right" if dir.x > 0 else "left"
 	else:
 		return "down" if dir.y > 0 else "up"
+
+func _on_grab_area_body_entered(body: Node2D) -> void:
+	#if body.is_in_group("player") and current_state != State.DEAD:
+		#if body.has_method("get_grabbed"):
+			##velocity = Vector2.ZERO
+			## Pass this zombie instance so the player knows who is biting them
+			#body.get_grabbed(self)
+	# Only grab if Zombie is in ATTACK or CHASE state
+	if current_state == State.DEAD: 
+		return
+		
+	if body.is_in_group("player") and (current_state == State.ATTACK or current_state == State.CHASE):
+		if body.has_method("get_grabbed"):
+			# ADDED CHECK: Is the timer at 0, and is the player free?
+			if attack_timer <= 0 and not body.is_grabbed:
+				## Pass this zombie instance so the player knows who is biting them
+				body.get_grabbed(self)
+				attack_timer = 10.0 # APPLY THE 10 SEC COOLDOWN HERE
+				change_state(State.ATTACK) # Ensure zombie stops moving
+
+func handle_recovery(delta):
+	# Applies to both STUMBLED and WALL_SIT
+	recovery_timer -= delta
+	if recovery_timer <= 0:
+		change_state(State.CHASE)
+
+func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2) -> void:
+	# Only apply this safe movement if we are actually chasing
+	if current_state == State.CHASE:
+		#velocity = safe_velocity
+		# Use lerp to smooth the transition to the safe velocity
+		# 0.1 makes it feel heavy/lumbering; 0.3 feels more responsive
+		velocity = velocity.lerp(safe_velocity, 0.2)
+		

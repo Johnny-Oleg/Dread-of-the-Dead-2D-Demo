@@ -9,19 +9,12 @@ var game_over: bool = false
 # =========================
 # PLAYER CORE STATS
 # =========================
+signal player_died
 var player_health: float = 1200.0
 var player_max_health: float = 1200.0
 
 # Danger threshold (30%)
 const DANGER_THRESHOLD: float = 0.3
-
-# =========================
-# PLAYER STATE FLAGS (Depricated -> moved to Player)
-# =========================
-#var is_running: bool = false
-#var is_aiming: bool = false
-#var is_reloading: bool = false
-#var can_shoot: bool = true
 
 # =========================
 # WEAPON DATA (START SIMPLE)
@@ -58,12 +51,6 @@ func reset_game():
 	game_over = false
 	
 	player_health = player_max_health
-	
-	# Depricated -> moved to Player
-	#is_running = false
-	#is_aiming = false
-	#is_reloading = false
-	#can_shoot = true
 	
 	current_ammo = 10
 	reserve_ammo = 5

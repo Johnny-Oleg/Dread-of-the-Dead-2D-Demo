@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://bp0ba4r5i3rav"]
+
+[ext_resource type="Script" uid="uid://e3x7aatwxw1q" path="res://scripts/info.gd" id="1_5uadj"]
+
+[node name="TestUI" type="Node2D" unique_id=76980105]
+
+[node name="GameUITest" type="CanvasLayer" parent="." unique_id=618546789]
+
+[node name="NinePatchRect" type="NinePatchRect" parent="GameUITest" unique_id=3242511]
+offset_left = -81.0
+offset_top = -63.0
+offset_right = 1237.0
+offset_bottom = 724.0
+
+[node name="Info" type="Node2D" parent="GameUITest" unique_id=1004359116]
+script = ExtResource("1_5uadj")
+
+[node name="HealthLabel" type="Label" parent="GameUITest/Info" unique_id=140682773]
+offset_left = 29.0
+offset_top = 582.0
+offset_right = 143.0
+offset_bottom = 613.0
+theme_override_colors/font_color = Color(0.24003872, 0.74218434, 1.540184e-06, 1)
+
+[node name="AimLabel" type="Label" parent="GameUITest/Info" unique_id=1066293563]
+offset_left = 24.0
+offset_top = 511.0
+offset_right = 138.0
+offset_bottom = 542.0
+theme_override_colors/font_color = Color(0.24003872, 0.74218434, 1.540184e-06, 1)
+
+[node name="AmmoLabel" type="Label" parent="GameUITest/Info" unique_id=2005345136]
+offset_left = 154.0
+offset_top = 575.0
+offset_right = 275.0
+offset_bottom = 614.0
+theme_override_colors/font_color = Color(0.5894365, 0.0025066496, 0.8411051, 1)
+
+[node name="EnemyLabel" type="Label" parent="GameUITest/Info" unique_id=1376610083]
+offset_left = 840.0
+offset_top = 569.0
+offset_right = 953.0
+offset_bottom = 607.0
+theme_override_colors/font_color = Color(0.85641235, 0, 0.017175939, 1)
+
+[node name="EnemyState" type="Label" parent="GameUITest/Info" unique_id=2057938414]
+offset_left = 537.0
+offset_top = 574.0
+offset_right = 660.0
+offset_bottom = 612.0
+theme_override_colors/font_color = Color(0.85641235, 0, 0.017175939, 1)

@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://ch27x52w42oys"]
+
+[ext_resource type="Texture2D" uid="uid://1w1iyrgp6uom" path="res://assets/images/inventory_bg.png" id="1_s6ek7"]
+
+[node name="Inventory" type="Node2D" unique_id=1869415428]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1632828612]
+layer = 101
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer" unique_id=904695652]
+offset_left = -69.0
+offset_top = -34.0
+offset_right = 1221.0
+offset_bottom = 686.00006
+texture = ExtResource("1_s6ek7")
+expand_mode = 1
