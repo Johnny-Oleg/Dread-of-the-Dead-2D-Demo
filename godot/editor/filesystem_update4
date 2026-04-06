@@ -1,2 +1,9 @@
+res://scenes/main.tscn
+res://scripts/main.gd
 res://scenes/ui/inventory.tscn
-res://scenes/ui/title_screen.tscn
+res://scripts/inventory.gd
+res://scripts/item.gd
+res://resources/m1911.tres
+res://resources/pistol_ammo.tres
+res://scripts/item_slot.gd
+res://scenes/ui/item_slot.tscn

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Item" format=3 uid="uid://ds27xm153ey0m"]
+
+[ext_resource type="Texture2D" uid="uid://clwyrno3n1saj" path="res://assets/images/colt_m1911_icon.png" id="1_0o6it"]
+[ext_resource type="Script" uid="uid://d3hqojntyyuic" path="res://scripts/item.gd" id="1_lewcg"]
+
+[resource]
+script = ExtResource("1_lewcg")
+name = "Colt M1911"
+icon = ExtResource("1_0o6it")
+item_type = "weapon"
+metadata/_custom_type_script = "uid://d3hqojntyyuic"

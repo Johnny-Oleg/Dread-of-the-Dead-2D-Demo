@@ -2,8 +2,9 @@ extends Node2D
 
 # 1. PRELOAD SCENES FROM THE FOLDERS
 const DINING_ROOM_SCENE = preload("res://scenes/rooms/dining_room.tscn")
-const GAME_UI_SCENE = preload("res://scenes/ui/test_ui.tscn") # Make sure this name matches your file!
+const GAME_UI_SCENE = preload("res://scenes/ui/test_ui.tscn")
 const GAME_OVER_SCENE = preload("res://scenes/ui/game_over.tscn")
+const INVENTORY_SCENE = preload("res://scenes/ui/inventory.tscn")
 
 @onready var game_world = $GameWorld
 @onready var ui_layer = $UI
@@ -13,6 +14,7 @@ const GAME_OVER_SCENE = preload("res://scenes/ui/game_over.tscn")
 # Keep track of what is currently loaded so we can delete it later
 var current_room: Node = null
 var current_ui: Node = null
+var inventory_instance: Node = null # Keep track of the inventory
 
 func _ready():
 	global.game_started = false
@@ -40,9 +42,14 @@ func _on_start_game():
 
 	# 3. Spawn the Gameplay UI
 	current_ui = GAME_UI_SCENE.instantiate()
-	ui_layer.add_child(current_ui) 
+	ui_layer.add_child(current_ui)
 
-	# 4. Hide the mouse for gameplay
+	# 4. SPAWN THE INVENTORY (But keep it hidden!)
+	inventory_instance = INVENTORY_SCENE.instantiate()
+	ui_layer.add_child(inventory_instance)
+	inventory_instance.visible = false
+	
+	# 5. Hide the mouse for gameplay
 	#Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 
 func _on_exit_game():
@@ -56,6 +63,8 @@ func _on_player_died():
 	if current_room != null:
 		current_room.process_mode = PROCESS_MODE_DISABLED # Freezes the room
 		# Or queue_free() if you want them gone instantly
+	if inventory_instance != null:
+		inventory_instance.queue_free()
 	
 	# 3. Wait for the dramatic pause
 	await get_tree().create_timer(3.0).timeout
@@ -69,63 +78,25 @@ func _on_player_died():
 	ui_layer.add_child(go_screen)
 	#Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
-#@onready var game_world = $GameWorld
-#@onready var music = $GameWorld/DiningRoom/BGM
-#@onready var player = $GameWorld/DiningRoom/YSort/Player # $Player
-#@onready var zombie =  $GameWorld/DiningRoom/YSort/Zombie # $Zombie
-#@onready var game_ui = $UI
-#@onready var title_screen = $UI/TitleScreen
-#@onready var title_layer = $UI/TitleScreen/Title
-#@onready var start_game = $UI/TitleScreen/Title/GameStart/VBoxContainer/StartGame
-#@onready var exit_game = $UI/TitleScreen/Title/GameStart/VBoxContainer/ExitButton
-#
-#func _ready():
-	#
-	## Initial state
-	#global.game_started = false
-	#
-	#game_world.visible = false
-	#music.stop()
-	#player.visible = false
-	#player.set_process(false)
-	#player.set_physics_process(false)
-	#zombie.visible = false
-	#
-	## (optional) hide gameplay UI if you want
-	#game_ui.get_node("GameUITest").visible = false
-#
-	## Connect signals from title screen
-	#title_screen.start_game.connect(_on_start_game)
-	#title_screen.exit_game.connect(_on_exit_game)
-	#
-	## This makes the mouse invisible but it can still click things
-	##if global.game_started == true:
-		##Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
-#
-## =========================
-## GAME FLOW
-## =========================
-#
-#func _on_start_game():
-	#global.game_started = true
-#
-	## Hide title
-	#title_layer.visible = false
-	#print("Title visible: ", title_screen.visible)
-	#print("Canvas visible: ", title_screen.get_node("Title").visible)
-#
-	## Enable gameplay
-	#game_world.visible = true
-	#music.play()
-	#player.visible = true
-	#player.set_process(true)
-	#player.set_physics_process(true)
-	#zombie.visible = true
-	#game_ui.get_node("GameUITest").visible = true
-	#player.z_index = int(player.global_position.y)
-#
-#func _on_exit_game():
-	#get_tree().quit()
-	#
-	#
-	#
+# =========================
+# INPUT HANDLING
+# =========================
+
+func _unhandled_input(event):
+	# Only allow opening the inventory if the game is actually running
+	if event.is_action_pressed("toggle_inventory") and global.game_started and not global.game_over:
+		toggle_diary()
+
+func toggle_diary():
+	if inventory_instance.visible:
+		# CLOSE INVENTORY
+		inventory_instance.visible = false
+		get_tree().paused = false # Unfreeze the game
+		#Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN) # Hide mouse for gameplay
+	else:
+		# OPEN INVENTORY
+		#inventory_instance.update_condition()
+		inventory_instance.visible = true
+		inventory_instance.on_open() # Run the health and ammo check
+		get_tree().paused = true # Freeze the zombies!
+		#Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE) # Show mouse to click items

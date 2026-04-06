@@ -63,9 +63,11 @@ shadow_offset = Vector2(0, 4)
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_85g3d"]
 
 [node name="Main" type="Node2D" unique_id=1971646971]
+process_mode = 3
 script = ExtResource("1_tipki")
 
 [node name="GameWorld" type="Node2D" parent="." unique_id=1451950881]
+process_mode = 1
 
 [node name="NinePatchRect" type="NinePatchRect" parent="GameWorld" unique_id=729810784]
 self_modulate = Color(0, 0, 0, 1)
@@ -87,9 +89,6 @@ offset_right = 884.48157
 offset_bottom = 464.0
 texture = ExtResource("2_o6xl0")
 expand_mode = 2
-
-[node name="Node2D" type="Node2D" parent="UI" unique_id=861198088]
-visible = false
 
 [node name="GameUITest" type="CanvasLayer" parent="UI" unique_id=812862399]
 visible = false

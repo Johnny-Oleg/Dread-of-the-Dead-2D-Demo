@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Item" format=3 uid="uid://dv6co0i5n2id8"]
+
+[ext_resource type="Texture2D" uid="uid://cxocfgi1dk2ty" path="res://assets/images/pistol_ammo_icon.png" id="1_663xb"]
+[ext_resource type="Script" uid="uid://d3hqojntyyuic" path="res://scripts/item.gd" id="1_gf0er"]
+
+[resource]
+script = ExtResource("1_gf0er")
+name = "Pistol Ammo"
+icon = ExtResource("1_663xb")
+item_type = "ammo"
+is_stackable = true
+count = 5
+metadata/_custom_type_script = "uid://d3hqojntyyuic"

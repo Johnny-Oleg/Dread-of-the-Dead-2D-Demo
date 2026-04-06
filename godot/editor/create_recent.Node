@@ -1,5 +1,13 @@
-Control
 TextureRect
+ResourcePreloader
+ColorRect
+Label
+HBoxContainer
+VBoxContainer
+Panel
+GridContainer
+ProgressBar
+Control
 CanvasLayer
 Node2D
 NinePatchRect

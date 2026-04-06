@@ -1,16 +1,205 @@
 [gd_scene format=3 uid="uid://ch27x52w42oys"]
 
-[ext_resource type="Texture2D" uid="uid://1w1iyrgp6uom" path="res://assets/images/inventory_bg.png" id="1_s6ek7"]
+[ext_resource type="Texture2D" uid="uid://blf1ifalmkga8" path="res://assets/images/inventory_bg.png" id="1_s6ek7"]
+[ext_resource type="Script" uid="uid://dejvpne62nnhx" path="res://scripts/inventory.gd" id="1_xeaml"]
+[ext_resource type="Texture2D" uid="uid://dtwdbrdtxwk16" path="res://assets/images/colt_main.png" id="3_5yy05"]
+[ext_resource type="PackedScene" uid="uid://b3b53qvop862v" path="res://scenes/ui/item_slot.tscn" id="4_5yy05"]
+[ext_resource type="Resource" uid="uid://ds27xm153ey0m" path="res://resources/m1911.tres" id="5_weae1"]
+[ext_resource type="Resource" uid="uid://dv6co0i5n2id8" path="res://resources/pistol_ammo.tres" id="6_bfvro"]
 
-[node name="Inventory" type="Node2D" unique_id=1869415428]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ulvp7"]
+load_path = "res://godot/imported/mc_avatar.png-122c018a27584433e231365f2b9223c0.ctex"
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1632828612]
+[node name="Inventory" type="CanvasLayer" unique_id=1632828612]
 layer = 101
+script = ExtResource("1_xeaml")
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer" unique_id=904695652]
-offset_left = -69.0
-offset_top = -34.0
-offset_right = 1221.0
-offset_bottom = 686.00006
+[node name="InventoryLayer" type="Control" parent="." unique_id=202031062]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="TextureRect" type="TextureRect" parent="InventoryLayer" unique_id=904695652]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.059000004
+anchor_top = -0.055000003
+anchor_right = 1.059
+anchor_bottom = 1.0550001
+offset_left = 0.086006165
+offset_top = 0.19497299
+offset_right = -0.08605957
+offset_bottom = -0.19506836
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("1_s6ek7")
 expand_mode = 1
+
+[node name="MainLayout" type="HBoxContainer" parent="InventoryLayer" unique_id=301730157]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.063
+anchor_top = 0.068
+anchor_right = 0.87900007
+anchor_bottom = 0.99700004
+offset_left = 0.29799652
+offset_top = -0.061012268
+offset_right = 11.391907
+offset_bottom = -0.05303955
+
+[node name="ProfileSection" type="VBoxContainer" parent="InventoryLayer/MainLayout" unique_id=1714966933]
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+alignment = 1
+
+[node name="PlayerSection" type="HBoxContainer" parent="InventoryLayer/MainLayout/ProfileSection" unique_id=384843418]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 1
+
+[node name="CharacterSection" type="VBoxContainer" parent="InventoryLayer/MainLayout/ProfileSection/PlayerSection" unique_id=313306032]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="NameLabel" type="Label" parent="InventoryLayer/MainLayout/ProfileSection/PlayerSection/CharacterSection" unique_id=1147452970]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "Arthur Greenwood"
+
+[node name="Avatar" type="TextureRect" parent="InventoryLayer/MainLayout/ProfileSection/PlayerSection/CharacterSection" unique_id=160159701]
+custom_minimum_size = Vector2(130, 170)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = SubResource("CompressedTexture2D_ulvp7")
+expand_mode = 3
+
+[node name="ConditionSection" type="VBoxContainer" parent="InventoryLayer/MainLayout/ProfileSection/PlayerSection" unique_id=631278695]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+alignment = 1
+
+[node name="StatusLabel" type="Label" parent="InventoryLayer/MainLayout/ProfileSection/PlayerSection/ConditionSection" unique_id=669640155]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+text = "Fine"
+
+[node name="HealthBar" type="ProgressBar" parent="InventoryLayer/MainLayout/ProfileSection/PlayerSection/ConditionSection" unique_id=628604081]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+value = 100.0
+rounded = true
+
+[node name="EquippedWeapon" type="VBoxContainer" parent="InventoryLayer/MainLayout/ProfileSection" unique_id=1853431335]
+custom_minimum_size = Vector2(440, 390)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="ItemName" type="Label" parent="InventoryLayer/MainLayout/ProfileSection/EquippedWeapon" unique_id=434031539]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "Colt M1911"
+autowrap_mode = 3
+
+[node name="WeaponIcon" type="TextureRect" parent="InventoryLayer/MainLayout/ProfileSection/EquippedWeapon" unique_id=887525800]
+custom_minimum_size = Vector2(200, 130)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture = ExtResource("3_5yy05")
+expand_mode = 1
+
+[node name="WeaponMag" type="Label" parent="InventoryLayer/MainLayout/ProfileSection/EquippedWeapon" unique_id=1683731414]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "Colt M1911"
+autowrap_mode = 3
+
+[node name="ItemGrid" type="GridContainer" parent="InventoryLayer/MainLayout" unique_id=1572090730]
+custom_minimum_size = Vector2(280, 390)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 6
+columns = 2
+
+[node name="ItemSlot1" parent="InventoryLayer/MainLayout/ItemGrid" unique_id=2134858516 instance=ExtResource("4_5yy05")]
+custom_minimum_size = Vector2(125, 90)
+layout_mode = 2
+size_flags_horizontal = 13
+size_flags_vertical = 7
+current_item = ExtResource("5_weae1")
+
+[node name="ItemSlot2" parent="InventoryLayer/MainLayout/ItemGrid" unique_id=817790086 instance=ExtResource("4_5yy05")]
+custom_minimum_size = Vector2(125, 90)
+layout_mode = 2
+size_flags_horizontal = 13
+size_flags_vertical = 7
+current_item = ExtResource("6_bfvro")
+
+[node name="ItemSlot3" parent="InventoryLayer/MainLayout/ItemGrid" unique_id=1699571382 instance=ExtResource("4_5yy05")]
+custom_minimum_size = Vector2(125, 90)
+layout_mode = 2
+size_flags_horizontal = 13
+size_flags_vertical = 7
+
+[node name="ItemSlot4" parent="InventoryLayer/MainLayout/ItemGrid" unique_id=181276939 instance=ExtResource("4_5yy05")]
+custom_minimum_size = Vector2(125, 90)
+layout_mode = 2
+size_flags_horizontal = 13
+size_flags_vertical = 7
+
+[node name="ItemSlot5" parent="InventoryLayer/MainLayout/ItemGrid" unique_id=1101527750 instance=ExtResource("4_5yy05")]
+custom_minimum_size = Vector2(125, 90)
+layout_mode = 2
+size_flags_horizontal = 13
+size_flags_vertical = 7
+
+[node name="ItemSlot6" parent="InventoryLayer/MainLayout/ItemGrid" unique_id=1201652634 instance=ExtResource("4_5yy05")]
+custom_minimum_size = Vector2(125, 90)
+layout_mode = 2
+size_flags_horizontal = 13
+size_flags_vertical = 7
+
+[node name="ItemSlot7" parent="InventoryLayer/MainLayout/ItemGrid" unique_id=1515641881 instance=ExtResource("4_5yy05")]
+custom_minimum_size = Vector2(125, 90)
+layout_mode = 2
+size_flags_horizontal = 13
+size_flags_vertical = 7
+
+[node name="ItemSlot8" parent="InventoryLayer/MainLayout/ItemGrid" unique_id=1878081994 instance=ExtResource("4_5yy05")]
+custom_minimum_size = Vector2(125, 90)
+layout_mode = 2
+size_flags_horizontal = 13
+size_flags_vertical = 7

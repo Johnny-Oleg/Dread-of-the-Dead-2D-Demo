@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Item" format=3 uid="uid://dyih718583yc2"]
+
+[ext_resource type="Texture2D" uid="uid://dnniaq2m0m5ox" path="res://assets/images/green_bottle_icon.png" id="1_a81lc"]
+[ext_resource type="Script" uid="uid://d3hqojntyyuic" path="res://scripts/item.gd" id="1_fc2v3"]
+
+[resource]
+script = ExtResource("1_fc2v3")
+name = "Green Medicine"
+icon = ExtResource("1_a81lc")
+is_stackable = false
+metadata/_custom_type_script = "uid://d3hqojntyyuic"
