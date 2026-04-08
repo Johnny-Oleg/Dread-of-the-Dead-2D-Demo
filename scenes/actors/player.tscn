@@ -379,7 +379,7 @@ size = Vector2(400, 963)
 size = Vector2(400, 963)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0bs3g"]
-size = Vector2(400, 961)
+size = Vector2(508, 972.5)
 
 [node name="Player" type="CharacterBody2D" unique_id=883593765 groups=["player"]]
 collision_layer = 2
@@ -388,7 +388,6 @@ motion_mode = 1
 script = ExtResource("1_qe8hj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1971721090]
-position = Vector2(-16, 6.5)
 shape = SubResource("RectangleShape2D_3vary")
 
 [node name="Body" type="Node2D" parent="." unique_id=766899656]
@@ -422,7 +421,6 @@ collision_layer = 8
 collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=1825958253]
-position = Vector2(-15, 6.5)
 shape = SubResource("RectangleShape2D_7knsb")
 debug_color = Color(0.97529453, 0.11922107, 0.26927754, 0.41960785)
 
@@ -431,11 +429,12 @@ collision_layer = 0
 collision_mask = 64
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" unique_id=1314798816]
-position = Vector2(-16, 6.5)
+position = Vector2(0, 5.75)
 shape = SubResource("RectangleShape2D_0bs3g")
 debug_color = Color(0.6509804, 0.5176471, 0.047058824, 0.41960785)
 
 [node name="ShootOrigin" type="Marker2D" parent="." unique_id=1881727627]
+visible = false
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=359109120]
 
@@ -444,6 +443,12 @@ scale = Vector2(5, 5)
 target_position = Vector2(0, -200)
 collision_mask = 17
 collide_with_areas = true
+
+[node name="InteractionRay" type="RayCast2D" parent="." unique_id=1614345201]
+target_position = Vector2(0, 100)
+collision_mask = 64
+collide_with_areas = true
+collide_with_bodies = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1695097936]
 

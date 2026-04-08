@@ -50,4 +50,9 @@ func update_slot():
 		icon_rect.visible = false
 		amount_label.visible = false
 		
-		
+# This built-in function listens for inputs directly on this specific slot
+func _gui_input(event):
+	# This now perfectly handles clicks, keyboard, and gamepads!
+	if event.is_action_pressed("inventory_use"):
+		if current_item != null:
+			get_tree().call_group("inventory_ui", "use_item", self)

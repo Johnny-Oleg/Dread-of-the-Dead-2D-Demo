@@ -5,6 +5,9 @@
 [ext_resource type="Texture2D" uid="uid://dg41xp5bcqtcu" path="res://assets/sprites/locations/dining_room_fg.png" id="2_nrcdl"]
 [ext_resource type="PackedScene" uid="uid://b1yjcowccdgc2" path="res://scenes/actors/zombie.tscn" id="3_45k0p"]
 [ext_resource type="AudioStream" uid="uid://dfmqo8886pfk3" path="res://assets/audio/bgm/castle_bgm_3.mp3" id="3_j37ga"]
+[ext_resource type="Resource" uid="uid://dyih718583yc2" path="res://resources/green_medicine.tres" id="4_nsgnh"]
+[ext_resource type="PackedScene" uid="uid://bul6bq4ipt3fb" path="res://scenes/items/world_item.tscn" id="4_w5wmq"]
+[ext_resource type="Resource" uid="uid://dv6co0i5n2id8" path="res://resources/pistol_ammo.tres" id="5_nsgnh"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_45k0p"]
 vertices = PackedVector2Array(960.3281, 419.20313, 1132.25, 12.9375, 1148.7266, 647.96875, 958.6719, 469, 3.921875, 7.046875, 910, 400, 213.67969, 476, 265, 476, 265, 493.02344, -0.921875, 645.02344, 910, 418.1875, 265.40625, 400, 264.40625, 424, 215.3125, 424, 906.1719, 491.9922, 908.1719, 469)
@@ -23,6 +26,16 @@ navigation_polygon = SubResource("NavigationPolygon_45k0p")
 
 [node name="YSort" type="Node2D" parent="." unique_id=1050489627]
 y_sort_enabled = true
+
+[node name="WorldItem" parent="YSort" unique_id=175435458 instance=ExtResource("4_w5wmq")]
+position = Vector2(86.00003, 434)
+scale = Vector2(0.05, 0.05)
+item_data = ExtResource("5_nsgnh")
+
+[node name="WorldItem2" parent="YSort" unique_id=1850882304 instance=ExtResource("4_w5wmq")]
+position = Vector2(764, 565)
+scale = Vector2(0.05, 0.05)
+item_data = ExtResource("4_nsgnh")
 
 [node name="Player" parent="YSort" unique_id=883593765 instance=ExtResource("2_j37ga")]
 position = Vector2(66, 257)

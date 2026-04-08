@@ -7,5 +7,6 @@
 script = ExtResource("1_fc2v3")
 name = "Green Medicine"
 icon = ExtResource("1_a81lc")
-is_stackable = false
+healing_amount = 400
+item_type = "healing"
 metadata/_custom_type_script = "uid://d3hqojntyyuic"

@@ -1,9 +1,3 @@
+res://scenes/items/world_item.tscn
+res://scenes/actors/player.tscn
 res://scenes/main.tscn
-res://scripts/main.gd
-res://scenes/ui/inventory.tscn
-res://scripts/inventory.gd
-res://scripts/item.gd
-res://resources/m1911.tres
-res://resources/pistol_ammo.tres
-res://scripts/item_slot.gd
-res://scenes/ui/item_slot.tscn

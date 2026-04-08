@@ -6,11 +6,24 @@
 [ext_resource type="PackedScene" uid="uid://b3b53qvop862v" path="res://scenes/ui/item_slot.tscn" id="4_5yy05"]
 [ext_resource type="Resource" uid="uid://ds27xm153ey0m" path="res://resources/m1911.tres" id="5_weae1"]
 [ext_resource type="Resource" uid="uid://dv6co0i5n2id8" path="res://resources/pistol_ammo.tres" id="6_bfvro"]
+[ext_resource type="Resource" uid="uid://dyih718583yc2" path="res://resources/green_medicine.tres" id="7_bfvro"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ulvp7"]
 load_path = "res://godot/imported/mc_avatar.png-122c018a27584433e231365f2b9223c0.ctex"
 
-[node name="Inventory" type="CanvasLayer" unique_id=1632828612]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bfvro"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(1, 1, 1, 0.4)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+corner_detail = 6
+
+[node name="Inventory" type="CanvasLayer" unique_id=1632828612 groups=["inventory_ui"]]
 layer = 101
 script = ExtResource("1_xeaml")
 
@@ -49,7 +62,7 @@ anchor_right = 0.87900007
 anchor_bottom = 0.99700004
 offset_left = 0.29799652
 offset_top = -0.061012268
-offset_right = 11.391907
+offset_right = 91.39191
 offset_bottom = -0.05303955
 
 [node name="ProfileSection" type="VBoxContainer" parent="InventoryLayer/MainLayout" unique_id=1714966933]
@@ -108,30 +121,34 @@ custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 1)
+theme_override_styles/fill = SubResource("StyleBoxFlat_bfvro")
 value = 100.0
 rounded = true
 
 [node name="EquippedWeapon" type="VBoxContainer" parent="InventoryLayer/MainLayout/ProfileSection" unique_id=1853431335]
 custom_minimum_size = Vector2(440, 390)
 layout_mode = 2
-size_flags_horizontal = 0
+size_flags_horizontal = 4
 size_flags_vertical = 4
 
 [node name="ItemName" type="Label" parent="InventoryLayer/MainLayout/ProfileSection/EquippedWeapon" unique_id=434031539]
-custom_minimum_size = Vector2(150, 0)
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 4
+size_flags_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 24
 text = "Colt M1911"
+horizontal_alignment = 1
 autowrap_mode = 3
 
 [node name="WeaponIcon" type="TextureRect" parent="InventoryLayer/MainLayout/ProfileSection/EquippedWeapon" unique_id=887525800]
 custom_minimum_size = Vector2(200, 130)
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 6
+size_flags_vertical = 4
 texture = ExtResource("3_5yy05")
 expand_mode = 1
 
@@ -139,67 +156,74 @@ expand_mode = 1
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_colors/font_color = Color(0, 0, 0, 1)
+size_flags_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 24
-text = "Colt M1911"
+text = "0"
 autowrap_mode = 3
 
-[node name="ItemGrid" type="GridContainer" parent="InventoryLayer/MainLayout" unique_id=1572090730]
-custom_minimum_size = Vector2(280, 390)
+[node name="MarginContainer" type="MarginContainer" parent="InventoryLayer/MainLayout" unique_id=2053430006]
 layout_mode = 2
-size_flags_horizontal = 10
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 126
+theme_override_constants/margin_top = 0
+
+[node name="ItemGrid" type="GridContainer" parent="InventoryLayer/MainLayout/MarginContainer" unique_id=1572090730]
+custom_minimum_size = Vector2(248, 368)
+layout_mode = 2
+size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/h_separation = 8
 theme_override_constants/v_separation = 6
 columns = 2
 
-[node name="ItemSlot1" parent="InventoryLayer/MainLayout/ItemGrid" unique_id=2134858516 instance=ExtResource("4_5yy05")]
-custom_minimum_size = Vector2(125, 90)
+[node name="ItemSlot1" parent="InventoryLayer/MainLayout/MarginContainer/ItemGrid" unique_id=2134858516 instance=ExtResource("4_5yy05")]
 layout_mode = 2
-size_flags_horizontal = 13
-size_flags_vertical = 7
+size_flags_horizontal = 4
+size_flags_vertical = 4
 current_item = ExtResource("5_weae1")
 
-[node name="ItemSlot2" parent="InventoryLayer/MainLayout/ItemGrid" unique_id=817790086 instance=ExtResource("4_5yy05")]
-custom_minimum_size = Vector2(125, 90)
+[node name="ItemSlot2" parent="InventoryLayer/MainLayout/MarginContainer/ItemGrid" unique_id=817790086 instance=ExtResource("4_5yy05")]
 layout_mode = 2
-size_flags_horizontal = 13
-size_flags_vertical = 7
+size_flags_horizontal = 4
+size_flags_vertical = 4
 current_item = ExtResource("6_bfvro")
 
-[node name="ItemSlot3" parent="InventoryLayer/MainLayout/ItemGrid" unique_id=1699571382 instance=ExtResource("4_5yy05")]
-custom_minimum_size = Vector2(125, 90)
+[node name="ItemSlot3" parent="InventoryLayer/MainLayout/MarginContainer/ItemGrid" unique_id=1699571382 instance=ExtResource("4_5yy05")]
 layout_mode = 2
-size_flags_horizontal = 13
-size_flags_vertical = 7
+size_flags_horizontal = 4
+size_flags_vertical = 4
+current_item = ExtResource("7_bfvro")
 
-[node name="ItemSlot4" parent="InventoryLayer/MainLayout/ItemGrid" unique_id=181276939 instance=ExtResource("4_5yy05")]
-custom_minimum_size = Vector2(125, 90)
+[node name="ItemSlot4" parent="InventoryLayer/MainLayout/MarginContainer/ItemGrid" unique_id=181276939 instance=ExtResource("4_5yy05")]
 layout_mode = 2
-size_flags_horizontal = 13
-size_flags_vertical = 7
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
-[node name="ItemSlot5" parent="InventoryLayer/MainLayout/ItemGrid" unique_id=1101527750 instance=ExtResource("4_5yy05")]
-custom_minimum_size = Vector2(125, 90)
+[node name="ItemSlot5" parent="InventoryLayer/MainLayout/MarginContainer/ItemGrid" unique_id=1101527750 instance=ExtResource("4_5yy05")]
 layout_mode = 2
-size_flags_horizontal = 13
-size_flags_vertical = 7
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
-[node name="ItemSlot6" parent="InventoryLayer/MainLayout/ItemGrid" unique_id=1201652634 instance=ExtResource("4_5yy05")]
-custom_minimum_size = Vector2(125, 90)
+[node name="ItemSlot6" parent="InventoryLayer/MainLayout/MarginContainer/ItemGrid" unique_id=1201652634 instance=ExtResource("4_5yy05")]
 layout_mode = 2
-size_flags_horizontal = 13
-size_flags_vertical = 7
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
-[node name="ItemSlot7" parent="InventoryLayer/MainLayout/ItemGrid" unique_id=1515641881 instance=ExtResource("4_5yy05")]
-custom_minimum_size = Vector2(125, 90)
+[node name="ItemSlot7" parent="InventoryLayer/MainLayout/MarginContainer/ItemGrid" unique_id=1515641881 instance=ExtResource("4_5yy05")]
 layout_mode = 2
-size_flags_horizontal = 13
-size_flags_vertical = 7
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
-[node name="ItemSlot8" parent="InventoryLayer/MainLayout/ItemGrid" unique_id=1878081994 instance=ExtResource("4_5yy05")]
-custom_minimum_size = Vector2(125, 90)
+[node name="ItemSlot8" parent="InventoryLayer/MainLayout/MarginContainer/ItemGrid" unique_id=1878081994 instance=ExtResource("4_5yy05")]
 layout_mode = 2
-size_flags_horizontal = 13
-size_flags_vertical = 7
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Panel" type="Panel" parent="." unique_id=1368175753]
+visible = false
+offset_left = 745.0
+offset_top = 252.0
+offset_right = 869.0
+offset_bottom = 344.0

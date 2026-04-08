@@ -6,6 +6,11 @@ const GAME_UI_SCENE = preload("res://scenes/ui/test_ui.tscn")
 const GAME_OVER_SCENE = preload("res://scenes/ui/game_over.tscn")
 const INVENTORY_SCENE = preload("res://scenes/ui/inventory.tscn")
 
+
+@onready var pickup_prompt = $UI/PickupPrompt # Adjust path if necessary
+@onready var prompt_message = $UI/PickupPrompt/Message
+@onready var yes_button = $UI/PickupPrompt/HBoxContainer/YesButton
+@onready var no_button = $UI/PickupPrompt/HBoxContainer/NoButton
 @onready var game_world = $GameWorld
 @onready var ui_layer = $UI
 @onready var title_screen = $UI/TitleScreen
@@ -15,6 +20,7 @@ const INVENTORY_SCENE = preload("res://scenes/ui/inventory.tscn")
 var current_room: Node = null
 var current_ui: Node = null
 var inventory_instance: Node = null # Keep track of the inventory
+var current_world_item: Area2D = null
 
 func _ready():
 	global.game_started = false
@@ -23,6 +29,9 @@ func _ready():
 	title_screen.start_game.connect(_on_start_game)
 	title_screen.exit_game.connect(_on_exit_game)
 	global.player_died.connect(_on_player_died)
+	yes_button.pressed.connect(_on_yes_pressed)
+	no_button.pressed.connect(_on_no_pressed)
+	pickup_prompt.visible = false
 
 # =========================
 # GAME FLOW
@@ -100,3 +109,41 @@ func toggle_diary():
 		inventory_instance.on_open() # Run the health and ammo check
 		get_tree().paused = true # Freeze the zombies!
 		#Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE) # Show mouse to click items
+
+func show_pickup_prompt(world_item_node: Area2D):
+	current_world_item = world_item_node
+	var item_data = current_world_item.get_item_data()
+	
+	prompt_message.text = "Will you take the " + item_data.name + "?"
+	
+	get_tree().paused = true
+	pickup_prompt.visible = true
+	yes_button.grab_focus() # Automatically highlight 'Yes' for gamepad/keyboard users
+	print(item_data, pickup_prompt.visible)
+
+func _on_yes_pressed():
+	if current_world_item:
+		var item_data = current_world_item.get_item_data()
+		var inventory = get_tree().get_first_node_in_group("inventory_ui")
+		
+		if inventory and inventory.add_item(item_data):
+			# Item was added! Delete it from the floor.
+			current_world_item.queue_free()
+		else:
+			# Inventory was full! Maybe play a "buzzer" sound here later.
+			print("Cannot pick up, inventory full!")
+			
+	close_pickup_prompt()
+
+func _on_no_pressed():
+	close_pickup_prompt()
+
+func close_pickup_prompt():
+	current_world_item = null
+	pickup_prompt.visible = false
+	get_tree().paused = false
+	
+	
+	
+	
+	

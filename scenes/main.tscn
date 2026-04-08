@@ -62,6 +62,26 @@ shadow_offset = Vector2(0, 4)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_85g3d"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_85g3d"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_trceg"]
+bg_color = Color(0, 0.5019608, 0.5019608, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a8y0u"]
+bg_color = Color(0.4627451, 0.4627451, 0.4627451, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jkv2x"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jbj1t"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_muem4"]
+bg_color = Color(0, 0.5019608, 0.5019608, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dp3eg"]
+bg_color = Color(0.4627451, 0.4627451, 0.4627451, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0ld40"]
+
 [node name="Main" type="Node2D" unique_id=1971646971]
 process_mode = 3
 script = ExtResource("1_tipki")
@@ -216,3 +236,66 @@ text = "Exit"
 [node name="TitleMusic" type="AudioStreamPlayer2D" parent="UI/TitleScreen" unique_id=568060281]
 stream = ExtResource("6_85g3d")
 autoplay = true
+
+[node name="PickupPrompt" type="Panel" parent="UI" unique_id=2135333624]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 283.0
+offset_top = 183.0
+offset_right = 883.0
+offset_bottom = 483.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Message" type="Label" parent="UI/PickupPrompt" unique_id=427092817]
+layout_mode = 0
+offset_left = 152.0
+offset_top = 73.0
+offset_right = 447.0
+offset_bottom = 156.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/PickupPrompt" unique_id=1690495299]
+layout_mode = 0
+offset_left = 110.0
+offset_top = 162.0
+offset_right = 510.0
+offset_bottom = 262.0
+alignment = 1
+
+[node name="YesButton" type="Button" parent="UI/PickupPrompt/HBoxContainer" unique_id=927251627]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_85g3d")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_trceg")
+theme_override_styles/hover = SubResource("StyleBoxFlat_a8y0u")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_jkv2x")
+text = "Yes"
+
+[node name="NoButton" type="Button" parent="UI/PickupPrompt/HBoxContainer" unique_id=414939472]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_jbj1t")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_muem4")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dp3eg")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_0ld40")
+text = "No"

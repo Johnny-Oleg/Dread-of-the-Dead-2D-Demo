@@ -7,6 +7,7 @@ extends CharacterBody2D
 @onready var sprite: AnimatedSprite2D = $Body/AnimatedSprite2D
 @onready var grapple_sprite: AnimatedSprite2D = $Body/GrappleSprite
 @onready var shoot_origin = $ShootOrigin
+@onready var interaction_ray = $InteractionRay
 
 # Timers
 @onready var reload_timer = $ReloadTimer
@@ -227,13 +228,18 @@ func shoot():
 	if is_reloading:
 		return
 
-	pistol_shot.play()
-	can_shoot = false
-	fire_timer.start(fire_rate)
-
-	global.current_ammo -= 1
-
-	# Rotate ray toward aim OLD
+	# PREVENT NEGATIVE AMMO: Only shoot if we have bullets!
+	if global.current_ammo > 0:
+		global.current_ammo -= 1
+		print("BANG!")
+		# ... play animation, cast raycast, etc.
+		pistol_shot.play()
+		can_shoot = false
+		fire_timer.start(fire_rate)
+	else:
+		print("Click... Out of ammo!")
+		
+	## Rotate ray toward aim OLD
 	#var target_global = global_position + aim_dir * 500
 	#shoot_ray.target_position = shoot_ray.to_local(target_global)
 	#shoot_ray.force_raycast_update()
@@ -407,6 +413,20 @@ func start_reload():
 
 	# Choose reload time
 	var reload_time = global.pistol_stats["reload_time"]
+	var max_mag = global.pistol_stats.mag_size
+	var missing_ammo = max_mag - global.current_ammo
+
+	# Only reload if the gun isn't full AND we have spare bullets
+	if missing_ammo > 0 and global.reserve_ammo > 0:
+		# 1. Find the inventory
+		var inventory = get_tree().get_first_node_in_group("inventory_ui")
+		if inventory:
+			# 2. Ask the inventory to consume the .tres items
+			var ammo_gained = inventory.consume_ammo(missing_ammo)
+			
+			# 3. Add what we successfully grabbed to our gun
+			global.current_ammo += ammo_gained
+			print("Reloaded ", ammo_gained, " bullets.")
 
 	if global.current_ammo == 0:
 		reload_time = 2.4 # empty reload override
@@ -514,19 +534,6 @@ func _on_grapple_sprite_animation_finished() -> void:
 				# Just pass the direction to the zombie
 				var shove_dir = (current_attacker.global_position - global_position).normalized()
 				current_attacker.get_shoved(shove_dir)
-				
-				## Calculate the direction away from the player
-				#var shove_dir = (current_attacker.global_position - global_position).normalized()
-				#var shove_target = current_attacker.global_position + (shove_dir * 400.0)
-				#
-				 ## Use a Tween for a smooth sliding effect
-				#var tween = create_tween()
-				#tween.tween_property(current_attacker, "global_position", shove_target, 0.4).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-   				#
-				#if randf() < 0.5:
-					#current_attacker.change_state(current_attacker.State.DOWNED)
-				
-				#current_attacker.change_state(current_attacker.State.SKID)
 
 		global.player_health -= damage
 		
@@ -545,5 +552,18 @@ func trigger_game_over():
 		
 	global.game_over = true
 	global.player_died.emit() # SHOUT TO MAIN.GD!
-	#
-	#
+	
+func _unhandled_input(event):
+	if event.is_action_pressed("interact"):
+		check_interaction()
+
+func check_interaction():
+	if interaction_ray.is_colliding():
+		var target = interaction_ray.get_collider()
+		
+		if target.has_method("get_item_data"):
+			# Tell the Main script to show the prompt for this specific item
+			var main_scene = get_tree().current_scene
+			print("Arthur sees: ", target.item_data.name)
+			if main_scene.has_method("show_pickup_prompt"):
+				main_scene.show_pickup_prompt(target)
