@@ -25,6 +25,8 @@ config/windows_native_icon="res://icon.ico"
 [autoload]
 
 global="*uid://bkselok1hufca"
+WorldState="*uid://bi2jd2puk83em"
+TransitionManager="*uid://dulbgxm5l4a7o"
 
 [file_customization]
 
@@ -37,6 +39,10 @@ folder_colors={
 "res://scenes/actors/": "yellow",
 "res://scripts/": "red"
 }
+
+[global_group]
+
+enemies=""
 
 [input]
 

@@ -2,6 +2,7 @@ extends Area2D
 
 @export var item_data: Item
 @onready var sprite = $Sprite2D
+@export var state_id: String = "" # e.g., "PistolAmmo_01"
 
 func _ready() -> void:
 	# If we assigned a .tres file in the Inspector, apply its icon to the sprite!

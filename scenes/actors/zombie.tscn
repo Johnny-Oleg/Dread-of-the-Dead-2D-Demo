@@ -229,7 +229,7 @@ radius = 305.47668
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tfd3c"]
 size = Vector2(505, 981)
 
-[node name="Zombie" type="CharacterBody2D" unique_id=493500758]
+[node name="Zombie" type="CharacterBody2D" unique_id=493500758 groups=["enemies", "zombie"]]
 collision_layer = 4
 collision_mask = 7
 motion_mode = 1
@@ -245,7 +245,8 @@ shape = SubResource("RectangleShape2D_idork")
 sprite_frames = SubResource("SpriteFrames_7fncv")
 animation = &"sit_against_wall"
 
-[node name="Hitbox" type="Area2D" parent="." unique_id=1802076305 groups=["zombie"]]
+[node name="Hitbox" type="Area2D" parent="." unique_id=1802076305]
+visible = false
 collision_layer = 32
 collision_mask = 8
 

@@ -54,11 +54,13 @@ var downed_cooldown := 0.0
 var recovery_timer: float = 0.0
 
 var last_direction: Vector2 = Vector2.DOWN
+@export var state_id: String = ""
 
 # =========================
 # REFERENCES
 # =========================
-@onready var player: CharacterBody2D = get_tree().get_first_node_in_group("player")
+#@onready var player: CharacterBody2D = get_tree().get_first_node_in_group("player")
+var player: CharacterBody2D = null
 @onready var body_collision: CollisionShape2D = $CollisionShape2D
 @onready var nav_agent: NavigationAgent2D = $NavigationAgent2D
 @onready var sprite: AnimatedSprite2D = $Body/AnimatedSprite2D
@@ -89,7 +91,11 @@ func _ready():
 # MAIN LOOP
 # =========================
 func _physics_process(delta):
-
+	# If player is missing, try to find him again
+	if player == null:
+		player = get_tree().get_first_node_in_group("player")
+		if player == null: return # If he's still not spawned, wait.
+	
 	match current_state:
 		State.IDLE: handle_idle(delta)
 		State.PATROL: handle_patrol(delta)
@@ -448,6 +454,10 @@ func take_damage(is_crit: bool = false):
 	if current_state == State.DEAD:
 		return
 		
+	# Safety Check: Ensure we have a player reference before using it
+	if player == null:
+		player = get_tree().get_first_node_in_group("player")
+		
 	# Remember if a zombie were on the ground when the bullet hit
 	var was_downed = (current_state == State.DOWNED)
 
@@ -459,9 +469,13 @@ func take_damage(is_crit: bool = false):
 	health -= damage_to_deal
 	
 	# 2. Immediate Alert (Even if out of vision cone. Wakes a zombie up if DOWNED, IDLE, or PATROL)
+	#if current_state != State.CHASE and current_state != State.ATTACK:
+		## Face the player and start chasing
+		#last_direction = global_position.direction_to(player.global_position)
+		#change_state(State.CHASE)
 	if current_state != State.CHASE and current_state != State.ATTACK:
-		# Face the player and start chasing
-		last_direction = global_position.direction_to(player.global_position)
+		if player != null: # Only face the player if we found him
+			last_direction = global_position.direction_to(player.global_position)
 		change_state(State.CHASE)
 
 	# 3. Check for Death or Downed
@@ -487,6 +501,8 @@ func take_damage(is_crit: bool = false):
 
 func die():
 	change_state(State.DEAD)
+	WorldState.kill_enemy(WorldState.current_room_name, state_id)
+	#queue_free()
 
 # =========================
 # ANIMATION

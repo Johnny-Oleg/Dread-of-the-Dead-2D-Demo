@@ -7,6 +7,10 @@ extends Control
 @onready var highlight = $ActiveHighLight # The gray cursor frame!
 
 func _ready():
+	# Sever the memory link so starting items don't edit the master .tres file!
+	if current_item != null:
+		current_item = current_item.duplicate()
+	
 	# Hide cursor by default
 	highlight.visible = false
 	

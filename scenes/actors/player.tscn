@@ -381,7 +381,12 @@ size = Vector2(400, 963)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0bs3g"]
 size = Vector2(508, 972.5)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gn53q"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_gn53q"]
+
 [node name="Player" type="CharacterBody2D" unique_id=883593765 groups=["player"]]
+scale = Vector2(0.15, 0.15)
 collision_layer = 2
 collision_mask = 5
 motion_mode = 1
@@ -437,6 +442,7 @@ debug_color = Color(0.6509804, 0.5176471, 0.047058824, 0.41960785)
 visible = false
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=359109120]
+position_smoothing_enabled = true
 
 [node name="ShootRay" type="RayCast2D" parent="." unique_id=1029114910]
 scale = Vector2(5, 5)
@@ -444,8 +450,15 @@ target_position = Vector2(0, -200)
 collision_mask = 17
 collide_with_areas = true
 
+[node name="InteractionCast" type="ShapeCast2D" parent="." unique_id=870314131]
+shape = SubResource("RectangleShape2D_gn53q")
+target_position = Vector2(200, 0)
+collision_mask = 64
+collide_with_areas = true
+collide_with_bodies = false
+
 [node name="InteractionRay" type="RayCast2D" parent="." unique_id=1614345201]
-target_position = Vector2(0, 100)
+visible = false
 collision_mask = 64
 collide_with_areas = true
 collide_with_bodies = false
@@ -470,6 +483,9 @@ stream = ExtResource("29_wi073")
 
 [node name="Bite" type="AudioStreamPlayer2D" parent="SoundEffects" unique_id=1452819850]
 stream = ExtResource("29_wi073")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=138336152]
+texture = SubResource("CompressedTexture2D_gn53q")
 
 [connection signal="animation_finished" from="Body/GrappleSprite" to="." method="_on_grapple_sprite_animation_finished"]
 [connection signal="timeout" from="ReloadTimer" to="." method="_on_reload_timer_timeout"]

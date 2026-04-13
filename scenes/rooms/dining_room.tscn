@@ -1,22 +1,34 @@
 [gd_scene format=3 uid="uid://3r6x6rj4t7dd"]
 
+[ext_resource type="Script" uid="uid://beuypcccafsa2" path="res://scripts/room_manager.gd" id="1_ueu1k"]
 [ext_resource type="Texture2D" uid="uid://c87kmg5sl2xot" path="res://assets/sprites/locations/dining_room_bg.png" id="1_wx7th"]
-[ext_resource type="PackedScene" uid="uid://drx0iakt15xe7" path="res://scenes/actors/player.tscn" id="2_j37ga"]
 [ext_resource type="Texture2D" uid="uid://dg41xp5bcqtcu" path="res://assets/sprites/locations/dining_room_fg.png" id="2_nrcdl"]
 [ext_resource type="PackedScene" uid="uid://b1yjcowccdgc2" path="res://scenes/actors/zombie.tscn" id="3_45k0p"]
 [ext_resource type="AudioStream" uid="uid://dfmqo8886pfk3" path="res://assets/audio/bgm/castle_bgm_3.mp3" id="3_j37ga"]
 [ext_resource type="Resource" uid="uid://dyih718583yc2" path="res://resources/green_medicine.tres" id="4_nsgnh"]
 [ext_resource type="PackedScene" uid="uid://bul6bq4ipt3fb" path="res://scenes/items/world_item.tscn" id="4_w5wmq"]
 [ext_resource type="Resource" uid="uid://dv6co0i5n2id8" path="res://resources/pistol_ammo.tres" id="5_nsgnh"]
+[ext_resource type="PackedScene" uid="uid://cnvfsw842fssq" path="res://scenes/rooms/door.tscn" id="10_p2s1j"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_45k0p"]
 vertices = PackedVector2Array(960.3281, 419.20313, 1132.25, 12.9375, 1148.7266, 647.96875, 958.6719, 469, 3.921875, 7.046875, 910, 400, 213.67969, 476, 265, 476, 265, 493.02344, -0.921875, 645.02344, 910, 418.1875, 265.40625, 400, 264.40625, 424, 215.3125, 424, 906.1719, 491.9922, 908.1719, 469)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 1, 0, 5), PackedInt32Array(6, 7, 8, 9), PackedInt32Array(0, 10, 5), PackedInt32Array(4, 5, 11), PackedInt32Array(11, 12, 13, 4), PackedInt32Array(9, 4, 13, 6), PackedInt32Array(14, 15, 3, 2), PackedInt32Array(14, 2, 9, 8)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-6, -3, 1142, 3, 1159, 658, -11, 655), PackedVector2Array(950, 429, 900, 428, 900, 410, 275, 410, 274, 434, 225, 434, 224, 466, 275, 466, 275, 483, 897, 482, 899, 459, 949, 459)])
 
-[node name="DiningRoom" type="Node2D" unique_id=1303867405]
+[sub_resource type="Gradient" id="Gradient_80ff7"]
+offsets = PackedFloat32Array(0, 0.7669173)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 
-[node name="Background" type="Sprite2D" parent="." unique_id=2105247640]
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ueu1k"]
+gradient = SubResource("Gradient_80ff7")
+fill = 1
+fill_from = Vector2(0.5025381, 0.48730963)
+
+[node name="DiningRoom" type="Node2D" unique_id=1303867405]
+script = ExtResource("1_ueu1k")
+room_name = "DiningRoom"
+
+[node name="RoomBG" type="Sprite2D" parent="." unique_id=2105247640]
 position = Vector2(574.5812, 323.7125)
 scale = Vector2(0.83781797, 0.84189457)
 texture = ExtResource("1_wx7th")
@@ -27,27 +39,27 @@ navigation_polygon = SubResource("NavigationPolygon_45k0p")
 [node name="YSort" type="Node2D" parent="." unique_id=1050489627]
 y_sort_enabled = true
 
-[node name="WorldItem" parent="YSort" unique_id=175435458 instance=ExtResource("4_w5wmq")]
-position = Vector2(86.00003, 434)
+[node name="PistolAmmo_01" parent="YSort" unique_id=175435458 groups=["world_items"] instance=ExtResource("4_w5wmq")]
+position = Vector2(491.99997, 572)
 scale = Vector2(0.05, 0.05)
 item_data = ExtResource("5_nsgnh")
+state_id = "PistolAmmo_01"
 
-[node name="WorldItem2" parent="YSort" unique_id=1850882304 instance=ExtResource("4_w5wmq")]
+[node name="GreemMedicine" parent="YSort" unique_id=1850882304 groups=["world_items"] instance=ExtResource("4_w5wmq")]
+visible = false
 position = Vector2(764, 565)
 scale = Vector2(0.05, 0.05)
 item_data = ExtResource("4_nsgnh")
 
-[node name="Player" parent="YSort" unique_id=883593765 instance=ExtResource("2_j37ga")]
-position = Vector2(66, 257)
+[node name="Zombie_01" parent="YSort" unique_id=493500758 instance=ExtResource("3_45k0p")]
+position = Vector2(730, 269)
 scale = Vector2(0.15, 0.15)
+state_id = "Zombie_01"
 
-[node name="Zombie" parent="YSort" unique_id=493500758 groups=["zombie"] instance=ExtResource("3_45k0p")]
-position = Vector2(391, 312)
+[node name="Zombie_02" parent="YSort" unique_id=1580677081 instance=ExtResource("3_45k0p")]
+position = Vector2(1005, 124)
 scale = Vector2(0.15, 0.15)
-
-[node name="Zombie2" parent="YSort" unique_id=1580677081 groups=["zombie"] instance=ExtResource("3_45k0p")]
-position = Vector2(511, 230)
-scale = Vector2(0.15, 0.15)
+state_id = "Zombie_02"
 
 [node name="Foreground" type="Sprite2D" parent="." unique_id=540954127]
 position = Vector2(575, 323)
@@ -77,3 +89,70 @@ polygon = PackedVector2Array(-6, 16, 44, 16, 44, 43, -6, 43)
 
 [node name="BGM" type="AudioStreamPlayer2D" parent="." unique_id=1341538121]
 stream = ExtResource("3_j37ga")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=393129127]
+color = Color(0.62967473, 0.62967485, 0.62967455, 1)
+
+[node name="BottomLight" type="Node2D" parent="." unique_id=1724091824]
+
+[node name="PointLight2D" type="PointLight2D" parent="BottomLight" unique_id=541661147]
+position = Vector2(401.00003, 376)
+scale = Vector2(1.5, 1.5)
+color = Color(0.979243, 0.8462427, 0.39332092, 1)
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_ueu1k")
+
+[node name="PointLight2D2" type="PointLight2D" parent="BottomLight" unique_id=733778067]
+position = Vector2(592, 376)
+scale = Vector2(1.5, 1.5)
+color = Color(0.979243, 0.8462427, 0.39332092, 1)
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_ueu1k")
+
+[node name="PointLight2D3" type="PointLight2D" parent="BottomLight" unique_id=833053188]
+position = Vector2(740, 375)
+scale = Vector2(1.5, 1.5)
+color = Color(0.979243, 0.8462427, 0.39332092, 1)
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_ueu1k")
+
+[node name="UpperLight" type="Node2D" parent="." unique_id=1250610099]
+
+[node name="PointLight2D" type="PointLight2D" parent="UpperLight" unique_id=727312374]
+position = Vector2(286.00003, 149)
+scale = Vector2(1.5, 1.5)
+color = Color(0.979243, 0.8462427, 0.39332092, 1)
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_ueu1k")
+texture_scale = 2.0
+
+[node name="PointLight2D2" type="PointLight2D" parent="UpperLight" unique_id=377193308]
+position = Vector2(575, 142)
+scale = Vector2(1.5, 1.5)
+color = Color(0.979243, 0.8462427, 0.39332092, 1)
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_ueu1k")
+texture_scale = 2.0
+
+[node name="PointLight2D3" type="PointLight2D" parent="UpperLight" unique_id=1751950456]
+position = Vector2(862, 143)
+scale = Vector2(1.5, 1.5)
+color = Color(0.979243, 0.8462427, 0.39332092, 1)
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_ueu1k")
+texture_scale = 2.0
+
+[node name="InvisibleWalls" type="StaticBody2D" parent="." unique_id=2072456053]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="InvisibleWalls" unique_id=2025823169]
+position = Vector2(2, -67)
+polygon = PackedVector2Array(16, -2, 1252, -5, 1269, 801, -122, 806, -127, 63, -8, 63, -8, 718, 1153, 718, 1145, 63, -15, 60)
+
+[node name="Spawn_DiningRoom_Entrance" type="Marker2D" parent="." unique_id=410141317 groups=["spawn_points"]]
+position = Vector2(74, 431)
+
+[node name="MainHall_East" parent="." unique_id=2079185188 instance=ExtResource("10_p2s1j")]
+position = Vector2(-26, 430)
+collision_layer = 65
+target_room_path = "uid://dorgmjunmif37"
+target_door_id = "MainHall_East"

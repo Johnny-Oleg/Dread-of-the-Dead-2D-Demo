@@ -119,7 +119,7 @@ offset_top = -63.0
 offset_right = 1237.0
 offset_bottom = 724.0
 
-[node name="Info" type="Node2D" parent="UI/GameUITest" unique_id=2061244454]
+[node name="Info" type="Node2D" parent="UI/GameUITest" unique_id=2061244454 groups=["game_ui"]]
 script = ExtResource("4_jyhfs")
 
 [node name="HealthLabel" type="Label" parent="UI/GameUITest/Info" unique_id=707213427]

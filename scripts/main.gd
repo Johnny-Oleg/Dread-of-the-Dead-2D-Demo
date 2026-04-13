@@ -1,11 +1,11 @@
 extends Node2D
 
 # 1. PRELOAD SCENES FROM THE FOLDERS
-const DINING_ROOM_SCENE = preload("res://scenes/rooms/dining_room.tscn")
+#const DINING_ROOM_SCENE = preload("res://scenes/rooms/dining_room.tscn")
+var main_hall_path = "res://scenes/rooms/main_hall.tscn"
 const GAME_UI_SCENE = preload("res://scenes/ui/test_ui.tscn")
 const GAME_OVER_SCENE = preload("res://scenes/ui/game_over.tscn")
 const INVENTORY_SCENE = preload("res://scenes/ui/inventory.tscn")
-
 
 @onready var pickup_prompt = $UI/PickupPrompt # Adjust path if necessary
 @onready var prompt_message = $UI/PickupPrompt/Message
@@ -45,9 +45,19 @@ func _on_start_game():
 	title_layer.visible = false
 	
 
-	# 2. Spawn the Dining Room
-	current_room = DINING_ROOM_SCENE.instantiate()
-	game_world.add_child(current_room) # Adds it to the tree!
+	# 2. Spawn the Dining Room DEPRICATED
+	#current_room = DINING_ROOM_SCENE.instantiate()
+	#game_world.add_child(current_room) # Adds it to the tree!
+	
+	# --- LOGIC START ---
+	# 2. Set the starting point BEFORE instantiating the room
+	TransitionManager.next_spawn_id = "MainHall_Start"
+	
+	# 3. Load the Main Hall dynamically
+	var starting_room_scene = load(main_hall_path)
+	current_room = starting_room_scene.instantiate()
+	game_world.add_child(current_room) 
+	# --- LOGIC END ---
 
 	# 3. Spawn the Gameplay UI
 	current_ui = GAME_UI_SCENE.instantiate()
@@ -92,8 +102,22 @@ func _on_player_died():
 # =========================
 
 func _unhandled_input(event):
-	# Only allow opening the inventory if the game is actually running
+	# Only allow opening the inventory if the game is actually running, and a player is not grabbed
+	# Listen for the inventory button
 	if event.is_action_pressed("toggle_inventory") and global.game_started and not global.game_over:
+		
+		# GUARD CLAUSE 1: Is the pickup prompt currently on screen?
+		if pickup_prompt.visible:
+			return # Stop right here, don't open the diary
+			
+		# GUARD CLAUSE 2: Is Arthur being grabbed?
+		# We grab the player node dynamically to check his state.
+		# (Make sure your Player root node is added to a group called "player")
+		var player = get_tree().get_first_node_in_group("player")
+		if player and player.is_grabbed:
+			return # Stop right here, he is fighting for his life!
+
+		# If both checks pass, it is safe to open/close the diary
 		toggle_diary()
 
 func toggle_diary():
@@ -127,6 +151,11 @@ func _on_yes_pressed():
 		var inventory = get_tree().get_first_node_in_group("inventory_ui")
 		
 		if inventory and inventory.add_item(item_data):
+			# Tell the WorldState we picked this up!
+			# We need to know what room we are currently in.
+			var current_room = get_tree().current_scene
+			WorldState.pick_item(WorldState.current_room_name, current_world_item.state_id)
+			
 			# Item was added! Delete it from the floor.
 			current_world_item.queue_free()
 		else:
@@ -143,7 +172,13 @@ func close_pickup_prompt():
 	pickup_prompt.visible = false
 	get_tree().paused = false
 	
+func change_room(path: String):
+	if current_room:
+		current_room.queue_free() # Delete old room
 	
+	var new_room_resource = load(path)
+	current_room = new_room_resource.instantiate()
+	game_world.add_child(current_room)
 	
 	
 	

@@ -1,0 +1,115 @@
+[gd_scene format=3 uid="uid://dorgmjunmif37"]
+
+[ext_resource type="Script" uid="uid://beuypcccafsa2" path="res://scripts/room_manager.gd" id="1_kbnu0"]
+[ext_resource type="Texture2D" uid="uid://bsvc7q3mkw8h0" path="res://assets/sprites/locations/main_hall_bg.png" id="1_t4rg4"]
+[ext_resource type="PackedScene" uid="uid://bul6bq4ipt3fb" path="res://scenes/items/world_item.tscn" id="2_l4h83"]
+[ext_resource type="Resource" uid="uid://dv6co0i5n2id8" path="res://resources/pistol_ammo.tres" id="3_kbnu0"]
+[ext_resource type="Resource" uid="uid://dyih718583yc2" path="res://resources/green_medicine.tres" id="4_pwc75"]
+[ext_resource type="PackedScene" uid="uid://b1yjcowccdgc2" path="res://scenes/actors/zombie.tscn" id="5_2jiy2"]
+[ext_resource type="AudioStream" uid="uid://dfmqo8886pfk3" path="res://assets/audio/bgm/castle_bgm_3.mp3" id="6_k4ces"]
+[ext_resource type="PackedScene" uid="uid://cnvfsw842fssq" path="res://scenes/rooms/door.tscn" id="7_l4h83"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_kbnu0"]
+vertices = PackedVector2Array(724.60156, 275.89844, 723.60156, 259.04688, 910, 259.95313, 910, 305, 818.77344, 603.8281, 819.6719, 632.96875, 61, 631.02344, 61, 510, 301.17188, 376, 524.21094, 376, 962.1172, 395.27344, 962.8594, 450, 956.4922, 450, 949.2031, 394.28125, 522.2031, 277.89844, 2, 510, 2, 500.54688, 16.578125, 305, -36, 340.21094, -36, 305, 949, 531.72656, 949, 580.1406, 888.3281, 581.02344, 18.578125, 258, 299.17188, 258, 947.21875, 305, -39.953125, 481.5625, -39.039063, 341.21875, 959.8281, 516.96094)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(4, 5, 6, 7, 8, 9), PackedInt32Array(10, 11, 12, 13), PackedInt32Array(9, 14, 0, 4), PackedInt32Array(8, 7, 15, 16, 17), PackedInt32Array(18, 19, 17, 16), PackedInt32Array(20, 21, 22), PackedInt32Array(23, 24, 8, 17), PackedInt32Array(3, 25, 13, 4), PackedInt32Array(26, 27, 18, 16), PackedInt32Array(20, 22, 4, 13, 12, 28)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(9, 248, 309, 248, 311, 366, 514, 366, 512, 268, 714, 266, 713, 249, 920, 250, 920, 295, 957, 295, 959, 385, 972, 386, 973, 460, 967, 460, 970, 520, 959, 535, 959, 590, 890, 591, 829, 611, 830, 643, 51, 641, 51, 520, -8, 520, -8, 507, -50, 488, -49, 334, -46, 333, -46, 295, 7, 295)])
+
+[sub_resource type="Gradient" id="Gradient_nsgnh"]
+offsets = PackedFloat32Array(0, 0.7669173)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_idonc"]
+gradient = SubResource("Gradient_nsgnh")
+fill = 1
+fill_from = Vector2(0.5025381, 0.48730963)
+
+[node name="MainHall" type="Node2D" unique_id=454006144]
+script = ExtResource("1_kbnu0")
+room_name = "MainHall"
+
+[node name="RoomBG" type="Sprite2D" parent="." unique_id=588738533]
+position = Vector2(574.5812, 323.7125)
+scale = Vector2(0.83781797, 0.84189457)
+texture = ExtResource("1_t4rg4")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=781547778]
+position = Vector2(118, 3)
+navigation_polygon = SubResource("NavigationPolygon_kbnu0")
+
+[node name="YSort" type="Node2D" parent="." unique_id=973912]
+y_sort_enabled = true
+
+[node name="PistolAmmo_01" parent="YSort" unique_id=175435458 groups=["world_items"] instance=ExtResource("2_l4h83")]
+position = Vector2(101.00001, 446)
+scale = Vector2(0.05, 0.05)
+item_data = ExtResource("3_kbnu0")
+state_id = "PistolAmmo_01"
+
+[node name="GreemMedicine" parent="YSort" unique_id=913135326 groups=["world_items"] instance=ExtResource("2_l4h83")]
+visible = false
+position = Vector2(764, 565)
+scale = Vector2(0.05, 0.05)
+item_data = ExtResource("4_pwc75")
+
+[node name="Zombie_01" parent="YSort" unique_id=493500758 instance=ExtResource("5_2jiy2")]
+position = Vector2(1029, 378)
+scale = Vector2(0.15, 0.15)
+state_id = "Zombie_01"
+
+[node name="BGM" type="AudioStreamPlayer2D" parent="." unique_id=1609331886]
+stream = ExtResource("6_k4ces")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1999707493]
+color = Color(0.62967473, 0.62967485, 0.62967455, 1)
+
+[node name="BottomLight" type="Node2D" parent="." unique_id=889973836]
+
+[node name="PointLight2D" type="PointLight2D" parent="BottomLight" unique_id=641919471]
+position = Vector2(731, 205.00002)
+scale = Vector2(3, 3)
+color = Color(0.979243, 0.8462427, 0.39332092, 1)
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_idonc")
+
+[node name="PointLight2D2" type="PointLight2D" parent="BottomLight" unique_id=237511658]
+visible = false
+position = Vector2(592, 376)
+scale = Vector2(1.5, 1.5)
+color = Color(0.979243, 0.8462427, 0.39332092, 1)
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_idonc")
+
+[node name="PointLight2D3" type="PointLight2D" parent="BottomLight" unique_id=17287199]
+visible = false
+position = Vector2(740, 375)
+scale = Vector2(1.5, 1.5)
+color = Color(0.979243, 0.8462427, 0.39332092, 1)
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_idonc")
+
+[node name="InvisibleWalls" type="StaticBody2D" parent="." unique_id=667009111]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="InvisibleWalls" unique_id=1870221092]
+position = Vector2(2, -67)
+polygon = PackedVector2Array(16, -2, 1252, -5, 1269, 801, -122, 806, -127, 63, -8, 63, -8, 718, 1153, 718, 1145, 63, -15, 60)
+
+[node name="Spawn_MainHall_Start" type="Marker2D" parent="." unique_id=475150831 groups=["spawn_points"]]
+position = Vector2(537, 533)
+
+[node name="Spawn_MainHall_West" type="Marker2D" parent="." unique_id=2015543659 groups=["spawn_points"]]
+visible = false
+position = Vector2(208, 262)
+
+[node name="Spawn_MainHall_East" type="Marker2D" parent="." unique_id=904860749 groups=["spawn_points"]]
+position = Vector2(836, 281)
+
+[node name="Corridor_Entrance" parent="." unique_id=2079185188 instance=ExtResource("7_l4h83")]
+visible = false
+position = Vector2(211, 184)
+collision_layer = 65
+
+[node name="DiningRoom_Entrance" parent="." unique_id=1219067470 instance=ExtResource("7_l4h83")]
+position = Vector2(952, 169)
+collision_layer = 65
+target_room_path = "uid://3r6x6rj4t7dd"
+target_door_id = "DiningRoom_Entrance"

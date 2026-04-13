@@ -1,3 +1,9 @@
-res://scenes/items/world_item.tscn
-res://scenes/actors/player.tscn
 res://scenes/main.tscn
+res://scripts/room_manager.gd
+res://scripts/zombie.gd
+res://scripts/info.gd
+res://scripts/door.gd
+res://scenes/rooms/dining_room.tscn
+res://scenes/rooms/main_hall.tscn
+res://scripts/player.gd
+res://scenes/rooms/door.tscn

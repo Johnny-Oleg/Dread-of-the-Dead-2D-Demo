@@ -205,3 +205,5 @@ func add_item(new_item: Item) -> bool:
 	# 3. If we get here, the grid is full
 	print("Inventory is full!")
 	return false
+	
+	

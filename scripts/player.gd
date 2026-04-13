@@ -7,7 +7,7 @@ extends CharacterBody2D
 @onready var sprite: AnimatedSprite2D = $Body/AnimatedSprite2D
 @onready var grapple_sprite: AnimatedSprite2D = $Body/GrappleSprite
 @onready var shoot_origin = $ShootOrigin
-@onready var interaction_ray = $InteractionRay
+@onready var interaction_cast = $InteractionCast
 
 # Timers
 @onready var reload_timer = $ReloadTimer
@@ -98,18 +98,8 @@ func _physics_process(delta):
 # INPUT
 # =========================
 func handle_input():
-	if 	is_grabbed:
+	if is_grabbed:
 		return
-
-
-	# Movement input OLD
-	#move_dir = Vector2.ZERO
-	#
-	#move_dir.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
-	#move_dir.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
-	#move_dir = move_dir.normalized()
-	#
-	#is_moving = move_dir.length() > 0
 	
 	# Movement input NEW
 	move_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
@@ -177,6 +167,12 @@ func handle_movement():
 		speed *= 0.9
 	
 	velocity = move_dir * speed
+	
+	# Rotate the interaction net
+	# Only change rotation if we are actively moving
+	if move_dir != Vector2.ZERO:
+		# .angle() converts the direction vector straight into the correct rotation!
+		interaction_cast.rotation = move_dir.angle()
 
 # =========================
 # AIMING (8-direction)
@@ -227,6 +223,8 @@ func shoot():
 		return
 	if is_reloading:
 		return
+	if is_grabbed:
+		return 
 
 	# PREVENT NEGATIVE AMMO: Only shoot if we have bullets!
 	if global.current_ammo > 0:
@@ -558,12 +556,18 @@ func _unhandled_input(event):
 		check_interaction()
 
 func check_interaction():
-	if interaction_ray.is_colliding():
-		var target = interaction_ray.get_collider()
+	# Force the cast to update its physics right now (good practice for instant button presses)
+	interaction_cast.force_shapecast_update() 
+	
+	if interaction_cast.is_colliding():
+		# Grab the first object the shape touched
+		var target = interaction_cast.get_collider(0)
 		
 		if target.has_method("get_item_data"):
-			# Tell the Main script to show the prompt for this specific item
 			var main_scene = get_tree().current_scene
-			print("Arthur sees: ", target.item_data.name)
 			if main_scene.has_method("show_pickup_prompt"):
 				main_scene.show_pickup_prompt(target)
+				
+		if target.has_method("interact"):
+			target.interact()
+				
