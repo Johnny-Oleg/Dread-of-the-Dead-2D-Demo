@@ -16,8 +16,10 @@ extends CharacterBody2D
 
 # Sound Effects
 @onready var pistol_shot = $SoundEffects/PistolShot
-@onready var pistol_reload = $SoundEffects/PistolReload
-@onready var bite = $SoundEffects/Bite
+@onready var sfx_pistol_reload = $SoundEffects/PistolReload
+@onready var sfx_run = $SoundEffects/Run
+@onready var sfx_walk = $SoundEffects/Walk
+@onready var sfx_hurt = $SoundEffects/Hurt
 
 
 # =========================
@@ -155,6 +157,8 @@ func handle_movement():
 	# Lock movement completely if aiming or reloading (RE style)
 	if is_aiming or is_reloading:
 		velocity = Vector2.ZERO
+		sfx_run.stop() # <-- Stops walking sound when aiming or reloading
+		sfx_walk.stop()
 		return
 
 	var speed = walk_speed
@@ -253,11 +257,11 @@ func shoot():
 			var is_crit = randf() < global.pistol_stats["crit_chance"]
 			# Access the zombie script from the hurtbox's owner
 			target.owner.take_damage(is_crit)
-	else:
-		print("MISS")
-	print("Ray target: ", shoot_ray.target_position)
-	print("Is colliding: ", shoot_ray.is_colliding())
-	print("BANG!")
+	#else:
+		#print("MISS")
+	#print("Ray target: ", shoot_ray.target_position)
+	#print("Is colliding: ", shoot_ray.is_colliding())
+	#print("BANG!")
 
 # =========================
 # ANIMATION SYSTEM
@@ -304,6 +308,10 @@ func play_move_animation():
 		
 	sprite.play("walk_" + dir_name)
 	
+	# Check if playing before restarting it
+	if not sfx_walk.playing:
+		sfx_walk.play()
+	
 	# Also update facing while moving
 	last_facing_dir = move_dir
 
@@ -311,6 +319,10 @@ func play_run_animation():
 	var dir_name = get_4_direction_name(move_dir)
 	
 	sprite.play("run_" + dir_name)
+	
+	# Check if playing before restarting it
+	if not sfx_run.playing:
+		sfx_run.play()
 			
 	# Also update facing while moving
 	last_facing_dir = move_dir
@@ -326,6 +338,9 @@ func play_idle_animation():
 		sprite.play("danger_idle_" + dir_name)
 	else:
 		sprite.play("idle_" + dir_name)
+
+	sfx_run.stop()
+	sfx_walk.stop()
 
 # =========================
 # DIRECTION HELPERS
@@ -407,7 +422,7 @@ func start_reload():
 
 	is_reloading = true
 	can_shoot = false
-	pistol_reload.play()
+	sfx_pistol_reload.play()
 
 	# Choose reload time
 	var reload_time = global.pistol_stats["reload_time"]
@@ -437,13 +452,13 @@ func cancel_reload():
 	is_reloading = false
 	reload_timer.stop()
 	can_shoot = true
-	pistol_reload.stop()
+	sfx_pistol_reload.stop()
 	
 func finish_reload():
 
 	is_reloading = false
 	can_shoot = true
-	pistol_reload.stop()
+	sfx_pistol_reload.stop()
 
 	var needed = global.pistol_stats["mag_size"] - global.current_ammo
 	var to_reload = min(needed, global.reserve_ammo)
@@ -478,6 +493,8 @@ func get_grabbed(zombie: CharacterBody2D):
 	is_aiming = false
 	is_grabbed = true
 	velocity = Vector2.ZERO
+	sfx_run.stop() # <-- Stops walking sound when grabbed by enemy
+	sfx_walk.stop()
 	
 	# 1. Hide regular sprites
 	current_attacker = zombie # Save the reference!

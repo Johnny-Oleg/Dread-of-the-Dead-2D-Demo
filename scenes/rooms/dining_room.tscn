@@ -53,12 +53,10 @@ item_data = ExtResource("4_nsgnh")
 
 [node name="Zombie_01" parent="YSort" unique_id=493500758 instance=ExtResource("3_45k0p")]
 position = Vector2(730, 269)
-scale = Vector2(0.15, 0.15)
 state_id = "Zombie_01"
 
 [node name="Zombie_02" parent="YSort" unique_id=1580677081 instance=ExtResource("3_45k0p")]
 position = Vector2(1005, 124)
-scale = Vector2(0.15, 0.15)
 state_id = "Zombie_02"
 
 [node name="Foreground" type="Sprite2D" parent="." unique_id=540954127]
@@ -153,6 +151,5 @@ position = Vector2(74, 431)
 
 [node name="MainHall_East" parent="." unique_id=2079185188 instance=ExtResource("10_p2s1j")]
 position = Vector2(-26, 430)
-collision_layer = 65
 target_room_path = "uid://dorgmjunmif37"
 target_door_id = "MainHall_East"

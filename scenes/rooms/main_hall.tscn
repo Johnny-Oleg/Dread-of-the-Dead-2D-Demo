@@ -53,7 +53,6 @@ item_data = ExtResource("4_pwc75")
 
 [node name="Zombie_01" parent="YSort" unique_id=493500758 instance=ExtResource("5_2jiy2")]
 position = Vector2(1029, 378)
-scale = Vector2(0.15, 0.15)
 state_id = "Zombie_01"
 
 [node name="BGM" type="AudioStreamPlayer2D" parent="." unique_id=1609331886]
@@ -106,10 +105,8 @@ position = Vector2(836, 281)
 [node name="Corridor_Entrance" parent="." unique_id=2079185188 instance=ExtResource("7_l4h83")]
 visible = false
 position = Vector2(211, 184)
-collision_layer = 65
 
 [node name="DiningRoom_Entrance" parent="." unique_id=1219067470 instance=ExtResource("7_l4h83")]
 position = Vector2(952, 169)
-collision_layer = 65
 target_room_path = "uid://3r6x6rj4t7dd"
 target_door_id = "DiningRoom_Entrance"

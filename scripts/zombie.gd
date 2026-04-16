@@ -68,6 +68,10 @@ var player: CharacterBody2D = null
 @onready var sfx_chase = $SoundEffects/ZombieChase
 @onready var sfx_hurt = $SoundEffects/ZombieHurt
 @onready var sfx_attack = $SoundEffects/ZombieAttack
+@onready var sfx_shamble = $SoundEffects/ZombieShamble
+@onready var sfx_bite = $SoundEffects/ZombieBite
+@onready var sfx_dead = $SoundEffects/ZombieDead
+
 
 # =========================
 # VISION debug
@@ -80,7 +84,7 @@ var player: CharacterBody2D = null
 func _ready():
 	randomize()
 
-	health = [2000,2500].pick_random()
+	health = [1500, 2000, 2000, 2500, 2500].pick_random()
 	max_health = health
 	nav_agent.path_desired_distance = 4.0
 	nav_agent.target_desired_distance = 8.0
@@ -146,6 +150,7 @@ func change_state(new_state: State):
 
 	match new_state:
 		State.IDLE:
+			sfx_shamble.stop() # <-- STOP SHAMBLING SOUND
 			idle_timer = 0.0
 			velocity = Vector2.ZERO
 			if voice_cooldown <= 0:
@@ -153,22 +158,29 @@ func change_state(new_state: State):
 				voice_cooldown = 8.0 # Wait 8 seconds before making another sound
 
 		State.PATROL:
+			# Check if playing so it doesn't restart awkwardly if moving from Chase -> Patrol
+			if not sfx_shamble.playing: 
+				sfx_shamble.play() # <-- START SHAMBLING SOUND				
 			set_new_patrol_target()
 		
 		State.CHASE:
+			if not sfx_shamble.playing:
+				sfx_shamble.play() # <-- START SHAMBLING SOUND		
 			if voice_cooldown <= 0:
 				sfx_chase.play()
 				voice_cooldown = 8.0 # Wait 8 seconds before making another sound
 			body_collision.set_deferred("disabled", false)
 
 		State.ATTACK:
+			sfx_shamble.stop() # <-- STOP SHAMBLING SOUND	
 			velocity = Vector2.ZERO
 			if voice_cooldown <= 0:
 				sfx_attack.play()
 				voice_cooldown = 8.0 # Wait 8 seconds before making another sound
-			sprite.play("attack")
+			sprite.play("attack_" + get_dir_string())
 			
 		State.HURT:
+			sfx_shamble.stop() # <-- STOP SHAMBLING SOUND
 			hurt_timer = 2.0
 			if voice_cooldown <= 0:
 				sfx_hurt.play()
@@ -177,9 +189,10 @@ func change_state(new_state: State):
 			#sprite.play("hurt_down") # Custom helper for 4-dir hurt anims
 		
 		State.DOWNED:
+			sfx_shamble.stop() # <-- STOP SHAMBLING SOUND
 			velocity = Vector2.ZERO
-			#sprite.play("dead_" + get_dir_string()) # Same as dead, no blood
-			sprite.play("downed") # For downed animation
+			sprite.play("downed_" + get_dir_string()) # Same as dead, no blood
+			#sprite.play("downed") # For downed animation
 			
 			# Turn off Layer 3 (Enemy) so a player can walk through
 			body_collision.set_deferred("disabled", true)
@@ -191,24 +204,29 @@ func change_state(new_state: State):
 				body_collision.set_deferred("disabled", false)
 		
 		State.DEAD:
+			sfx_shamble.stop() # <-- STOP SHAMBLING SOUND
 			velocity = Vector2.ZERO
-			#sprite.play("dead_" + get_dir_string())
-			sprite.play("dead_left") # For dead animation
+			sprite.play("dead_" + get_dir_string())
+			sfx_dead.play()
+			#sprite.play("dead_left") # For dead animation
 			body_collision.set_deferred("disabled", true)
 			# TODO: Trigger blood pool sprite/particle here
 			
 		State.SKID:
+			sfx_shamble.stop() # <-- STOP SHAMBLING SOUND
 			velocity = Vector2.ZERO
 			sprite.play("hurt_up") # Or whichever direction you want for sliding back
 			
 		State.STUMBLED:
+			sfx_shamble.stop() # <-- STOP SHAMBLING SOUND
 			velocity = Vector2.ZERO
-			sprite.play("downed")
+			sprite.play("downed_" + get_dir_string())
 			recovery_timer = 3.0 # Stand up in 3 seconds
 			
 		State.WALL_SIT:
+			sfx_shamble.stop() # <-- STOP SHAMBLING SOUND
 			velocity = Vector2.ZERO
-			sprite.play("sit_against_wall") 
+			sprite.play("sit_against_wall_" + get_dir_string()) 
 			recovery_timer = 4.0 # Takes a bit longer to stand up from a wall
 		
 func get_shoved(shove_dir: Vector2):
@@ -369,6 +387,7 @@ func handle_patrol(delta):
 		last_direction = dir
 
 	velocity = dir * speed
+	
 
 # =========================
 # CHASE
@@ -415,6 +434,8 @@ func handle_chase(delta):
 	var dist = global_position.distance_to(player.global_position)
 	if dist < 70: 
 		change_state(State.ATTACK)
+		
+	
 
 # =========================
 # ATTACK
@@ -437,7 +458,8 @@ func handle_attack(delta):
 	if player.has_method("get_grabbed") and not player.is_grabbed:
 		player.get_grabbed(self)
 		attack_timer = 10.0 # Reset cooldown so it doesn't spam every frame
-
+		sfx_bite.play()
+		
 # =========================
 # HURT
 # =========================
