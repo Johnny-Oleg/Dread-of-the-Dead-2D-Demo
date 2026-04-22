@@ -4,9 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://bsvc7q3mkw8h0" path="res://assets/sprites/locations/main_hall_bg.png" id="1_t4rg4"]
 [ext_resource type="PackedScene" uid="uid://bul6bq4ipt3fb" path="res://scenes/items/world_item.tscn" id="2_l4h83"]
 [ext_resource type="Resource" uid="uid://dv6co0i5n2id8" path="res://resources/pistol_ammo.tres" id="3_kbnu0"]
-[ext_resource type="Resource" uid="uid://dyih718583yc2" path="res://resources/green_medicine.tres" id="4_pwc75"]
 [ext_resource type="PackedScene" uid="uid://b1yjcowccdgc2" path="res://scenes/actors/zombie.tscn" id="5_2jiy2"]
-[ext_resource type="AudioStream" uid="uid://dfmqo8886pfk3" path="res://assets/audio/bgm/castle_bgm_3.mp3" id="6_k4ces"]
+[ext_resource type="PackedScene" uid="uid://b6iiv8qkk13v4" path="res://scenes/vfx/light_flicker.tscn" id="7_kbnu0"]
 [ext_resource type="PackedScene" uid="uid://cnvfsw842fssq" path="res://scenes/rooms/door.tscn" id="7_l4h83"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_kbnu0"]
@@ -23,11 +22,21 @@ gradient = SubResource("Gradient_nsgnh")
 fill = 1
 fill_from = Vector2(0.5025381, 0.48730963)
 
+[sub_resource type="Gradient" id="Gradient_873w3"]
+offsets = PackedFloat32Array(0, 0.7669173)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_pwc75"]
+gradient = SubResource("Gradient_873w3")
+fill = 1
+fill_from = Vector2(0.5025381, 0.48730963)
+
 [node name="MainHall" type="Node2D" unique_id=454006144]
 script = ExtResource("1_kbnu0")
 room_name = "MainHall"
 
 [node name="RoomBG" type="Sprite2D" parent="." unique_id=588738533]
+z_index = -2
 position = Vector2(574.5812, 323.7125)
 scale = Vector2(0.83781797, 0.84189457)
 texture = ExtResource("1_t4rg4")
@@ -41,50 +50,33 @@ y_sort_enabled = true
 
 [node name="PistolAmmo_01" parent="YSort" unique_id=175435458 groups=["world_items"] instance=ExtResource("2_l4h83")]
 position = Vector2(101.00001, 446)
-scale = Vector2(0.05, 0.05)
+scale = Vector2(0.04, 0.04)
 item_data = ExtResource("3_kbnu0")
 state_id = "PistolAmmo_01"
-
-[node name="GreemMedicine" parent="YSort" unique_id=913135326 groups=["world_items"] instance=ExtResource("2_l4h83")]
-visible = false
-position = Vector2(764, 565)
-scale = Vector2(0.05, 0.05)
-item_data = ExtResource("4_pwc75")
 
 [node name="Zombie_01" parent="YSort" unique_id=493500758 instance=ExtResource("5_2jiy2")]
 position = Vector2(1029, 378)
 state_id = "Zombie_01"
 
-[node name="BGM" type="AudioStreamPlayer2D" parent="." unique_id=1609331886]
-stream = ExtResource("6_k4ces")
-
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1999707493]
 color = Color(0.62967473, 0.62967485, 0.62967455, 1)
 
-[node name="BottomLight" type="Node2D" parent="." unique_id=889973836]
+[node name="FirePlace" type="Node2D" parent="." unique_id=889973836]
 
-[node name="PointLight2D" type="PointLight2D" parent="BottomLight" unique_id=641919471]
+[node name="PointLight2D" type="PointLight2D" parent="FirePlace" unique_id=641919471]
+visible = false
 position = Vector2(731, 205.00002)
 scale = Vector2(3, 3)
 color = Color(0.979243, 0.8462427, 0.39332092, 1)
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_idonc")
 
-[node name="PointLight2D2" type="PointLight2D" parent="BottomLight" unique_id=237511658]
-visible = false
-position = Vector2(592, 376)
-scale = Vector2(1.5, 1.5)
-color = Color(0.979243, 0.8462427, 0.39332092, 1)
-shadow_enabled = true
-texture = SubResource("GradientTexture2D_idonc")
-
-[node name="PointLight2D3" type="PointLight2D" parent="BottomLight" unique_id=17287199]
-visible = false
-position = Vector2(740, 375)
-scale = Vector2(1.5, 1.5)
-color = Color(0.979243, 0.8462427, 0.39332092, 1)
-shadow_enabled = true
-texture = SubResource("GradientTexture2D_idonc")
+[node name="LightFlicker" parent="FirePlace" unique_id=151647620 instance=ExtResource("7_kbnu0")]
+position = Vector2(731, 246)
+scale = Vector2(3, 3)
+texture = SubResource("GradientTexture2D_pwc75")
+min_energy = 0.04
+max_energy = 2.0
 
 [node name="InvisibleWalls" type="StaticBody2D" parent="." unique_id=667009111]
 

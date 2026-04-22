@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dorssy5ahx0j5" path="res://scripts/main.gd" id="1_tipki"]
 [ext_resource type="Texture2D" uid="uid://cpdp1p8f2wc7e" path="res://assets/images/you_died.png" id="2_o6xl0"]
 [ext_resource type="Script" uid="uid://e3x7aatwxw1q" path="res://scripts/info.gd" id="4_jyhfs"]
-[ext_resource type="Texture2D" uid="uid://d4mysx0c0gb2j" path="res://assets/images/title_screen_image.jpeg" id="4_o6xl0"]
+[ext_resource type="Texture2D" uid="uid://e72krp36ctt1" path="res://assets/images/title_screen_image.png" id="5_o6xl0"]
 [ext_resource type="Texture2D" uid="uid://bnadyck8i75mc" path="res://assets/images/dotd_logo.png" id="5_tipki"]
 [ext_resource type="AudioStream" uid="uid://clphmkgyxq8vr" path="res://assets/audio/bgm/title_bgm.mp3" id="6_85g3d"]
 [ext_resource type="Script" uid="uid://cemc815284ffv" path="res://scripts/title_screen.gd" id="6_choun"]
@@ -11,7 +11,7 @@
 [sub_resource type="CanvasTexture" id="CanvasTexture_85g3d"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_o6xl0"]
-texture = ExtResource("4_o6xl0")
+texture = ExtResource("5_o6xl0")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_choun"]
 bg_color = Color(1, 1, 1, 1)
@@ -91,6 +91,7 @@ process_mode = 1
 
 [node name="NinePatchRect" type="NinePatchRect" parent="GameWorld" unique_id=729810784]
 self_modulate = Color(0, 0, 0, 1)
+z_index = -3
 offset_left = -1101.0
 offset_top = -716.0
 offset_right = 1894.0
@@ -237,30 +238,33 @@ text = "Exit"
 stream = ExtResource("6_85g3d")
 autoplay = true
 
-[node name="PickupPrompt" type="Panel" parent="UI" unique_id=2135333624]
+[node name="PickUp" type="CanvasLayer" parent="UI" unique_id=295829609]
+
+[node name="PickupPrompt" type="Panel" parent="UI/PickUp" unique_id=2135333624]
+process_mode = 3
 visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 283.0
-offset_top = 183.0
-offset_right = 883.0
-offset_bottom = 483.0
+offset_left = -300.0
+offset_top = -150.0
+offset_right = 300.0
+offset_bottom = 150.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="Message" type="Label" parent="UI/PickupPrompt" unique_id=427092817]
+[node name="Message" type="Label" parent="UI/PickUp/PickupPrompt" unique_id=427092817]
 layout_mode = 0
 offset_left = 152.0
 offset_top = 73.0
 offset_right = 447.0
 offset_bottom = 156.0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/PickupPrompt" unique_id=1690495299]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/PickUp/PickupPrompt" unique_id=1690495299]
 layout_mode = 0
 offset_left = 110.0
 offset_top = 162.0
@@ -268,7 +272,7 @@ offset_right = 510.0
 offset_bottom = 262.0
 alignment = 1
 
-[node name="YesButton" type="Button" parent="UI/PickupPrompt/HBoxContainer" unique_id=927251627]
+[node name="YesButton" type="Button" parent="UI/PickUp/PickupPrompt/HBoxContainer" unique_id=927251627]
 custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
 size_flags_horizontal = 2
@@ -284,7 +288,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_a8y0u")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_jkv2x")
 text = "Yes"
 
-[node name="NoButton" type="Button" parent="UI/PickupPrompt/HBoxContainer" unique_id=414939472]
+[node name="NoButton" type="Button" parent="UI/PickUp/PickupPrompt/HBoxContainer" unique_id=414939472]
 custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
 size_flags_horizontal = 8

@@ -17,10 +17,6 @@ var rooms = {
 				"type": "ammo",
 				"picked": false
 			},
-			"GreenMedicine_01": {
-				"type": "healing",
-				"picked": false
-			}
 		},
 		"enemies": {
 			"Zombie_01": {
@@ -34,6 +30,10 @@ var rooms = {
 		"items": {
 			"PistolAmmo_01": {
 				"type": "ammo",
+				"picked": false
+			},
+			"GreenMedicine_01": {
+				"type": "healing",
 				"picked": false
 			}
 		},

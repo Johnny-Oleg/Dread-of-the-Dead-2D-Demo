@@ -71,7 +71,8 @@ var player: CharacterBody2D = null
 @onready var sfx_shamble = $SoundEffects/ZombieShamble
 @onready var sfx_bite = $SoundEffects/ZombieBite
 @onready var sfx_dead = $SoundEffects/ZombieDead
-
+@export var blood_splat_scene: PackedScene
+@export var blood_pool_scene: PackedScene
 
 # =========================
 # VISION debug
@@ -490,11 +491,15 @@ func take_damage(is_crit: bool = false):
 	
 	health -= damage_to_deal
 	
+	# --- SPAWN THE BLOOD SPLAT ---
+	if blood_splat_scene:
+		var splat = blood_splat_scene.instantiate()
+		get_parent().add_child(splat) # Add to the room, not the zombie!
+		
+		# Position it at the zombie's center, slightly offset upwards so it's not at his feet
+		splat.global_position = global_position + Vector2(0, -20) 
+	
 	# 2. Immediate Alert (Even if out of vision cone. Wakes a zombie up if DOWNED, IDLE, or PATROL)
-	#if current_state != State.CHASE and current_state != State.ATTACK:
-		## Face the player and start chasing
-		#last_direction = global_position.direction_to(player.global_position)
-		#change_state(State.CHASE)
 	if current_state != State.CHASE and current_state != State.ATTACK:
 		if player != null: # Only face the player if we found him
 			last_direction = global_position.direction_to(player.global_position)
@@ -524,7 +529,24 @@ func take_damage(is_crit: bool = false):
 func die():
 	change_state(State.DEAD)
 	WorldState.kill_enemy(WorldState.current_room_name, state_id)
+	
+	# --- SPAWN THE BLOOD POOL AFTER 3 SECONDS ---
+	spawn_blood_pool()
 	#queue_free()
+
+func spawn_blood_pool():
+	# Wait for 3 seconds before pooling
+	await get_tree().create_timer(3.0).timeout
+	
+	# Double check the zombie wasn't magically deleted during those 3 seconds
+	if not is_inside_tree(): 
+		return 
+		
+	if blood_pool_scene:
+		var pool = blood_pool_scene.instantiate()
+		
+		get_parent().add_child(pool)
+		pool.global_position = global_position
 
 # =========================
 # ANIMATION

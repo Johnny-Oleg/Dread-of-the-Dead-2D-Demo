@@ -7,10 +7,10 @@ const GAME_UI_SCENE = preload("res://scenes/ui/test_ui.tscn")
 const GAME_OVER_SCENE = preload("res://scenes/ui/game_over.tscn")
 const INVENTORY_SCENE = preload("res://scenes/ui/inventory.tscn")
 
-@onready var pickup_prompt = $UI/PickupPrompt # Adjust path if necessary
-@onready var prompt_message = $UI/PickupPrompt/Message
-@onready var yes_button = $UI/PickupPrompt/HBoxContainer/YesButton
-@onready var no_button = $UI/PickupPrompt/HBoxContainer/NoButton
+@onready var pickup_prompt = $UI/PickUp/PickupPrompt # Adjust path if necessary
+@onready var prompt_message = $UI/PickUp/PickupPrompt/Message
+@onready var yes_button = $UI/PickUp/PickupPrompt/HBoxContainer/YesButton
+@onready var no_button = $UI/PickUp/PickupPrompt/HBoxContainer/NoButton
 @onready var game_world = $GameWorld
 @onready var ui_layer = $UI
 @onready var title_screen = $UI/TitleScreen
@@ -31,6 +31,11 @@ func _ready():
 	global.player_died.connect(_on_player_died)
 	yes_button.pressed.connect(_on_yes_pressed)
 	no_button.pressed.connect(_on_no_pressed)
+	# Visual feedback for focus
+	yes_button.focus_entered.connect(_on_button_focus_entered.bind(yes_button))
+	no_button.focus_entered.connect(_on_button_focus_entered.bind(no_button))
+	yes_button.focus_exited.connect(_on_button_focus_exited.bind(yes_button))
+	no_button.focus_exited.connect(_on_button_focus_exited.bind(no_button))
 	pickup_prompt.visible = false
 
 # =========================
@@ -120,6 +125,22 @@ func _unhandled_input(event):
 		# If both checks pass, it is safe to open/close the diary
 		toggle_diary()
 
+# Use _input for high-priority UI actions that happen while paused
+func _input(event):
+	# Only check if the pick up window is actually open
+	if pickup_prompt.visible:
+		if event.is_action_pressed("ui_cancel"):
+			print("Esc pressed! Bypassing UI.")
+			_on_no_pressed()
+			
+			# Tell Godot we handled this input so it stops processing it
+			get_viewport().set_input_as_handled() 
+		
+		# Let the D-pad/Arrows move focus if it gets lost
+		elif not get_viewport().gui_get_focus_owner():
+			yes_button.grab_focus()
+			print("Focus restored to Yes button")
+
 func toggle_diary():
 	if inventory_instance.visible:
 		# CLOSE INVENTORY
@@ -128,7 +149,6 @@ func toggle_diary():
 		#Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN) # Hide mouse for gameplay
 	else:
 		# OPEN INVENTORY
-		#inventory_instance.update_condition()
 		inventory_instance.visible = true
 		inventory_instance.on_open() # Run the health and ammo check
 		get_tree().paused = true # Freeze the zombies!
@@ -158,12 +178,12 @@ func _on_yes_pressed():
 			
 			# Item was added! Delete it from the floor.
 			current_world_item.queue_free()
+			close_pickup_prompt()
 		else:
 			# Inventory was full! Maybe play a "buzzer" sound here later.
 			print("Cannot pick up, inventory full!")
+			# Play "Inventory Full" sound here TODO
 			
-	close_pickup_prompt()
-
 func _on_no_pressed():
 	close_pickup_prompt()
 
@@ -171,6 +191,12 @@ func close_pickup_prompt():
 	current_world_item = null
 	pickup_prompt.visible = false
 	get_tree().paused = false
+	
+func _on_button_focus_entered(btn):
+	btn.modulate = Color(1.5, 1.5, 1.5) # Makes the button "glow" (Overbright)
+
+func _on_button_focus_exited(btn):
+	btn.modulate = Color(1, 1, 1) # Back to normal	
 	
 func change_room(path: String):
 	if current_room:

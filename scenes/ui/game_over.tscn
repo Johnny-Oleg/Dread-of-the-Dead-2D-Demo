@@ -1,13 +1,9 @@
 [gd_scene format=3 uid="uid://cucp3cc76fo6e"]
 
-[ext_resource type="Texture2D" uid="uid://d4mysx0c0gb2j" path="res://assets/images/title_screen_image.jpeg" id="1_x6o8e"]
 [ext_resource type="Texture2D" uid="uid://cv8p4dwl5ixcg" path="res://assets/images/game_over.png" id="2_vfrx6"]
 [ext_resource type="AudioStream" uid="uid://clphmkgyxq8vr" path="res://assets/audio/bgm/title_bgm.mp3" id="3_o6b8n"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_4583b"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_b6337"]
-texture = ExtResource("1_x6o8e")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r6ix2"]
 bg_color = Color(1, 1, 1, 1)
@@ -75,18 +71,6 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 1149.0
 offset_bottom = 645.0
-
-[node name="Panel" type="Panel" parent="Title/GameStart" unique_id=1829119613]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 1115.0
-offset_bottom = 608.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_b6337")
 
 [node name="TitleLogo" type="TextureRect" parent="Title/GameStart" unique_id=1505410748]
 layout_mode = 1

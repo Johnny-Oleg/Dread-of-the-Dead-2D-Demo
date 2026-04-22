@@ -1,4 +1,6 @@
-res://scenes/actors/zombie.tscn
-res://scripts/player.gd
-res://scenes/actors/player.tscn
-res://scripts/zombie.gd
+res://scenes/rooms/dining_room.tscn
+res://scripts/room_manager.gd
+res://scenes/vfx/light_flicker.tscn
+res://scripts/light_flicker.gd
+res://scenes/rooms/main_hall.tscn
+res://scripts/sound_manager.gd

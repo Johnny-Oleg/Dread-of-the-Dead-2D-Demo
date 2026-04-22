@@ -8,6 +8,8 @@ extends CharacterBody2D
 @onready var grapple_sprite: AnimatedSprite2D = $Body/GrappleSprite
 @onready var shoot_origin = $ShootOrigin
 @onready var interaction_cast = $InteractionCast
+@onready var muzzle_flash = "res://scenes/vfx/muzzle_flash.tscn"
+@onready var shoot_light = $MuzzlePosition/PointLight2D2
 
 # Timers
 @onready var reload_timer = $ReloadTimer
@@ -17,9 +19,11 @@ extends CharacterBody2D
 # Sound Effects
 @onready var pistol_shot = $SoundEffects/PistolShot
 @onready var sfx_pistol_reload = $SoundEffects/PistolReload
+@onready var sfx_pistol_empty = $SoundEffects/EmptyPistolMag
 @onready var sfx_run = $SoundEffects/Run
 @onready var sfx_walk = $SoundEffects/Walk
 @onready var sfx_hurt = $SoundEffects/Hurt
+@onready var sfx_died = $SoundEffects/Died
 
 
 # =========================
@@ -32,6 +36,17 @@ extends CharacterBody2D
 @onready var shoot_ray: RayCast2D = $ShootRay
 @export var fire_rate: float = 0.4
 var can_shoot: bool = true
+
+var muzzle_offsets = {
+	"up": Vector2(20, -77),
+	"up_right": Vector2(43, -70),
+	"right": Vector2(80, -60),
+	"down_right": Vector2(60, -60),
+	"down": Vector2(6, -60),
+	"down_left": Vector2(-35, -60),
+	"left": Vector2(-77, -60),
+	"up_left": Vector2(-47, -77)
+}
 
 # RELOAD
 var is_reloading: bool = false
@@ -90,7 +105,10 @@ func _physics_process(delta):
 	handle_input()
 	handle_movement()
 	handle_aiming()
-	update_animation()
+	#update_animation()
+	# SAFETY CHECK: Don't play walk/run/idle animations if we are in the grapple sprite!
+	if not is_grabbed:
+		update_animation()
 
 	move_and_slide()
 	
@@ -182,16 +200,8 @@ func handle_movement():
 # AIMING (8-direction)
 # =========================
 func handle_aiming():
-
 	if not is_aiming or is_reloading:
 		return
-	#
-	#var mouse_pos = get_global_mouse_position()
-	#aim_dir = (mouse_pos - global_position).normalized()
-#
-	## While aiming, override facing
-	#last_facing_dir = aim_dir
-	#shoot_ray.target_position = aim_dir * 500
 	
 	var target_found = false
 
@@ -209,14 +219,27 @@ func handle_aiming():
 
 	# MODE B: MANUAL AIM (Fallback if no targets or auto-aim is OFF)
 	if not target_found:
-		var mouse_pos = get_global_mouse_position()
-		aim_dir = (mouse_pos - global_position).normalized()
+		# 1. Default to wherever Arthur was last facing!
+		aim_dir = last_facing_dir
+		
+		# 2. WASD / D-Pad / Analog Stick Steering
+		# Since movement is locked while aiming, we can safely reuse the movement keys
+		var manual_steer = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+		
+		if manual_steer.length() > 0:
+			# Steer the gun using the keyboard/gamepad
+			aim_dir = manual_steer.normalized()
+		elif Input.get_last_mouse_velocity().length() > 5.0:
+			# 3. Mouse Override
+			# ONLY use the mouse if the user is actively swiping it. 
+			# This prevents the player from snapping to a dead, invisible cursor.
+			var mouse_pos = get_global_mouse_position()
+			aim_dir = (mouse_pos - global_position).normalized()
 
 	# Apply final aim direction
 	last_facing_dir = aim_dir
 	shoot_ray.target_position = aim_dir * 500
 	
-
 # =========================
 # SHOOTING (8-direction)
 # =========================
@@ -234,34 +257,69 @@ func shoot():
 	if global.current_ammo > 0:
 		global.current_ammo -= 1
 		print("BANG!")
-		# ... play animation, cast raycast, etc.
 		pistol_shot.play()
+		apply_recoil()
+		flash_light()
+		
+		# --- THE RAYCAST INSIDE THE AMMO CHECK ---
+		shoot_ray.target_position = aim_dir * 500
+		shoot_ray.force_raycast_update()
+
+		if shoot_ray.is_colliding():
+			var target = shoot_ray.get_collider()
+			if target.is_in_group("zombie_hurtbox"):
+				var is_crit = randf() < global.pistol_stats["crit_chance"]
+				target.owner.take_damage(is_crit)
+		# --------------------------------------------------
+		
+		# Put the gun on cooldown
 		can_shoot = false
 		fire_timer.start(fire_rate)
+		
 	else:
 		print("Click... Out of ammo!")
 		
-	## Rotate ray toward aim OLD
-	#var target_global = global_position + aim_dir * 500
-	#shoot_ray.target_position = shoot_ray.to_local(target_global)
-	#shoot_ray.force_raycast_update()
+		# Put the empty click on a small cooldown so it doesn't spam 60 times a second
+		can_shoot = false
+		fire_timer.start(0.25)
+		sfx_pistol_empty.play()
 	
-	# Just set the target position directly using the aim_dir
-	shoot_ray.target_position = aim_dir * 500
-	shoot_ray.force_raycast_update()
 
-	if shoot_ray.is_colliding():
-		var target = shoot_ray.get_collider()
-		# Remember: player's RayCast mask should hit Layer 5 (EnemyHurtbox)
-		if target.is_in_group("zombie_hurtbox"):
-			var is_crit = randf() < global.pistol_stats["crit_chance"]
-			# Access the zombie script from the hurtbox's owner
-			target.owner.take_damage(is_crit)
-	#else:
-		#print("MISS")
-	#print("Ray target: ", shoot_ray.target_position)
-	#print("Is colliding: ", shoot_ray.is_colliding())
-	#print("BANG!")
+func apply_recoil():
+	# Calculate the opposite direction of where we are aiming
+	var recoil_dir = -aim_dir * 6 # Jerk back 6 pixels
+	
+	var tween = create_tween()
+	# Jerk backward quickly
+	tween.tween_property(sprite, "offset", recoil_dir, 0.05).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
+	# Snap back to center
+	tween.tween_property(sprite, "offset", Vector2.ZERO, 0.1)
+
+#func spawn_muzzle_flash():
+	#var flash = muzzle_flash.instantiate()
+	#get_parent().add_child(flash) # Add to room, not Arthur, so it stays in place
+	#
+	## Position it slightly in front of Arthur's center
+	#flash.global_position = global_position + (aim_dir * 20) 
+	#flash.rotation = aim_dir.angle()
+
+func flash_light():
+	var dir_string = get_8_direction_name(aim_dir)
+	
+	# Check if the string exists in our dictionary
+	if muzzle_offsets.has(dir_string):
+		# USE LOCAL POSITION, NOT GLOBAL! 
+		# This places it exactly X/Y pixels away from Arthur's center
+		shoot_light.position = muzzle_offsets[dir_string] 
+	
+	shoot_light.enabled = true
+	await get_tree().create_timer(0.05).timeout
+	shoot_light.enabled = false
+	
+	## Position is already handled by the AnimationPlayer!
+	#shoot_light.enabled = true
+	#await get_tree().create_timer(0.05).timeout
+	#shoot_light.enabled = false
 
 # =========================
 # ANIMATION SYSTEM
@@ -493,7 +551,13 @@ func get_grabbed(zombie: CharacterBody2D):
 	is_aiming = false
 	is_grabbed = true
 	velocity = Vector2.ZERO
-	sfx_run.stop() # <-- Stops walking sound when grabbed by enemy
+	
+	# --- FORCE MOVEMENT TO STOP ---
+	is_moving = false
+	is_running = false
+	move_dir = Vector2.ZERO
+	velocity = Vector2.ZERO
+	sfx_run.stop() 
 	sfx_walk.stop()
 	
 	# 1. Hide regular sprites
@@ -515,6 +579,8 @@ func get_grabbed(zombie: CharacterBody2D):
 	play_grapple_animation(is_front, is_right)
 
 func play_grapple_animation(front: bool, right: bool):
+	
+	velocity = Vector2.ZERO
 	var anim_name = "grab_front" if front else "grab_back"
 	grapple_sprite.flip_h = !right # Flip if the zombie is on the left
 	
@@ -522,6 +588,7 @@ func play_grapple_animation(front: bool, right: bool):
 		grapple_sprite.flip_h = right
 		
 	grapple_sprite.play(anim_name)
+	sfx_hurt.play()
 	#if grapple_sprite.frame == 15:
 		#bite.play()
 
@@ -565,6 +632,7 @@ func trigger_game_over():
 	if global.game_over: 
 		return # Prevent this from firing 50 times a second
 		
+	sfx_died.play()
 	global.game_over = true
 	global.player_died.emit() # SHOUT TO MAIN.GD!
 	

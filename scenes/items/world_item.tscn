@@ -6,6 +6,7 @@
 size = Vector2(1024, 1024)
 
 [node name="WorldItem" type="Area2D" unique_id=175435458]
+y_sort_enabled = true
 collision_layer = 64
 collision_mask = 2
 script = ExtResource("1_yrq7p")

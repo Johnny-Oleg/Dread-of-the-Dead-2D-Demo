@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://l1dmp21b4dei"]
+
+[sub_resource type="Gradient" id="Gradient_u5ttp"]
+colors = PackedColorArray(0.996648, 0.8657679, 0.513278, 1, 1, 0.019607844, 0.15686275, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7uy7g"]
+gradient = SubResource("Gradient_u5ttp")
+fill = 1
+fill_from = Vector2(0.45294118, 0.04117647)
+
+[node name="MuzzleFlash" type="Sprite2D" unique_id=1209693817]
+texture = SubResource("GradientTexture2D_7uy7g")

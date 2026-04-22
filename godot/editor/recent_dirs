@@ -1,7 +1,8 @@
-res://assets/sprites/player/
-res://assets/sprites/enemy/
-res://scenes/rooms/
 res://scripts/
+res://scenes/vfx/
+res://assets/sprites/enemy/
+res://assets/sprites/player/
+res://scenes/rooms/
 res://resources/
 res://scenes/items/
 res://assets/images/

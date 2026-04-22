@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://b6iiv8qkk13v4"]
+
+[ext_resource type="Script" uid="uid://b73g67hfhj2ec" path="res://scripts/light_flicker.gd" id="1_adlto"]
+
+[sub_resource type="Gradient" id="Gradient_873w3"]
+offsets = PackedFloat32Array(0, 0.7669173)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ueu1k"]
+gradient = SubResource("Gradient_873w3")
+fill = 1
+fill_from = Vector2(0.5025381, 0.48730963)
+
+[node name="LightFlicker" type="PointLight2D" unique_id=151647620]
+position = Vector2(401.00003, 376)
+scale = Vector2(1.5, 1.5)
+color = Color(0.979243, 0.8462427, 0.39332092, 1)
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_ueu1k")
+script = ExtResource("1_adlto")

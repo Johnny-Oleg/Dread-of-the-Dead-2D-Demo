@@ -29,38 +29,38 @@
 [ext_resource type="Texture2D" uid="uid://2y7utbffi021" path="res://assets/sprites/player/walk_front_2.png" id="22_23deo"]
 [ext_resource type="Texture2D" uid="uid://v0dr80emojik" path="res://assets/sprites/player/walk_left_2.png" id="24_maee5"]
 [ext_resource type="Texture2D" uid="uid://ciwvuomtoxro6" path="res://assets/sprites/player/run_left.png" id="25_5jobd"]
-[ext_resource type="Texture2D" uid="uid://ddy8hy1s8opf1" path="res://assets/sprites/player/walk_right.png" id="25_avuod"]
-[ext_resource type="Texture2D" uid="uid://ds4smou400ptt" path="res://assets/sprites/player/walk_right_3.png" id="26_3vary"]
-[ext_resource type="Texture2D" uid="uid://cv2wobiga8b2q" path="res://assets/sprites/player/walk_right_2.png" id="26_7knsb"]
-[ext_resource type="Texture2D" uid="uid://ro02sjaj3650" path="res://assets/sprites/player/run_left_1.png" id="26_pi76d"]
+[ext_resource type="Texture2D" uid="uid://b0ofqucgmgykp" path="res://assets/sprites/player/run_left_2.png" id="25_10nxg"]
 [ext_resource type="Texture2D" uid="uid://da2av7lfrcwdl" path="res://assets/sprites/player/walk_up_2.png" id="27_vs8kn"]
 [ext_resource type="Texture2D" uid="uid://cidsgoeqas0wf" path="res://assets/sprites/player/run_right.png" id="27_vtkd1"]
 [ext_resource type="AudioStream" uid="uid://crp25gu5bvwbe" path="res://assets/audio/sfx/player_sfx/pistol_shot_sfx.WAV" id="28_v4ynn"]
 [ext_resource type="Texture2D" uid="uid://baq02mm0w0ama" path="res://assets/sprites/player/run_right_2.png" id="28_v53r6"]
-[ext_resource type="Texture2D" uid="uid://beo5da06bo6n8" path="res://assets/sprites/player/run_right_3.png" id="29_j7vwf"]
 [ext_resource type="AudioStream" uid="uid://ureud55pn7uw" path="res://assets/audio/sfx/player_sfx/pistol_reload_sfx.WAV" id="29_wi073"]
 [ext_resource type="Texture2D" uid="uid://kqk0r5pblqyt" path="res://assets/sprites/player/run_up.png" id="30_i8bcl"]
 [ext_resource type="Texture2D" uid="uid://oo8ta0lxp75q" path="res://assets/sprites/enemy/attack_back.png" id="31_joone"]
 [ext_resource type="Texture2D" uid="uid://4pjbloi2kh3n" path="res://assets/sprites/player/run_up_2.png" id="31_trr3m"]
 [ext_resource type="Texture2D" uid="uid://dyxdrlxnmhoja" path="res://assets/sprites/enemy/attack_back_2.png" id="32_mmbxj"]
 [ext_resource type="Texture2D" uid="uid://d6xvp38y16dm" path="res://assets/sprites/enemy/attack_back_3.png" id="33_h4tku"]
+[ext_resource type="Texture2D" uid="uid://boko681vyk2rp" path="res://assets/sprites/player/walk_left_4.png" id="34_is16v"]
 [ext_resource type="Texture2D" uid="uid://odlbqrc2b7xm" path="res://assets/sprites/enemy/attack_back_4.png" id="34_q2csf"]
-[ext_resource type="Texture2D" uid="uid://c5auk8v28f1nh" path="res://assets/sprites/player/walk_left_3.png" id="35_vaf7d"]
 [ext_resource type="Texture2D" uid="uid://b5odpmooowx6f" path="res://assets/sprites/enemy/attack_front.png" id="35_wi5q3"]
 [ext_resource type="Texture2D" uid="uid://dc4mp2mukbacv" path="res://assets/sprites/enemy/attack_front_2.png" id="36_61mlo"]
 [ext_resource type="Texture2D" uid="uid://dfj1ko8cbw7v8" path="res://assets/sprites/enemy/attack_back_5.png" id="36_r251j"]
+[ext_resource type="Texture2D" uid="uid://cv2wobiga8b2q" path="res://assets/sprites/player/walk_right_2.png" id="36_rjrsu"]
 [ext_resource type="Texture2D" uid="uid://cdnub21qs2mii" path="res://assets/sprites/enemy/attack_front_3.png" id="37_smak5"]
 [ext_resource type="Texture2D" uid="uid://cftr412d2b1c4" path="res://assets/sprites/enemy/attack_back_6.png" id="37_spmms"]
-[ext_resource type="Texture2D" uid="uid://vkdcqoyjags" path="res://assets/sprites/player/walk_right_4.png" id="37_v4v3j"]
+[ext_resource type="Texture2D" uid="uid://boa5c75166shh" path="res://assets/sprites/player/walk_right_4.png" id="37_v4v3j"]
 [ext_resource type="Texture2D" uid="uid://camc0wkuwtkoi" path="res://assets/sprites/enemy/attack_front_4.png" id="38_c0pob"]
 [ext_resource type="Texture2D" uid="uid://d7a15vb7vvjq" path="res://assets/sprites/enemy/attack_front_5.png" id="39_4ygid"]
 [ext_resource type="Texture2D" uid="uid://47ijm40v64o6" path="res://assets/sprites/enemy/attack_front_6.png" id="43_r8eyy"]
 [ext_resource type="Texture2D" uid="uid://b60mxueh5g055" path="res://assets/sprites/enemy/attack_front_7.png" id="44_42ob5"]
+[ext_resource type="AudioStream" uid="uid://cuoq478grtiue" path="res://assets/audio/sfx/player_sfx/empty_pistol_sfx.WAV" id="54_7hljr"]
+[ext_resource type="AudioStream" uid="uid://drdbuxq3aqsyt" path="res://assets/audio/sfx/player_sfx/hurt_sfx.WAV" id="56_rjrsu"]
+[ext_resource type="AudioStream" uid="uid://dcskf2qvewlja" path="res://assets/audio/sfx/player_sfx/died_sfx.WAV" id="57_7hljr"]
 [ext_resource type="AudioStream" uid="uid://bj8dhm07q28eq" path="res://assets/audio/sfx/player_sfx/run_sfx.WAV" id="57_rjrsu"]
 [ext_resource type="AudioStream" uid="uid://dei0o1dkf4j2w" path="res://assets/audio/sfx/player_sfx/walk_sfx.WAV" id="58_7hljr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3vary"]
-size = Vector2(65, 59)
+size = Vector2(68, 91)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_qe8hj"]
 animations = [{
@@ -293,10 +293,10 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 2.0,
+"duration": 1.0,
 "texture": ExtResource("20_q7md3")
 }, {
-"duration": 2.0,
+"duration": 1.0,
 "texture": ExtResource("21_mmbxj")
 }],
 "loop": true,
@@ -304,35 +304,32 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 2.0,
-"texture": ExtResource("25_5jobd")
+"duration": 1.0,
+"texture": ExtResource("25_10nxg")
 }, {
-"duration": 2.0,
-"texture": ExtResource("26_pi76d")
+"duration": 1.0,
+"texture": ExtResource("25_5jobd")
 }],
 "loop": true,
 "name": &"run_left",
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 2.0,
+"duration": 1.0,
 "texture": ExtResource("27_vtkd1")
 }, {
-"duration": 2.0,
+"duration": 1.0,
 "texture": ExtResource("28_v53r6")
-}, {
-"duration": 2.0,
-"texture": ExtResource("29_j7vwf")
 }],
 "loop": true,
 "name": &"run_right",
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 2.0,
+"duration": 1.0,
 "texture": ExtResource("30_i8bcl")
 }, {
-"duration": 2.0,
+"duration": 1.0,
 "texture": ExtResource("31_trr3m")
 }],
 "loop": true,
@@ -355,7 +352,7 @@ animations = [{
 "texture": ExtResource("24_maee5")
 }, {
 "duration": 2.0,
-"texture": ExtResource("35_vaf7d")
+"texture": ExtResource("34_is16v")
 }],
 "loop": true,
 "name": &"walk_left",
@@ -363,16 +360,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 2.0,
-"texture": ExtResource("26_3vary")
-}, {
-"duration": 2.0,
 "texture": ExtResource("37_v4v3j")
 }, {
 "duration": 2.0,
-"texture": ExtResource("25_avuod")
-}, {
-"duration": 2.0,
-"texture": ExtResource("26_7knsb")
+"texture": ExtResource("36_rjrsu")
 }],
 "loop": true,
 "name": &"walk_right",
@@ -453,26 +444,53 @@ size = Vector2(88, 195)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gn53q"]
 
+[sub_resource type="Animation" id="Animation_rjrsu"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_5jobd"]
+resource_name = "flash-left"
+
+[sub_resource type="Animation" id="Animation_7hljr"]
+resource_name = "flash-right"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5jobd"]
+_data = {
+&"RESET": SubResource("Animation_rjrsu"),
+&"flash-left": SubResource("Animation_5jobd"),
+&"flash-right": SubResource("Animation_7hljr")
+}
+
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_gn53q"]
 
+[sub_resource type="Gradient" id="Gradient_80ff7"]
+offsets = PackedFloat32Array(0, 0.7669173)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_rjrsu"]
+gradient = SubResource("Gradient_80ff7")
+width = 60
+height = 30
+fill = 1
+fill_from = Vector2(0.5025381, 0.48730963)
+
 [node name="Player" type="CharacterBody2D" unique_id=883593765 groups=["player"]]
+y_sort_enabled = true
 collision_layer = 2
 collision_mask = 5
 motion_mode = 1
 script = ExtResource("1_qe8hj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1971721090]
-position = Vector2(-2.5, -2.5)
+position = Vector2(-1, 45.5)
 shape = SubResource("RectangleShape2D_3vary")
 
 [node name="Body" type="Node2D" parent="." unique_id=766899656]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Body" unique_id=1403885371]
 texture_filter = 1
-position = Vector2(0, -2)
+position = Vector2(1, -2)
 sprite_frames = SubResource("SpriteFrames_qe8hj")
-animation = &"aim_down"
-frame_progress = 0.433739
+animation = &"idle_down"
 
 [node name="GrappleSprite" type="AnimatedSprite2D" parent="Body" unique_id=1709623858]
 visible = false
@@ -534,6 +552,7 @@ collide_with_areas = true
 collide_with_bodies = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1695097936]
+libraries/ = SubResource("AnimationLibrary_5jobd")
 
 [node name="ReloadTimer" type="Timer" parent="." unique_id=1610546581]
 one_shot = true
@@ -551,6 +570,9 @@ stream = ExtResource("28_v4ynn")
 [node name="PistolReload" type="AudioStreamPlayer2D" parent="SoundEffects" unique_id=2093997597]
 stream = ExtResource("29_wi073")
 
+[node name="EmptyPistolMag" type="AudioStreamPlayer2D" parent="SoundEffects" unique_id=576565993]
+stream = ExtResource("54_7hljr")
+
 [node name="Run" type="AudioStreamPlayer2D" parent="SoundEffects" unique_id=1452819850]
 stream = ExtResource("57_rjrsu")
 
@@ -558,8 +580,28 @@ stream = ExtResource("57_rjrsu")
 stream = ExtResource("58_7hljr")
 pitch_scale = 0.7
 
+[node name="Hurt" type="AudioStreamPlayer2D" parent="SoundEffects" unique_id=1079551083]
+stream = ExtResource("56_rjrsu")
+
+[node name="Died" type="AudioStreamPlayer2D" parent="SoundEffects" unique_id=1299430538]
+stream = ExtResource("57_7hljr")
+
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=138336152]
 texture = SubResource("CompressedTexture2D_gn53q")
+
+[node name="MuzzlePosition" type="Node2D" parent="." unique_id=27178725]
+
+[node name="PointLight2D" type="PointLight2D" parent="MuzzlePosition" unique_id=2144049148]
+visible = false
+enabled = false
+color = Color(0.8348868, 0.625686, 7.70092e-07, 1)
+
+[node name="PointLight2D2" type="PointLight2D" parent="MuzzlePosition" unique_id=110514848]
+scale = Vector2(0.6, 0.6)
+enabled = false
+color = Color(0.979243, 0.8462427, 0.39332092, 1)
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_rjrsu")
 
 [connection signal="animation_finished" from="Body/GrappleSprite" to="." method="_on_grapple_sprite_animation_finished"]
 [connection signal="timeout" from="ReloadTimer" to="." method="_on_reload_timer_timeout"]

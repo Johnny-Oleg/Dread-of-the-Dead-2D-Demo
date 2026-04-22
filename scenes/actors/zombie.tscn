@@ -3,7 +3,9 @@
 [ext_resource type="Script" uid="uid://kwwdtf82vdtx" path="res://scripts/zombie.gd" id="1_fk42m"]
 [ext_resource type="Texture2D" uid="uid://b0jig5r76eepy" path="res://assets/sprites/enemy/idle_front.png" id="2_4wk1i"]
 [ext_resource type="Texture2D" uid="uid://dooyxlcryr55p" path="res://assets/sprites/enemy/attack_right.png" id="2_167r3"]
+[ext_resource type="PackedScene" uid="uid://dgbyig70ot2b4" path="res://scenes/vfx/blood_splat.tscn" id="2_d6g05"]
 [ext_resource type="Texture2D" uid="uid://cuesevw0c7ju" path="res://assets/sprites/enemy/idle_left.png" id="3_6nedx"]
+[ext_resource type="PackedScene" uid="uid://douux5qq2xlv0" path="res://scenes/vfx/blood_pool.tscn" id="3_p8nef"]
 [ext_resource type="Texture2D" uid="uid://det60yy1uf4e2" path="res://assets/sprites/enemy/attack_right_2.png" id="3_tfd3c"]
 [ext_resource type="Texture2D" uid="uid://byl1rmvhoonmi" path="res://assets/sprites/enemy/attack_left.png" id="4_oud2d"]
 [ext_resource type="Texture2D" uid="uid://c36aw3wp5iqq" path="res://assets/sprites/enemy/idle_right.png" id="4_w465y"]
@@ -36,7 +38,11 @@
 [ext_resource type="Texture2D" uid="uid://djj8vy6pb2lkx" path="res://assets/sprites/enemy/sit_front_right.png" id="19_3em6j"]
 [ext_resource type="Texture2D" uid="uid://chimstnq4tnlq" path="res://assets/sprites/enemy/sit_up.png" id="24_lwipm"]
 [ext_resource type="Texture2D" uid="uid://cfsaqfpdlpp63" path="res://assets/sprites/enemy/walk_down_2.png" id="26_ljkrq"]
+[ext_resource type="Texture2D" uid="uid://b6lnjwctru7d5" path="res://assets/sprites/enemy/walk_down_3.png" id="27_jd2mn"]
+[ext_resource type="Texture2D" uid="uid://boey0vexkoiea" path="res://assets/sprites/enemy/walk_left_2.png" id="29_3em6j"]
 [ext_resource type="Texture2D" uid="uid://duwdv4kf03y0c" path="res://assets/sprites/enemy/walk_up_2.png" id="30_d6g05"]
+[ext_resource type="Texture2D" uid="uid://btti4xnevbi4l" path="res://assets/sprites/enemy/walk_left_3.png" id="30_ljkrq"]
+[ext_resource type="Texture2D" uid="uid://dd22t2vcedf1g" path="res://assets/sprites/enemy/walk_right_2.png" id="30_lwipm"]
 [ext_resource type="Texture2D" uid="uid://70g3efc1002x" path="res://assets/sprites/enemy/walk_up_3.png" id="31_p8nef"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_idork"]
@@ -289,21 +295,33 @@ animations = [{
 }, {
 "duration": 3.0,
 "texture": ExtResource("26_ljkrq")
+}, {
+"duration": 3.0,
+"texture": ExtResource("27_jd2mn")
 }],
 "loop": true,
 "name": &"walk_down",
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 3.0,
 "texture": ExtResource("7_nv8q1")
+}, {
+"duration": 3.0,
+"texture": ExtResource("29_3em6j")
+}, {
+"duration": 3.0,
+"texture": ExtResource("30_ljkrq")
 }],
 "loop": true,
 "name": &"walk_left",
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 3.0,
+"texture": ExtResource("30_lwipm")
+}, {
+"duration": 3.0,
 "texture": ExtResource("8_4dawi")
 }],
 "loop": true,
@@ -335,10 +353,13 @@ radius = 64.28063
 size = Vector2(102, 190.5)
 
 [node name="Zombie" type="CharacterBody2D" unique_id=493500758 groups=["enemies", "zombie"]]
+y_sort_enabled = true
 collision_layer = 4
 collision_mask = 7
 motion_mode = 1
 script = ExtResource("1_fk42m")
+blood_splat_scene = ExtResource("2_d6g05")
+blood_pool_scene = ExtResource("3_p8nef")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=140206386]
 shape = SubResource("RectangleShape2D_idork")
@@ -347,9 +368,8 @@ shape = SubResource("RectangleShape2D_idork")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Body" unique_id=1680198091]
 sprite_frames = SubResource("SpriteFrames_7fncv")
-animation = &"downed_up"
-frame = 1
-frame_progress = 1.0
+animation = &"walk_left"
+frame_progress = 0.0552978
 
 [node name="Hitbox" type="Area2D" parent="." unique_id=1802076305]
 visible = false

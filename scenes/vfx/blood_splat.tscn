@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://dgbyig70ot2b4"]
+
+[ext_resource type="Texture2D" uid="uid://uccopocbnco8" path="res://assets/sprites/enemy/blood_splat.png" id="1_cadup"]
+[ext_resource type="Script" uid="uid://28wftypa152" path="res://scripts/blood_splat.gd" id="2_r2rcs"]
+
+[node name="BloodSplat" type="Sprite2D" unique_id=931431644]
+z_index = 5
+texture = ExtResource("1_cadup")
+script = ExtResource("2_r2rcs")

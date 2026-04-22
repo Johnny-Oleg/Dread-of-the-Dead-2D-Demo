@@ -4,6 +4,8 @@ extends Node2D
 @export var room_name: String = "" 
 @onready var background = $RoomBG # Ensure your background Sprite2D is named this!
 var player_scene = preload("res://scenes/actors/player.tscn")
+@onready var howl_timer = $Timer
+@onready var howl_sfx = $HowlPlayer
 
 func _ready():
 	if room_name == "":
@@ -12,9 +14,11 @@ func _ready():
 	
 	WorldState.current_room_name = room_name
 	
+	setup_room_audio()
 	setup_camera_limits()
 	spawn_player()
 	sync_room_state()
+	#bgm.play()
 	
 	# test ui optional DELETE later
 	# --- Tell the UI to update its enemy tracking ---
@@ -140,3 +144,16 @@ func spawn_player():
 	await get_tree().process_frame # Wait 1 frame for Arthur to "exist"
 	setup_camera_limits()
 	
+func setup_room_audio():
+	# 1. Handle Background Music
+	if room_name == "SaveRoom":
+		SoundManager.play_safe()
+	else:
+		SoundManager.play_creepy()
+
+	# 2. Handle Specific Room Ambience
+	if room_name == "DiningRoom":
+		SoundManager.start_dining_ambience()
+	else:
+		# If we aren't in the Dining Room, make sure the timer is off
+		SoundManager.stop_dining_ambience()
