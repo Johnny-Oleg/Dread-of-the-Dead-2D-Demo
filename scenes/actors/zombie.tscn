@@ -46,7 +46,7 @@
 [ext_resource type="Texture2D" uid="uid://70g3efc1002x" path="res://assets/sprites/enemy/walk_up_3.png" id="31_p8nef"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_idork"]
-size = Vector2(64.5, 72)
+size = Vector2(63, 69)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_7fncv"]
 animations = [{
@@ -362,14 +362,14 @@ blood_splat_scene = ExtResource("2_d6g05")
 blood_pool_scene = ExtResource("3_p8nef")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=140206386]
+position = Vector2(3.5, 61.5)
 shape = SubResource("RectangleShape2D_idork")
 
 [node name="Body" type="Node2D" parent="." unique_id=873943492]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Body" unique_id=1680198091]
 sprite_frames = SubResource("SpriteFrames_7fncv")
-animation = &"walk_left"
-frame_progress = 0.0552978
+animation = &"idle_down"
 
 [node name="Hitbox" type="Area2D" parent="." unique_id=1802076305]
 visible = false

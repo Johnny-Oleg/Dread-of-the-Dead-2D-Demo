@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://b3b53qvop862v"]
 
 [ext_resource type="Script" uid="uid://dqx72i77l6fbk" path="res://scripts/item_slot.gd" id="1_uw4km"]
+[ext_resource type="AudioStream" uid="uid://cpnrcxc8sg62h" path="res://assets/audio/bgm/cursor_move.WAV" id="2_obwa2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uw4km"]
 content_margin_left = 0.0
@@ -65,3 +66,6 @@ offset_right = 124.0
 offset_bottom = 92.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_uw4km")
+
+[node name="Cursor" type="AudioStreamPlayer2D" parent="." unique_id=1922759383]
+stream = ExtResource("2_obwa2")

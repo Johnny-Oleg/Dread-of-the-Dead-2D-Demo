@@ -1,0 +1,217 @@
+[gd_scene format=3 uid="uid://4pdvq0i0wtqo"]
+
+[ext_resource type="Script" uid="uid://beuypcccafsa2" path="res://scripts/room_manager.gd" id="1_slb67"]
+[ext_resource type="Texture2D" uid="uid://dwsgjwk5jsunl" path="res://assets/sprites/locations/library.png" id="2_7p1ic"]
+[ext_resource type="PackedScene" uid="uid://bul6bq4ipt3fb" path="res://scenes/items/world_item.tscn" id="3_ba7xh"]
+[ext_resource type="Resource" uid="uid://dv6co0i5n2id8" path="res://resources/pistol_ammo.tres" id="4_uxmpq"]
+[ext_resource type="Resource" uid="uid://dyih718583yc2" path="res://resources/green_medicine.tres" id="5_qmdcs"]
+[ext_resource type="PackedScene" uid="uid://b1yjcowccdgc2" path="res://scenes/actors/zombie.tscn" id="6_ow6ea"]
+[ext_resource type="PackedScene" uid="uid://b6iiv8qkk13v4" path="res://scenes/vfx/light_flicker.tscn" id="7_5dd8q"]
+[ext_resource type="Texture2D" uid="uid://c1puoavvgv878" path="res://assets/sprites/locations/bookshelve.png" id="8_ba7xh"]
+[ext_resource type="Texture2D" uid="uid://0l630oiqnqlk" path="res://assets/sprites/locations/chandelier.png" id="8_u6v2a"]
+[ext_resource type="Texture2D" uid="uid://ph1ptw36786v" path="res://assets/sprites/locations/double_door.png" id="8_uxmpq"]
+[ext_resource type="PackedScene" uid="uid://cnvfsw842fssq" path="res://scenes/rooms/door.tscn" id="9_w1h6y"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_slb67"]
+vertices = PackedVector2Array(1286, 880, 1433.1172, 834.8828, 1699.7109, 835.72656, 1698.1328, 949.96875, 1286, 780, 1434, 643.9531, 10.8828125, 946.02344, 971.8672, 880, 954.22656, 416.39844, 973.1172, 780, 736.71875, 879, 739.28906, 788, 752.4297, 417.35938, 417.85938, 879, 10.109375, 877.03125, 272, 878.03906, 1195.4063, 395.8828, 1193.6875, 346.1797, 1391.8594, 346.96094, 1391, 403.78906, 1434.8516, 402.9297, 953.3672, 345.35938, 1034.4375, 346.04688, 1034.4375, 395.8828, 272, 788.96094, 9.078125, 789.96094, 9.921875, 690, 277.20313, 690, 419.14063, 788, 682.28125, 407.02344, 682.28125, 338.5078, 751.5625, 339.1797, 275.78125, 444, 10.0703125, 444, 10.7890625, 337.60156, 520.0625, 340.09375, 520.9219, 407.02344, 12, 619.03125, 12, 510, 277.21875, 510, 275.79688, 620.03906)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(1, 0, 4, 5), PackedInt32Array(0, 3, 6, 7), PackedInt32Array(8, 9, 7, 10, 11, 12), PackedInt32Array(10, 7, 6, 13), PackedInt32Array(13, 6, 14, 15), PackedInt32Array(16, 17, 18, 19), PackedInt32Array(19, 20, 5), PackedInt32Array(8, 21, 22, 23, 9), PackedInt32Array(24, 25, 26, 27, 28), PackedInt32Array(29, 30, 31, 12), PackedInt32Array(32, 33, 34, 35, 36), PackedInt32Array(37, 38, 39, 40), PackedInt32Array(13, 15, 24, 28), PackedInt32Array(28, 39, 32, 36, 29, 12, 11), PackedInt32Array(16, 19, 5, 4, 9, 23), PackedInt32Array(40, 39, 28, 27)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(1, 956, 0, 867, 262, 868, 262, 799, -1, 800, 0, 680, 267, 680, 266, 630, 2, 629, 2, 500, 267, 500, 266, 454, 0, 454, 0.8574996, 327.56485, 529.93475, 330.13736, 530.79224, 397.0223, 672.27966, 397.0223, 672.27966, 328.42233, 761.45966, 329.27985, 762.31714, 407.31232, 944.10706, 406.4548, 943.2496, 335.28235, 1044.4346, 336.13983, 1044.4346, 385.87482, 1185.0645, 385.87482, 1183.3495, 336.13983, 1402.0118, 336.99734, 1401.1543, 393.59232, 1444.8868, 392.7348, 1444, 644, 1443.1719, 824.9146, 1709.8542, 825.7721, 1708, 960), PackedVector2Array(428, 869, 727, 869, 729, 798, 429, 798), PackedVector2Array(982, 870, 1276, 870, 1276, 790, 983, 790)])
+
+[sub_resource type="Gradient" id="Gradient_p2s1j"]
+offsets = PackedFloat32Array(0, 0.7669173)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_orlim"]
+gradient = SubResource("Gradient_p2s1j")
+fill = 1
+fill_from = Vector2(0.5025381, 0.48730963)
+
+[node name="Library" type="Node2D" unique_id=393312871]
+script = ExtResource("1_slb67")
+room_name = "Library"
+
+[node name="RoomBG" type="Sprite2D" parent="." unique_id=185581432]
+z_index = -2
+position = Vector2(997, 563)
+scale = Vector2(1.4482665, 1.4553136)
+texture = ExtResource("2_7p1ic")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=531275237]
+scale = Vector2(1.1661813, 1.1661813)
+navigation_polygon = SubResource("NavigationPolygon_slb67")
+
+[node name="YSort" type="Node2D" parent="." unique_id=1764450533]
+y_sort_enabled = true
+
+[node name="PistolAmmo_01" parent="YSort" unique_id=175435458 groups=["world_items"] instance=ExtResource("3_ba7xh")]
+position = Vector2(1156, 468)
+scale = Vector2(0.04, 0.04)
+item_data = ExtResource("4_uxmpq")
+state_id = "PistolAmmo_01"
+
+[node name="GreenMedicine_01" parent="YSort" unique_id=751566969 groups=["world_items"] instance=ExtResource("3_ba7xh")]
+position = Vector2(38, 448)
+scale = Vector2(0.04, 0.04)
+item_data = ExtResource("5_qmdcs")
+state_id = "GreenMedicine_01"
+
+[node name="Zombie_01" parent="YSort" unique_id=493500758 instance=ExtResource("6_ow6ea")]
+position = Vector2(729, 536)
+state_id = "Zombie_01"
+
+[node name="Zombie_02" parent="YSort" unique_id=1033533094 instance=ExtResource("6_ow6ea")]
+position = Vector2(1577, 410)
+state_id = "Zombie_02"
+
+[node name="Zombie_03" parent="YSort" unique_id=606951170 instance=ExtResource("6_ow6ea")]
+position = Vector2(394, 406)
+state_id = "Zombie_03"
+
+[node name="Bookshelve1" type="Sprite2D" parent="YSort" unique_id=875010885]
+y_sort_enabled = true
+position = Vector2(679, 875)
+scale = Vector2(1.4564769, 1.4571732)
+texture = ExtResource("8_ba7xh")
+
+[node name="Bookshelve2" type="Sprite2D" parent="YSort" unique_id=1438712517]
+y_sort_enabled = true
+position = Vector2(1324, 875.00006)
+scale = Vector2(1.4564769, 1.4571732)
+texture = ExtResource("8_ba7xh")
+
+[node name="Bookshelve3" type="Sprite2D" parent="YSort" unique_id=1039567152]
+y_sort_enabled = true
+position = Vector2(141, 875.00006)
+scale = Vector2(1.4564769, 1.4571732)
+texture = ExtResource("8_ba7xh")
+
+[node name="Bookshelve4" type="Sprite2D" parent="YSort" unique_id=1974689410]
+y_sort_enabled = true
+position = Vector2(142, 658.00006)
+scale = Vector2(1.4564769, 1.4571732)
+texture = ExtResource("8_ba7xh")
+
+[node name="Bookshelve5" type="Sprite2D" parent="YSort" unique_id=824766941]
+y_sort_enabled = true
+position = Vector2(141, 419.00012)
+scale = Vector2(1.4564769, 1.4571732)
+texture = ExtResource("8_ba7xh")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="YSort" unique_id=509396888]
+collision_mask = 0
+
+[node name="Bookshelve1" type="CollisionPolygon2D" parent="YSort/StaticBody2D" unique_id=1329467703]
+position = Vector2(1172, 878.9999)
+scale = Vector2(7.389532, 2.1145217)
+polygon = PackedVector2Array(-3.897812, 16.307098, 42.74121, 16.307098, 42.74121, 42.45999, -3.897812, 42.7677)
+
+[node name="Bookshelve2" type="CollisionPolygon2D" parent="YSort/StaticBody2D" unique_id=1046618792]
+position = Vector2(534.4115, 885.392)
+scale = Vector2(6.955194, 2.0827558)
+polygon = PackedVector2Array(-3.897812, 16.307098, 42.74121, 16.307098, 42.74121, 28.82956, 42.74121, 42.45999, -3.897812, 42.7677)
+
+[node name="Bookshelve3" type="CollisionPolygon2D" parent="YSort/StaticBody2D" unique_id=67236336]
+position = Vector2(-8.999985, 891.03015)
+scale = Vector2(7.4401207, 1.9321201)
+polygon = PackedVector2Array(-3.897812, 16.307098, 42.74121, 16.307098, 42.74121, 42.45999, -3.897812, 42.7677)
+
+[node name="Bookshelve4" type="CollisionPolygon2D" parent="YSort/StaticBody2D" unique_id=372933353]
+position = Vector2(-5.999996, 675.0535)
+scale = Vector2(7.4401207, 2.1683183)
+polygon = PackedVector2Array(-3.897812, 16.307098, 42.74121, 16.307098, 42.74121, 42.45999, -3.897812, 42.7677)
+
+[node name="Bookshelve5" type="CollisionPolygon2D" parent="YSort/StaticBody2D" unique_id=642159028]
+position = Vector2(-5.999996, 471.2628)
+scale = Vector2(7.4401207, 2.2627985)
+polygon = PackedVector2Array(-3.897812, 16.307098, 42.74121, 16.307098, 42.74121, 42.45999, -3.897812, 42.7677)
+
+[node name="Doors" type="Sprite2D" parent="YSort" unique_id=613194862]
+position = Vector2(1004.00006, 1153)
+scale = Vector2(0.8771622, 0.8771622)
+texture = ExtResource("8_uxmpq")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=240839078]
+color = Color(0.62967473, 0.62967485, 0.62967455, 1)
+
+[node name="BottomLight" type="Node2D" parent="." unique_id=291792960]
+
+[node name="LightFlicker" parent="BottomLight" unique_id=151647620 instance=ExtResource("7_5dd8q")]
+position = Vector2(45, 185)
+
+[node name="LightFlicker2" parent="BottomLight" unique_id=1727227075 instance=ExtResource("7_5dd8q")]
+position = Vector2(362, 184)
+texture = SubResource("GradientTexture2D_orlim")
+
+[node name="LightFlicker3" parent="BottomLight" unique_id=400336390 instance=ExtResource("7_5dd8q")]
+position = Vector2(701, 375)
+scale = Vector2(1, 1)
+texture = SubResource("GradientTexture2D_orlim")
+
+[node name="LightFlicker4" parent="BottomLight" unique_id=223061024 instance=ExtResource("7_5dd8q")]
+position = Vector2(1285, 365)
+scale = Vector2(1, 1)
+texture = SubResource("GradientTexture2D_orlim")
+
+[node name="LightFlicker5" parent="BottomLight" unique_id=1039241111 instance=ExtResource("7_5dd8q")]
+position = Vector2(1949, 183)
+scale = Vector2(1, 1)
+texture = SubResource("GradientTexture2D_orlim")
+
+[node name="Chandeliers" type="Node2D" parent="." unique_id=300435370]
+
+[node name="Chandelier1" type="Sprite2D" parent="Chandeliers" unique_id=775018979]
+position = Vector2(471.50003, 103.04849)
+scale = Vector2(0.42058817, 0.42058808)
+texture = ExtResource("8_u6v2a")
+metadata/_edit_group_ = true
+
+[node name="LightFlicker" parent="Chandeliers" unique_id=1583260504 instance=ExtResource("7_5dd8q")]
+position = Vector2(473, 124.28234)
+scale = Vector2(2.5, 2.5)
+texture = SubResource("GradientTexture2D_orlim")
+min_energy = 0.5
+max_energy = 1.5
+metadata/_edit_group_ = true
+
+[node name="Chandelier2" type="Sprite2D" parent="Chandeliers" unique_id=1132324641]
+position = Vector2(855.5, 61.048492)
+scale = Vector2(0.42058817, 0.42058808)
+texture = ExtResource("8_u6v2a")
+metadata/_edit_group_ = true
+
+[node name="LightFlicker2" parent="Chandeliers" unique_id=1604898311 instance=ExtResource("7_5dd8q")]
+position = Vector2(857, 79.28235)
+scale = Vector2(2.5, 2.5)
+texture = SubResource("GradientTexture2D_orlim")
+metadata/_edit_group_ = true
+
+[node name="Chandelier3" type="Sprite2D" parent="Chandeliers" unique_id=463898828]
+position = Vector2(1328.5, 101.04849)
+scale = Vector2(0.42058817, 0.42058808)
+texture = ExtResource("8_u6v2a")
+metadata/_edit_group_ = true
+
+[node name="LightFlicker3" parent="Chandeliers" unique_id=2031720146 instance=ExtResource("7_5dd8q")]
+position = Vector2(1328, 118.28234)
+scale = Vector2(2.5, 2.5)
+texture = SubResource("GradientTexture2D_orlim")
+metadata/_edit_group_ = true
+
+[node name="InvisibleWalls" type="StaticBody2D" parent="." unique_id=393025989]
+
+[node name="Frame" type="CollisionPolygon2D" parent="InvisibleWalls" unique_id=2030800768]
+position = Vector2(0.4410584, -101.79302)
+scale = Vector2(1.7384446, 1.7082748)
+polygon = PackedVector2Array(-129, -5, 1268, -5, 1269, 801, -122, 806, -126, 39, -4, 38, -3, 715, 1151, 715, 1150, 66, -129, 66)
+
+[node name="Walls" type="CollisionPolygon2D" parent="InvisibleWalls" unique_id=100791883]
+polygon = PackedVector2Array(3, 388, 612, 392, 612, 468, 791, 468, 790, 389, 881, 389, 881, 478, 1110, 478, 1109, 392, 1208, 392, 1210, 457, 1389, 458, 1388, 397, 1624, 399, 1625, 463, 1677, 463, 1676, 969, 1994, 968, 1993, 15, 0, 13)
+
+[node name="Spawn_Library_Entrance" type="Marker2D" parent="." unique_id=388292117 groups=["spawn_points"]]
+position = Vector2(1000, 1036)
+
+[node name="Corridor_East" parent="." unique_id=2079185188 instance=ExtResource("9_w1h6y")]
+position = Vector2(995, 1143)
+scale = Vector2(2, 1)
+target_room_path = "uid://dorgmjunmif37"
+target_door_id = "Corridor_East"

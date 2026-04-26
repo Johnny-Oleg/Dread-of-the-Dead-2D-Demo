@@ -5,21 +5,32 @@ extends Node
 @onready var haunted_player = AudioStreamPlayer.new()
 @onready var ambient_player = AudioStreamPlayer.new() # For the dog!
 @onready var ambient_timer = Timer.new()
+@onready var clock_player = AudioStreamPlayer.new() # For the clock!
 
 func _ready():
 	add_child(creepy_player)
 	add_child(safe_player)
 	add_child(ambient_player)
 	add_child(ambient_timer)
+	add_child(clock_player)
 	
 	# Load streams
 	creepy_player.stream = load("res://assets/audio/bgm/castle_bgm_2.mp3")
 	haunted_player.stream = load("res://assets/audio/bgm/castle_bgm_3.mp3")
 	safe_player.stream = load("res://assets/audio/bgm/save_room_bgm.mp3")
 	ambient_player.stream = load("res://assets/audio/bgm/dog_howling.wav")
+	clock_player.stream = load("res://assets/audio/bgm/clock.WAV")
+
+	creepy_player.bus = "Music"
+	safe_player.bus = "Music"
+	clock_player.bus = "Ambience"
+	ambient_player.bus = "Ambience"
 
 	# Connect the timer
 	ambient_timer.timeout.connect(_on_ambient_timeout)
+	
+	#if clock_player.stream is AudioStreamWAV:
+		#clock_player.stream.loop_mode = AudioStreamWAV.LOOP_FORWARD
 
 func play_creepy():
 	if creepy_player.playing: return
@@ -52,6 +63,16 @@ func _on_ambient_timeout():
 	# Randomize next howl between 30 and 45 seconds
 	ambient_timer.wait_time = randf_range(30.0, 45.0)
 	ambient_timer.start()
+
+func start_mainhall_ambience():
+	if not clock_player.playing:
+		clock_player.play()
+		clock_player.volume_db = -10
+		print("Clock started ticking...")
+
+func stop_mainhall_ambience():
+	clock_player.stop()
+	print("Clock stopped.")
 
 # --- FADE LOGIC ---
 func fade_in(player):

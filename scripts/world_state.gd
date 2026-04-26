@@ -32,10 +32,10 @@ var rooms = {
 				"type": "ammo",
 				"picked": false
 			},
-			"GreenMedicine_01": {
-				"type": "healing",
-				"picked": false
-			}
+			#"GreenMedicine_01": {
+				#"type": "healing",
+				#"picked": false
+			#}
 		},
 		"enemies": {
 			"Zombie_01": {
@@ -55,7 +55,7 @@ var rooms = {
 				"type": "healing",
 				"picked": false
 			},
-			"PistolAmmo_02": {
+			"PistolAmmo_01": {
 				"type": "ammo",
 				"picked": false
 			}
@@ -76,12 +76,16 @@ var rooms = {
 		}
 	},
 
-	"SaveRoom1": {
+	"SaveRoom": {
 		"items": {
 			"GreenMedicine_01": {
 				"type": "healing",
 				"picked": false
-			}
+			},
+			"PistolAmmo_01": {
+				"type": "ammo",
+				"picked": false
+			},
 		},
 		"enemies": {
 			# Save rooms usually empty
@@ -124,6 +128,7 @@ func is_item_picked(room_name: String, item_id: String) -> bool:
 	return rooms[room_name]["items"][item_id]["picked"]
 
 func pick_item(room_name: String, item_id: String):
+
 	rooms[room_name]["items"][item_id]["picked"] = true
 	
 	

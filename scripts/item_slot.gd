@@ -5,6 +5,8 @@ extends Control
 @onready var icon_rect = $Icon 
 @onready var amount_label = $AmountLabel
 @onready var highlight = $ActiveHighLight # The gray cursor frame!
+@onready var cursor_sfx = $Cursor
+var can_play_sfx = false
 
 func _ready():
 	# Sever the memory link so starting items don't edit the master .tres file!
@@ -20,6 +22,16 @@ func _ready():
 	focus_exited.connect(_on_focus_exited)
 	
 	update_slot()
+	
+# 2. Godot's built-in visibility listener
+func _notification(what):
+	# This automatically fires whenever the inventory UI is shown or hidden
+	if what == NOTIFICATION_VISIBILITY_CHANGED:
+		if is_visible_in_tree():
+			# Mute the slot, wait exactly 1 frame for the auto-focus to happen, then unmute
+			can_play_sfx = false
+			await get_tree().process_frame
+			can_play_sfx = true
 
 # If the mouse touches this slot, force the WASD system to select it too
 func _on_mouse_entered():
@@ -27,8 +39,10 @@ func _on_mouse_entered():
 
 func _on_focus_entered():
 	highlight.visible = true
-	# We will create this group and function in Phase 4!
 	get_tree().call_group("inventory_ui", "update_description", current_item)
+	# Only play the sound if our 1-frame opening mute is over
+	if can_play_sfx:
+		cursor_sfx.play()
 
 func _on_focus_exited():
 	highlight.visible = false

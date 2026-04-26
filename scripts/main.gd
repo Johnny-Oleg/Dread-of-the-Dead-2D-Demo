@@ -7,7 +7,8 @@ const GAME_UI_SCENE = preload("res://scenes/ui/test_ui.tscn")
 const GAME_OVER_SCENE = preload("res://scenes/ui/game_over.tscn")
 const INVENTORY_SCENE = preload("res://scenes/ui/inventory.tscn")
 
-@onready var pickup_prompt = $UI/PickUp/PickupPrompt # Adjust path if necessary
+@onready var pickup_prompt = $UI/PickUp/PickupPrompt
+@onready var item_icon = $UI/PickUp/PickupPrompt/ItemImage
 @onready var prompt_message = $UI/PickUp/PickupPrompt/Message
 @onready var yes_button = $UI/PickUp/PickupPrompt/HBoxContainer/YesButton
 @onready var no_button = $UI/PickUp/PickupPrompt/HBoxContainer/NoButton
@@ -159,6 +160,7 @@ func show_pickup_prompt(world_item_node: Area2D):
 	var item_data = current_world_item.get_item_data()
 	
 	prompt_message.text = "Will you take the " + item_data.name + "?"
+	item_icon.texture = item_data.icon
 	
 	get_tree().paused = true
 	pickup_prompt.visible = true
@@ -199,6 +201,11 @@ func _on_button_focus_exited(btn):
 	btn.modulate = Color(1, 1, 1) # Back to normal	
 	
 func change_room(path: String):
+	var player = get_tree().get_first_node_in_group("player")
+	
+	if player.is_grabbed:
+		return
+	
 	if current_room:
 		current_room.queue_free() # Delete old room
 	

@@ -19,6 +19,11 @@ func _ready():
 	add_child(color_rect)
 
 func fade_to_room(scene_path: String, spawn_id: String):
+	var player = get_tree().get_first_node_in_group("player")
+	
+	if player.is_grabbed:
+		return
+	
 	# 1. Store where we want to spawn
 	next_spawn_id = spawn_id
 	

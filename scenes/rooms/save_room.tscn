@@ -1,0 +1,84 @@
+[gd_scene format=3 uid="uid://bykudanhglrqj"]
+
+[ext_resource type="Texture2D" uid="uid://ckysl66ix6wyg" path="res://assets/sprites/locations/save_room.png" id="1_cjmcn"]
+[ext_resource type="Script" uid="uid://beuypcccafsa2" path="res://scripts/room_manager.gd" id="1_drs4g"]
+[ext_resource type="PackedScene" uid="uid://bul6bq4ipt3fb" path="res://scenes/items/world_item.tscn" id="1_n4dw2"]
+[ext_resource type="Resource" uid="uid://dv6co0i5n2id8" path="res://resources/pistol_ammo.tres" id="2_m0g4d"]
+[ext_resource type="Resource" uid="uid://dyih718583yc2" path="res://resources/green_medicine.tres" id="3_u76nd"]
+[ext_resource type="PackedScene" uid="uid://b6iiv8qkk13v4" path="res://scenes/vfx/light_flicker.tscn" id="6_drs4g"]
+[ext_resource type="PackedScene" uid="uid://cnvfsw842fssq" path="res://scenes/rooms/door.tscn" id="8_w7kdh"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_q0sjv"]
+vertices = PackedVector2Array(63.03125, 453, 63.960938, 151.14844, 175.4375, 152.85156, 178.45313, 218, 454.8828, 453, 342, 218, 452.1172, 217, 344.27344, 217, 342, 181, 343.27344, 181)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 0, 3, 5), PackedInt32Array(6, 4, 5, 7), PackedInt32Array(7, 5, 8, 9)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(53, 463, 54, 141, 185, 143, 188, 208, 332, 208, 332, 171, 353, 171, 354, 207, 462, 207, 465, 463)])
+
+[sub_resource type="Gradient" id="Gradient_p2s1j"]
+offsets = PackedFloat32Array(0, 0.7669173)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_w7kdh"]
+gradient = SubResource("Gradient_p2s1j")
+fill = 1
+fill_from = Vector2(0.5025381, 0.48730963)
+
+[node name="SaveRoom" type="Node2D" unique_id=1015672556]
+script = ExtResource("1_drs4g")
+room_name = "SaveRoom"
+
+[node name="RoomBG" type="Sprite2D" parent="." unique_id=1445502618]
+position = Vector2(259, 257)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_cjmcn")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=1933235317]
+navigation_polygon = SubResource("NavigationPolygon_q0sjv")
+
+[node name="YSort" type="Node2D" parent="." unique_id=780669904]
+y_sort_enabled = true
+
+[node name="PistolAmmo_01" parent="YSort" unique_id=175435458 groups=["world_items"] instance=ExtResource("1_n4dw2")]
+position = Vector2(93, 191)
+scale = Vector2(0.04, 0.04)
+item_data = ExtResource("2_m0g4d")
+state_id = "PistolAmmo_01"
+
+[node name="GreenMedicine_01" parent="YSort" unique_id=1245327320 groups=["world_items"] instance=ExtResource("1_n4dw2")]
+position = Vector2(426, 334)
+scale = Vector2(0.04, 0.04)
+item_data = ExtResource("3_u76nd")
+state_id = "GreenMedicine_01"
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1895063901]
+color = Color(0.62967473, 0.62967485, 0.62967455, 1)
+
+[node name="OilLamp" type="Node2D" parent="." unique_id=553641971]
+
+[node name="PointLight2D" type="PointLight2D" parent="OilLamp" unique_id=691561879]
+visible = false
+position = Vector2(401.00003, 376)
+scale = Vector2(1.5, 1.5)
+color = Color(0.979243, 0.8462427, 0.39332092, 1)
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_w7kdh")
+
+[node name="LightFlicker" parent="OilLamp" unique_id=151647620 instance=ExtResource("6_drs4g")]
+position = Vector2(311.00003, 114)
+
+[node name="InvisibleWalls" type="StaticBody2D" parent="." unique_id=1685283553]
+
+[node name="Frame" type="CollisionPolygon2D" parent="InvisibleWalls" unique_id=515434801]
+position = Vector2(0.13302875, -62.844456)
+scale = Vector2(0.45064375, 0.8061036)
+polygon = PackedVector2Array(-129, -5, 1268, -5, 1269, 801, -122, 806, -126, 39, -4, 38, -3, 715, 1151, 715, 1150, 66, -129, 66)
+
+[node name="Walls" type="CollisionPolygon2D" parent="InvisibleWalls" unique_id=1891442105]
+polygon = PackedVector2Array(1, 514, 203, 514, 203, 460, 58, 460, 58, 142, 186, 142, 187, 205, 454, 206, 455, 458, 312, 458, 312, 513, 516, 513, 514, 4, -1, 3)
+
+[node name="Spawn_SaveRoom_Entrance" type="Marker2D" parent="." unique_id=1944074868 groups=["spawn_points"]]
+position = Vector2(258, 417)
+
+[node name="Corridor_North_West_Entrance" parent="." unique_id=2079185188 instance=ExtResource("8_w7kdh")]
+position = Vector2(257, 500)
+target_room_path = "uid://6pk5x8bsnudw"
+target_door_id = "Corridor_North_West"

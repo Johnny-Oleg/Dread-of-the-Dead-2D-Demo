@@ -60,7 +60,7 @@
 [ext_resource type="AudioStream" uid="uid://dei0o1dkf4j2w" path="res://assets/audio/sfx/player_sfx/walk_sfx.WAV" id="58_7hljr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3vary"]
-size = Vector2(68, 91)
+size = Vector2(68, 65)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_qe8hj"]
 animations = [{
@@ -481,7 +481,7 @@ motion_mode = 1
 script = ExtResource("1_qe8hj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1971721090]
-position = Vector2(-1, 45.5)
+position = Vector2(-1, 58.5)
 shape = SubResource("RectangleShape2D_3vary")
 
 [node name="Body" type="Node2D" parent="." unique_id=766899656]

@@ -4,16 +4,16 @@
 [ext_resource type="Texture2D" uid="uid://c87kmg5sl2xot" path="res://assets/sprites/locations/dining_room_bg.png" id="1_wx7th"]
 [ext_resource type="Texture2D" uid="uid://dg41xp5bcqtcu" path="res://assets/sprites/locations/dining_room_fg.png" id="2_nrcdl"]
 [ext_resource type="PackedScene" uid="uid://b1yjcowccdgc2" path="res://scenes/actors/zombie.tscn" id="3_45k0p"]
-[ext_resource type="Resource" uid="uid://dyih718583yc2" path="res://resources/green_medicine.tres" id="4_nsgnh"]
 [ext_resource type="PackedScene" uid="uid://bul6bq4ipt3fb" path="res://scenes/items/world_item.tscn" id="4_w5wmq"]
 [ext_resource type="Resource" uid="uid://dv6co0i5n2id8" path="res://resources/pistol_ammo.tres" id="5_nsgnh"]
 [ext_resource type="PackedScene" uid="uid://b6iiv8qkk13v4" path="res://scenes/vfx/light_flicker.tscn" id="9_80ff7"]
+[ext_resource type="Texture2D" uid="uid://0l630oiqnqlk" path="res://assets/sprites/locations/chandelier.png" id="9_p2s1j"]
 [ext_resource type="PackedScene" uid="uid://cnvfsw842fssq" path="res://scenes/rooms/door.tscn" id="10_p2s1j"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_45k0p"]
-vertices = PackedVector2Array(960.3281, 419.20313, 1132.25, 12.9375, 1148.7266, 647.96875, 958.6719, 469, 213.67969, 476, 264.53906, 476, 262.53906, 519.97656, -0.921875, 645.02344, 911.3906, 521.02344, 909.3906, 469, 3.921875, 7.046875, 215.3125, 424, 265.28906, 390.02344, 264.28906, 424, 908.65625, 388.97656, 909.65625, 418.1797)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 7), PackedInt32Array(8, 9, 3, 2), PackedInt32Array(8, 2, 7, 6), PackedInt32Array(4, 7, 10, 11), PackedInt32Array(12, 13, 11, 10), PackedInt32Array(12, 10, 1, 14), PackedInt32Array(14, 1, 0, 15)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(-6, -3, 1142, 3, 1159, 658, -11, 655), PackedVector2Array(950, 429, 900, 428, 899, 399, 275, 400, 274, 434, 225, 434, 224, 466, 275, 466, 273, 510, 901, 511, 899, 459, 949, 459)])
+vertices = PackedVector2Array(960.3281, 419.20313, 900.21094, 281.67188, 1147.8828, 282, 1152.4531, 646.8203, 958.6719, 469, 213.67969, 476, 264.53906, 476, 262.53906, 519.97656, -0.9609375, 645.0078, 911.3906, 521.02344, 909.3906, 469, 0.4609375, 280.4297, 215.3125, 424, 264.28906, 424, 246.53125, 280.78125, 265.28906, 390.02344, 909.65625, 418.1797, 908.65625, 388.97656, 898.5703, 273.03125, 806.96875, 281.53906, 809.9531, 270.9922, 647.10156, 281.3203, 516.1719, 281.14063, 519.3672, 270.8203, 643.40625, 270.8203, 332.5703, 280.8828, 255.10156, 269.21875, 324.10938, 269.21875)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 0, 3), PackedInt32Array(5, 6, 7, 8), PackedInt32Array(9, 10, 4, 3), PackedInt32Array(9, 3, 8, 7), PackedInt32Array(5, 8, 11, 12), PackedInt32Array(13, 12, 11, 14, 15), PackedInt32Array(0, 16, 17), PackedInt32Array(1, 0, 17), PackedInt32Array(18, 1, 17, 15, 19), PackedInt32Array(19, 20, 18), PackedInt32Array(21, 19, 15, 14), PackedInt32Array(22, 23, 24, 21), PackedInt32Array(22, 21, 14), PackedInt32Array(25, 22, 14), PackedInt32Array(25, 14, 26, 27)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-9.4963045, 270.42288, 1157.7578, 272.023, 1162.578, 656.8468, -11, 655), PackedVector2Array(950, 429, 900, 428, 899, 399, 275, 400, 274, 434, 225, 434, 224, 466, 275, 466, 273, 510, 901, 511, 899, 459, 949, 459), PackedVector2Array(250.06934, 259.22192, 329.20523, 259.22192, 346.6151, 283.22397, 233.45082, 281.62384), PackedVector2Array(796.1069, 283.22397, 802.43774, 260.82208, 906.8971, 263.22226, 910.8539, 284.02402), PackedVector2Array(512.0091, 260.82208, 650.4969, 260.82208, 659.20184, 285.62418, 504.0955, 286.42422)])
 
 [sub_resource type="Gradient" id="Gradient_p2s1j"]
 offsets = PackedFloat32Array(0, 0.7669173)
@@ -30,59 +30,57 @@ room_name = "DiningRoom"
 
 [node name="RoomBG" type="Sprite2D" parent="." unique_id=2105247640]
 z_index = -2
-position = Vector2(574.5812, 323.7125)
-scale = Vector2(0.83781797, 0.84189457)
+position = Vector2(737, 414)
+scale = Vector2(1.0706301, 1.0758395)
 texture = ExtResource("1_wx7th")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=1298605851]
+position = Vector2(12, 7.0000005)
+scale = Vector2(1.2636495, 1.2498943)
 navigation_polygon = SubResource("NavigationPolygon_45k0p")
 
 [node name="YSort" type="Node2D" parent="." unique_id=1050489627]
 y_sort_enabled = true
 
 [node name="PistolAmmo_01" parent="YSort" unique_id=175435458 groups=["world_items"] instance=ExtResource("4_w5wmq")]
-position = Vector2(491.99997, 572)
+position = Vector2(772, 746)
 scale = Vector2(0.04, 0.04)
 item_data = ExtResource("5_nsgnh")
 state_id = "PistolAmmo_01"
 
-[node name="GreemMedicine" parent="YSort" unique_id=1850882304 groups=["world_items"] instance=ExtResource("4_w5wmq")]
-position = Vector2(764, 565)
-scale = Vector2(0.04, 0.04)
-item_data = ExtResource("4_nsgnh")
-
 [node name="Zombie_01" parent="YSort" unique_id=493500758 instance=ExtResource("3_45k0p")]
-position = Vector2(730, 269)
+position = Vector2(657, 394)
 state_id = "Zombie_01"
 
 [node name="Zombie_02" parent="YSort" unique_id=1580677081 instance=ExtResource("3_45k0p")]
-position = Vector2(1005, 124)
+position = Vector2(1338, 487)
 state_id = "Zombie_02"
 
 [node name="Foreground" type="Sprite2D" parent="YSort" unique_id=540954127]
-position = Vector2(575, 323)
-scale = Vector2(0.9031094, 0.90514517)
+position = Vector2(737, 421.00003)
+scale = Vector2(1.13617, 1.12491)
 texture = ExtResource("2_nrcdl")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="YSort" unique_id=1151722788]
 collision_mask = 0
 
 [node name="Table" type="CollisionPolygon2D" parent="YSort/StaticBody2D" unique_id=1307684251]
-position = Vector2(281, 399)
+position = Vector2(373, 514)
+scale = Vector2(1.252172, 1.1536546)
 polygon = PackedVector2Array(-7, 0, 615, 1, 618, 111, -8, 109)
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="YSort" unique_id=1420251119]
 collision_mask = 0
 
 [node name="Chair" type="CollisionPolygon2D" parent="YSort/StaticBody2D2" unique_id=1656351132]
-position = Vector2(230, 421)
+position = Vector2(302, 541)
 polygon = PackedVector2Array(-6, 14, 44, 14, 44, 43, -6, 43)
 
 [node name="StaticBody2D3" type="StaticBody2D" parent="YSort" unique_id=508426159]
 collision_mask = 0
 
-[node name="Cahir2" type="CollisionPolygon2D" parent="YSort/StaticBody2D3" unique_id=1794579884]
-position = Vector2(905, 414)
+[node name="Chair2" type="CollisionPolygon2D" parent="YSort/StaticBody2D3" unique_id=1794579884]
+position = Vector2(1158, 537)
 polygon = PackedVector2Array(-6, 16, 44, 16, 44, 43, -6, 43)
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=393129127]
@@ -99,53 +97,71 @@ shadow_enabled = true
 texture = SubResource("GradientTexture2D_ueu1k")
 
 [node name="LightFlicker" parent="BottomLight" unique_id=151647620 instance=ExtResource("9_80ff7")]
+position = Vector2(518, 489)
 
 [node name="LightFlicker2" parent="BottomLight" unique_id=58745028 instance=ExtResource("9_80ff7")]
-position = Vector2(592, 373)
+position = Vector2(758, 489)
 texture = SubResource("GradientTexture2D_ueu1k")
 
 [node name="LightFlicker3" parent="BottomLight" unique_id=2032042337 instance=ExtResource("9_80ff7")]
-position = Vector2(740, 375)
+position = Vector2(945, 492)
 texture = SubResource("GradientTexture2D_ueu1k")
 
-[node name="UpperLight" type="Node2D" parent="." unique_id=1250610099]
+[node name="Chandeliers" type="Node2D" parent="." unique_id=1250610099]
 
-[node name="PointLight2D" type="PointLight2D" parent="UpperLight" unique_id=727312374]
-visible = false
-position = Vector2(286.00003, 149)
-scale = Vector2(1.5, 1.5)
-color = Color(0.979243, 0.8462427, 0.39332092, 1)
-shadow_enabled = true
-texture = SubResource("GradientTexture2D_ueu1k")
-texture_scale = 2.0
+[node name="Chandelier1" type="Sprite2D" parent="Chandeliers" unique_id=857038195]
+position = Vector2(285.50003, 116.76615)
+scale = Vector2(0.42058817, 0.42058808)
+texture = ExtResource("9_p2s1j")
+metadata/_edit_group_ = true
 
-[node name="LightFlicker" parent="UpperLight" unique_id=843319509 instance=ExtResource("9_80ff7")]
+[node name="LightFlicker" parent="Chandeliers" unique_id=843319509 instance=ExtResource("9_80ff7")]
 position = Vector2(287, 138)
 scale = Vector2(2.5, 2.5)
 texture = SubResource("GradientTexture2D_ueu1k")
 min_energy = 0.5
 max_energy = 1.5
+metadata/_edit_group_ = true
 
-[node name="LightFlicker2" parent="UpperLight" unique_id=1999912385 instance=ExtResource("9_80ff7")]
+[node name="Chandelier2" type="Sprite2D" parent="Chandeliers" unique_id=185565692]
+position = Vector2(574.5, 116.76615)
+scale = Vector2(0.42058817, 0.42058808)
+texture = ExtResource("9_p2s1j")
+metadata/_edit_group_ = true
+
+[node name="LightFlicker2" parent="Chandeliers" unique_id=1999912385 instance=ExtResource("9_80ff7")]
 position = Vector2(576, 135)
 scale = Vector2(2.5, 2.5)
 texture = SubResource("GradientTexture2D_ueu1k")
+metadata/_edit_group_ = true
 
-[node name="LightFlicker3" parent="UpperLight" unique_id=1743093991 instance=ExtResource("9_80ff7")]
+[node name="Chandelier3" type="Sprite2D" parent="Chandeliers" unique_id=63151082]
+position = Vector2(863.50006, 117.76615)
+scale = Vector2(0.42058817, 0.42058808)
+texture = ExtResource("9_p2s1j")
+metadata/_edit_group_ = true
+
+[node name="LightFlicker3" parent="Chandeliers" unique_id=1743093991 instance=ExtResource("9_80ff7")]
 position = Vector2(863.00006, 135)
 scale = Vector2(2.5, 2.5)
 texture = SubResource("GradientTexture2D_ueu1k")
+metadata/_edit_group_ = true
 
 [node name="InvisibleWalls" type="StaticBody2D" parent="." unique_id=2072456053]
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="InvisibleWalls" unique_id=2025823169]
-position = Vector2(2, -67)
-polygon = PackedVector2Array(16, -2, 1252, -5, 1269, 801, -122, 806, -127, 63, -8, 63, -8, 718, 1153, 718, 1145, 63, -15, 60)
+[node name="Frame" type="CollisionPolygon2D" parent="InvisibleWalls" unique_id=2028807675]
+position = Vector2(3, -83)
+scale = Vector2(1.2778553, 1.2778553)
+polygon = PackedVector2Array(-129, -5, 1268, -5, 1269, 801, -122, 806, -126, 39, -4, 38, -3, 715, 1151, 715, 1150, 66, -129, 66)
+
+[node name="Walls" type="CollisionPolygon2D" parent="InvisibleWalls" unique_id=1676921899]
+scale = Vector2(1.2827717, 1.1548069)
+polygon = PackedVector2Array(0, 296, 240, 296, 254, 284, 332, 284, 348, 300, 501, 297, 513, 285, 648, 285, 658, 303, 783, 303, 794, 287, 904, 287, 913, 300, 1149, 300, 1149, 3, 3, 4)
 
 [node name="Spawn_DiningRoom_Entrance" type="Marker2D" parent="." unique_id=410141317 groups=["spawn_points"]]
-position = Vector2(74, 431)
+position = Vector2(30, 543)
 
 [node name="MainHall_East" parent="." unique_id=2079185188 instance=ExtResource("10_p2s1j")]
-position = Vector2(-26, 430)
+position = Vector2(-26, 566)
 target_room_path = "uid://dorgmjunmif37"
 target_door_id = "MainHall_East"

@@ -14,7 +14,6 @@ func _ready():
 func _on_start_pressed():
 	music.stop()
 	start_game.emit()
-	print("title start")
 
 func _on_exit_pressed():
 	exit_game.emit()

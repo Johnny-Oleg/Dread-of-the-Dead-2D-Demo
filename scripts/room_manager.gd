@@ -4,8 +4,6 @@ extends Node2D
 @export var room_name: String = "" 
 @onready var background = $RoomBG # Ensure your background Sprite2D is named this!
 var player_scene = preload("res://scenes/actors/player.tscn")
-@onready var howl_timer = $Timer
-@onready var howl_sfx = $HowlPlayer
 
 func _ready():
 	if room_name == "":
@@ -73,11 +71,14 @@ func sync_room_state():
 				# If the enemy is marked as dead in the Autoload...
 				if not WorldState.is_enemy_alive(room_name, enemy.state_id):
 					# KEEP THE CORPSE: Force the zombie into the DEAD state instead of queue_free()
-					enemy.change_state(enemy.State.DEAD)
+					#enemy.change_state(enemy.State.DEAD)
+					## Turn off their collision so Arthur doesn't bump into the corpse
+					#if enemy.has_node("CollisionShape2D"):
+						#enemy.get_node("CollisionShape2D").set_deferred("disabled", true)
 					
-					# Turn off their collision so Arthur doesn't bump into the corpse
-					if enemy.has_node("CollisionShape2D"):
-						enemy.get_node("CollisionShape2D").set_deferred("disabled", true)
+					# --- Use a new silent setup instead of change_state! ---
+					enemy.set_as_already_dead()
+					# -------
 	
 #func spawn_player():
 	#print("DEBUG: Attempting to spawn Arthur. ID is: ", TransitionManager.next_spawn_id)
@@ -157,3 +158,12 @@ func setup_room_audio():
 	else:
 		# If we aren't in the Dining Room, make sure the timer is off
 		SoundManager.stop_dining_ambience()
+		
+	# Handle Clock Ambience
+	if room_name == "MainHall":
+		SoundManager.start_mainhall_ambience()
+	else:
+		SoundManager.stop_mainhall_ambience()
+
+		
+		

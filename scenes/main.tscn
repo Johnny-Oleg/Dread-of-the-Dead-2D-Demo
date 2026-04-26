@@ -96,6 +96,7 @@ offset_left = -1101.0
 offset_top = -716.0
 offset_right = 1894.0
 offset_bottom = 1250.0
+scale = Vector2(1.2217404, 1.2337446)
 texture = SubResource("CanvasTexture_85g3d")
 
 [node name="UI" type="Node2D" parent="." unique_id=1537198464]
@@ -257,19 +258,25 @@ grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
+[node name="ItemImage" type="Sprite2D" parent="UI/PickUp/PickupPrompt" unique_id=1574497239]
+position = Vector2(300, 100)
+scale = Vector2(0.1, 0.1)
+
 [node name="Message" type="Label" parent="UI/PickUp/PickupPrompt" unique_id=427092817]
 layout_mode = 0
-offset_left = 152.0
-offset_top = 73.0
-offset_right = 447.0
-offset_bottom = 156.0
+offset_left = 157.0
+offset_top = 135.0
+offset_right = 452.0
+offset_bottom = 218.0
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/PickUp/PickupPrompt" unique_id=1690495299]
 layout_mode = 0
 offset_left = 110.0
-offset_top = 162.0
+offset_top = 194.0
 offset_right = 510.0
-offset_bottom = 262.0
+offset_bottom = 294.0
 alignment = 1
 
 [node name="YesButton" type="Button" parent="UI/PickUp/PickupPrompt/HBoxContainer" unique_id=927251627]

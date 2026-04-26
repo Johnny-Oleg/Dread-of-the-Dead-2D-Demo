@@ -1,0 +1,151 @@
+[gd_scene format=3 uid="uid://6pk5x8bsnudw"]
+
+[ext_resource type="PackedScene" uid="uid://bul6bq4ipt3fb" path="res://scenes/items/world_item.tscn" id="1_jf14u"]
+[ext_resource type="Script" uid="uid://beuypcccafsa2" path="res://scripts/room_manager.gd" id="1_xm07l"]
+[ext_resource type="Texture2D" uid="uid://eymnbqcggv5e" path="res://assets/sprites/locations/corridor.png" id="2_bnshd"]
+[ext_resource type="Resource" uid="uid://dv6co0i5n2id8" path="res://resources/pistol_ammo.tres" id="2_xm07l"]
+[ext_resource type="PackedScene" uid="uid://b1yjcowccdgc2" path="res://scenes/actors/zombie.tscn" id="3_bnshd"]
+[ext_resource type="PackedScene" uid="uid://b6iiv8qkk13v4" path="res://scenes/vfx/light_flicker.tscn" id="4_7eq0f"]
+[ext_resource type="PackedScene" uid="uid://cnvfsw842fssq" path="res://scenes/rooms/door.tscn" id="5_0bt2f"]
+[ext_resource type="Texture2D" uid="uid://ph1ptw36786v" path="res://assets/sprites/locations/double_door.png" id="6_7eq0f"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_7eq0f"]
+vertices = PackedVector2Array(1828.2734, 757.97656, 1535.6875, 556, 1532.6875, 511.03125, 1793.0938, 511.96875, 1851.5391, 665.64844, 1838.3203, 719.47656, 1156.2188, 553.8828, 1155.2188, 508, 1433.2031, 508, 1434.2109, 556, 684.96094, 1258.0938, 59.84375, 1263.8984, 55.148438, 963.0625, 390, 965.0625, 684, 1004.14844, 678.85156, 651, 390, 379, 664.8672, 500.8672, 58, 379, 58, 264.97656, 667.8672, 264.0078, 755, 651, 1049.1875, 505.8672, 1050.2031, 555.1094, 755, 756.0078)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4, 5), PackedInt32Array(6, 7, 8, 9), PackedInt32Array(10, 11, 12, 13, 14), PackedInt32Array(15, 14, 13, 16, 17), PackedInt32Array(16, 18, 19, 20), PackedInt32Array(16, 20, 17), PackedInt32Array(21, 15, 17, 22, 23), PackedInt32Array(0, 24, 21, 23, 6, 9), PackedInt32Array(0, 9, 1)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(50, 1274, 45, 953, 380, 955, 380, 389, 48, 389, 48, 255, 678, 254, 675, 491, 1059, 496, 1060, 545, 1146, 544, 1145, 498, 1443, 498, 1444, 546, 1525, 546, 1522, 501, 1800, 502, 1862, 665, 1848, 722, 1836, 768, 745, 766, 745, 661, 689, 661, 694, 1004, 695, 1268)])
+
+[sub_resource type="Gradient" id="Gradient_p2s1j"]
+offsets = PackedFloat32Array(0, 0.7669173)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bv60p"]
+gradient = SubResource("Gradient_p2s1j")
+fill = 1
+fill_from = Vector2(0.5025381, 0.48730963)
+
+[node name="Corridor" type="Node2D" unique_id=45374317]
+script = ExtResource("1_xm07l")
+room_name = "Corridor"
+
+[node name="RoomBG" type="Sprite2D" parent="." unique_id=1028150564]
+z_index = -2
+position = Vector2(948.00006, 650.00006)
+scale = Vector2(0.8775913, 0.8818616)
+texture = ExtResource("2_bnshd")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=1516882268]
+navigation_polygon = SubResource("NavigationPolygon_7eq0f")
+
+[node name="YSort" type="Node2D" parent="." unique_id=1572484116]
+y_sort_enabled = true
+
+[node name="PistolAmmo_01" parent="YSort" unique_id=175435458 groups=["world_items"] instance=ExtResource("1_jf14u")]
+position = Vector2(621, 345)
+scale = Vector2(0.04, 0.04)
+item_data = ExtResource("2_xm07l")
+state_id = "PistolAmmo_01"
+
+[node name="Zombie_01" parent="YSort" unique_id=493500758 instance=ExtResource("3_bnshd")]
+position = Vector2(1275, 639)
+state_id = "Zombie_01"
+
+[node name="Zombie_02" parent="YSort" unique_id=1159482558 instance=ExtResource("3_bnshd")]
+position = Vector2(473, 562)
+state_id = "Zombie_02"
+
+[node name="Doors" type="Sprite2D" parent="YSort" unique_id=2142997328]
+position = Vector2(375, 1178)
+scale = Vector2(0.8771622, 0.8771622)
+texture = ExtResource("6_7eq0f")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1450999934]
+color = Color(0.62967473, 0.62967485, 0.62967455, 1)
+
+[node name="BottomLight" type="Node2D" parent="." unique_id=21903203]
+
+[node name="LightFlicker" parent="BottomLight" unique_id=151647620 instance=ExtResource("4_7eq0f")]
+position = Vector2(285, 155)
+
+[node name="LightFlicker10" parent="BottomLight" unique_id=1502740060 instance=ExtResource("4_7eq0f")]
+position = Vector2(418, 552)
+
+[node name="LightFlicker11" parent="BottomLight" unique_id=504657547 instance=ExtResource("4_7eq0f")]
+position = Vector2(412.00003, 670)
+
+[node name="LightFlicker12" parent="BottomLight" unique_id=964215872 instance=ExtResource("4_7eq0f")]
+position = Vector2(658, 836)
+
+[node name="LightFlicker13" parent="BottomLight" unique_id=2096007102 instance=ExtResource("4_7eq0f")]
+position = Vector2(355, 833.00006)
+
+[node name="LightFlicker14" parent="BottomLight" unique_id=1508044444 instance=ExtResource("4_7eq0f")]
+position = Vector2(54, 834)
+
+[node name="LightFlicker2" parent="BottomLight" unique_id=1349747456 instance=ExtResource("4_7eq0f")]
+position = Vector2(470.00003, 154)
+texture = SubResource("GradientTexture2D_bv60p")
+
+[node name="LightFlicker3" parent="BottomLight" unique_id=1455575931 instance=ExtResource("4_7eq0f")]
+position = Vector2(760, 370)
+texture = SubResource("GradientTexture2D_bv60p")
+
+[node name="LightFlicker4" parent="BottomLight" unique_id=1473554041 instance=ExtResource("4_7eq0f")]
+position = Vector2(655, 375)
+texture = SubResource("GradientTexture2D_bv60p")
+
+[node name="LightFlicker5" parent="BottomLight" unique_id=1869161796 instance=ExtResource("4_7eq0f")]
+position = Vector2(937, 363)
+texture = SubResource("GradientTexture2D_bv60p")
+
+[node name="LightFlicker6" parent="BottomLight" unique_id=657719913 instance=ExtResource("4_7eq0f")]
+position = Vector2(1152, 362)
+texture = SubResource("GradientTexture2D_bv60p")
+
+[node name="LightFlicker7" parent="BottomLight" unique_id=246166909 instance=ExtResource("4_7eq0f")]
+position = Vector2(1432, 362)
+texture = SubResource("GradientTexture2D_bv60p")
+
+[node name="LightFlicker8" parent="BottomLight" unique_id=1702433728 instance=ExtResource("4_7eq0f")]
+position = Vector2(1644, 362)
+texture = SubResource("GradientTexture2D_bv60p")
+
+[node name="LightFlicker9" parent="BottomLight" unique_id=2070473194 instance=ExtResource("4_7eq0f")]
+position = Vector2(1838.0001, 398.00003)
+texture = SubResource("GradientTexture2D_bv60p")
+
+[node name="InvisibleWalls" type="StaticBody2D" parent="." unique_id=1956655978]
+
+[node name="Frame" type="CollisionPolygon2D" parent="InvisibleWalls" unique_id=2118736461]
+position = Vector2(2.799141, -142.60475)
+scale = Vector2(1.6389481, 1.9790385)
+polygon = PackedVector2Array(-129, -5, 1268, -5, 1269, 801, -122, 806, -126, 39, -4, 38, -2.9281836, 709.2357, 1150.8607, 708.2251, 1150, 66, -129, 66)
+
+[node name="Walls" type="CollisionPolygon2D" parent="InvisibleWalls" unique_id=938151460]
+polygon = PackedVector2Array(55, 1292, 55, 957, 382, 957, 381, 389, 51, 390, 50, 258, 673, 259, 678, 493, 1051, 495, 1053, 550, 1150, 551, 1149, 504, 1438, 505, 1438, 552, 1529, 552, 1528, 505, 1788, 507, 1857, 664, 1844, 719, 1840, 768, 744, 767, 741, 636, 681, 638, 689, 1269, 739, 1269, 1879, 1272, 1880, 151, 742, 146, 740, 8, 11, 8, 11, 1288)
+
+[node name="Spawn_Corridor_North_West" type="Marker2D" parent="." unique_id=1381178406 groups=["spawn_points"]]
+position = Vector2(172, 332)
+
+[node name="Spawn_Corridor_South_West" type="Marker2D" parent="." unique_id=1091483116 groups=["spawn_points"]]
+position = Vector2(537, 1189)
+
+[node name="Spawn_Corridor_East" type="Marker2D" parent="." unique_id=515401608 groups=["spawn_points"]]
+position = Vector2(1291, 569)
+
+[node name="SaveRoom_Entrance" parent="." unique_id=2079185188 instance=ExtResource("5_0bt2f")]
+position = Vector2(175, 206)
+scale = Vector2(1, 1.2)
+target_room_path = "uid://bykudanhglrqj"
+target_door_id = "SaveRoom_Entrance"
+
+[node name="MainHall_West" parent="." unique_id=1838171717 instance=ExtResource("5_0bt2f")]
+position = Vector2(371, 1260)
+scale = Vector2(2, 1)
+target_room_path = "uid://dorgmjunmif37"
+target_door_id = "MainHall_West"
+
+[node name="Library_Entrance" parent="." unique_id=1470243549 instance=ExtResource("5_0bt2f")]
+position = Vector2(1291, 419)
+scale = Vector2(2, 1.5)
+target_room_path = "uid://4pdvq0i0wtqo"
+target_door_id = "Library_Entrance"

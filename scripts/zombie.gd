@@ -99,6 +99,7 @@ func _physics_process(delta):
 	# If player is missing, try to find him again
 	if player == null:
 		player = get_tree().get_first_node_in_group("player")
+		
 		if player == null: return # If he's still not spawned, wait.
 	
 	match current_state:
@@ -182,7 +183,7 @@ func change_state(new_state: State):
 			
 		State.HURT:
 			sfx_shamble.stop() # <-- STOP SHAMBLING SOUND
-			hurt_timer = 2.0
+			hurt_timer = 5.0
 			if voice_cooldown <= 0:
 				sfx_hurt.play()
 				voice_cooldown = 8.0 # Wait 8 seconds before making another sound
@@ -206,12 +207,11 @@ func change_state(new_state: State):
 		
 		State.DEAD:
 			sfx_shamble.stop() # <-- STOP SHAMBLING SOUND
+			sfx_idle.stop()
 			velocity = Vector2.ZERO
 			sprite.play("dead_" + get_dir_string())
 			sfx_dead.play()
-			#sprite.play("dead_left") # For dead animation
 			body_collision.set_deferred("disabled", true)
-			# TODO: Trigger blood pool sprite/particle here
 			
 		State.SKID:
 			sfx_shamble.stop() # <-- STOP SHAMBLING SOUND
@@ -486,8 +486,10 @@ func take_damage(is_crit: bool = false):
 
 	# 1. Calculate Damage
 	var damage_to_deal = global.pistol_stats["damage"]
+	
 	if is_crit:
 		damage_to_deal *= global.pistol_stats["crit_multiplier"]
+		change_state(State.HURT)
 	
 	health -= damage_to_deal
 	
@@ -503,6 +505,7 @@ func take_damage(is_crit: bool = false):
 	if current_state != State.CHASE and current_state != State.ATTACK:
 		if player != null: # Only face the player if we found him
 			last_direction = global_position.direction_to(player.global_position)
+		
 		change_state(State.CHASE)
 
 	# 3. Check for Death or Downed
@@ -522,8 +525,8 @@ func take_damage(is_crit: bool = false):
 		downed_cooldown = 20.0 # Start the 20 sec cooldown
 		return
 
-	# 30% Chance to stun (if not already downed/dead)
-	if randf() < 0.3:
+	# 20% Chance to stun (if not already downed/dead)
+	if randf() < 0.2:
 		change_state(State.HURT)
 
 func die():
@@ -620,4 +623,30 @@ func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2) -> void:
 		# Use lerp to smooth the transition to the safe velocity
 		# 0.1 makes it feel heavy/lumbering; 0.3 feels more responsive
 		velocity = velocity.lerp(safe_velocity, 0.2)
+		
+# This is ONLY used when the player re-enters a room with a previously dead zombie
+func set_as_already_dead():
+	sfx_idle.stop()
+	current_state = State.DEAD
+	
+	# 1. Turn off collisions silently
+	if has_node("CollisionShape2D"):
+		$CollisionShape2D.set_deferred("disabled", true)
+		
+	# 2. Set the sprite to the final frame of the death animation silently!
+	var anim_name = "dead_" + get_dir_string()
+	sprite.animation = anim_name
+	# Jump immediately to the last frame of the death animation
+	sprite.frame = sprite.sprite_frames.get_frame_count(anim_name) - 1 
+	
+	# 3. Spawn the blood pool INSTANTLY (No 3-second wait)
+	if blood_pool_scene:
+		var pool = blood_pool_scene.instantiate()
+		
+		# We use call_deferred here because doing add_child while the room is 
+		# still loading its _ready() function can sometimes crash Godot.
+		get_parent().call_deferred("add_child", pool)
+		
+		pool.global_position = global_position
+		
 		
