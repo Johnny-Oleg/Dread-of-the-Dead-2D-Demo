@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://b3b53qvop862v" path="res://scenes/ui/item_slot.tscn" id="4_5yy05"]
 [ext_resource type="Resource" uid="uid://ds27xm153ey0m" path="res://resources/m1911.tres" id="5_weae1"]
 [ext_resource type="Resource" uid="uid://dv6co0i5n2id8" path="res://resources/pistol_ammo.tres" id="6_bfvro"]
+[ext_resource type="AudioStream" uid="uid://bwhnw837hrn8h" path="res://assets/audio/bgm/use_item.WAV" id="7_bfvro"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ulvp7"]
 load_path = "res://godot/imported/mc_avatar.png-122c018a27584433e231365f2b9223c0.ctex"
@@ -218,6 +219,9 @@ size_flags_vertical = 4
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+
+[node name="UseItem" type="AudioStreamPlayer2D" parent="InventoryLayer" unique_id=717958190]
+stream = ExtResource("7_bfvro")
 
 [node name="Panel" type="Panel" parent="." unique_id=1368175753]
 visible = false

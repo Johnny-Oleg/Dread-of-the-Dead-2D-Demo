@@ -39,8 +39,12 @@
 [ext_resource type="Texture2D" uid="uid://chimstnq4tnlq" path="res://assets/sprites/enemy/sit_up.png" id="24_lwipm"]
 [ext_resource type="Texture2D" uid="uid://cfsaqfpdlpp63" path="res://assets/sprites/enemy/walk_down_2.png" id="26_ljkrq"]
 [ext_resource type="Texture2D" uid="uid://b6lnjwctru7d5" path="res://assets/sprites/enemy/walk_down_3.png" id="27_jd2mn"]
+[ext_resource type="Texture2D" uid="uid://bnhap0tbwuapa" path="res://assets/sprites/enemy/stand_up_right.png" id="27_qyvm0"]
+[ext_resource type="Texture2D" uid="uid://cnh8j7wovn2pr" path="res://assets/sprites/enemy/stand_up_right_2.png" id="28_u6raf"]
+[ext_resource type="Texture2D" uid="uid://cjfd6vj0iarxn" path="res://assets/sprites/enemy/stand_up_left.png" id="29_0vvdl"]
 [ext_resource type="Texture2D" uid="uid://boey0vexkoiea" path="res://assets/sprites/enemy/walk_left_2.png" id="29_3em6j"]
 [ext_resource type="Texture2D" uid="uid://duwdv4kf03y0c" path="res://assets/sprites/enemy/walk_up_2.png" id="30_d6g05"]
+[ext_resource type="Texture2D" uid="uid://dmodpq3nbby2i" path="res://assets/sprites/enemy/stand_up_left_2.png" id="30_e8ctt"]
 [ext_resource type="Texture2D" uid="uid://btti4xnevbi4l" path="res://assets/sprites/enemy/walk_left_3.png" id="30_ljkrq"]
 [ext_resource type="Texture2D" uid="uid://dd22t2vcedf1g" path="res://assets/sprites/enemy/walk_right_2.png" id="30_lwipm"]
 [ext_resource type="Texture2D" uid="uid://70g3efc1002x" path="res://assets/sprites/enemy/walk_up_3.png" id="31_p8nef"]
@@ -290,6 +294,50 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
+"duration": 5.0,
+"texture": ExtResource("27_qyvm0")
+}, {
+"duration": 3.0,
+"texture": ExtResource("28_u6raf")
+}],
+"loop": false,
+"name": &"stand_up_down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 5.0,
+"texture": ExtResource("29_0vvdl")
+}, {
+"duration": 3.0,
+"texture": ExtResource("30_e8ctt")
+}],
+"loop": false,
+"name": &"stand_up_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 5.0,
+"texture": ExtResource("27_qyvm0")
+}, {
+"duration": 3.0,
+"texture": ExtResource("28_u6raf")
+}],
+"loop": false,
+"name": &"stand_up_right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 5.0,
+"texture": ExtResource("29_0vvdl")
+}, {
+"duration": 3.0,
+"texture": ExtResource("30_e8ctt")
+}],
+"loop": false,
+"name": &"stand_up_up",
+"speed": 5.0
+}, {
+"frames": [{
 "duration": 3.0,
 "texture": ExtResource("6_jtxwv")
 }, {
@@ -346,8 +394,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fk42m"]
 size = Vector2(726, 456)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_evdf1"]
-radius = 64.28063
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_d6g05"]
+radius = 63.0
+height = 216.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tfd3c"]
 size = Vector2(102, 190.5)
@@ -370,6 +419,7 @@ shape = SubResource("RectangleShape2D_idork")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Body" unique_id=1680198091]
 sprite_frames = SubResource("SpriteFrames_7fncv")
 animation = &"idle_down"
+autoplay = "idle_down"
 
 [node name="Hitbox" type="Area2D" parent="." unique_id=1802076305]
 visible = false
@@ -386,7 +436,7 @@ collision_layer = 0
 collision_mask = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GrabArea" unique_id=1074840814]
-shape = SubResource("CircleShape2D_evdf1")
+shape = SubResource("CapsuleShape2D_d6g05")
 debug_color = Color(0.9882353, 0.8980392, 0.20392157, 0.41960785)
 
 [node name="Hurtbox" type="Area2D" parent="." unique_id=624578128 groups=["zombie_hurtbox"]]

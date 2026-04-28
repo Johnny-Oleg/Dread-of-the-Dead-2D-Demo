@@ -124,13 +124,13 @@ polygon = PackedVector2Array(-129, -5, 1268, -5, 1269, 801, -122, 806, -126, 39,
 polygon = PackedVector2Array(55, 1292, 55, 957, 382, 957, 381, 389, 51, 390, 50, 258, 673, 259, 678, 493, 1051, 495, 1053, 550, 1150, 551, 1149, 504, 1438, 505, 1438, 552, 1529, 552, 1528, 505, 1788, 507, 1857, 664, 1844, 719, 1840, 768, 744, 767, 741, 636, 681, 638, 689, 1269, 739, 1269, 1879, 1272, 1880, 151, 742, 146, 740, 8, 11, 8, 11, 1288)
 
 [node name="Spawn_Corridor_North_West" type="Marker2D" parent="." unique_id=1381178406 groups=["spawn_points"]]
-position = Vector2(172, 332)
+position = Vector2(173, 305)
 
 [node name="Spawn_Corridor_South_West" type="Marker2D" parent="." unique_id=1091483116 groups=["spawn_points"]]
-position = Vector2(537, 1189)
+position = Vector2(514, 1198)
 
 [node name="Spawn_Corridor_East" type="Marker2D" parent="." unique_id=515401608 groups=["spawn_points"]]
-position = Vector2(1291, 569)
+position = Vector2(1291, 540)
 
 [node name="SaveRoom_Entrance" parent="." unique_id=2079185188 instance=ExtResource("5_0bt2f")]
 position = Vector2(175, 206)

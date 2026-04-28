@@ -16,7 +16,6 @@ func _ready():
 	setup_camera_limits()
 	spawn_player()
 	sync_room_state()
-	#bgm.play()
 	
 	# test ui optional DELETE later
 	# --- Tell the UI to update its enemy tracking ---
@@ -29,23 +28,39 @@ func setup_camera_limits():
 	if player and background:
 		var cam = player.get_node("Camera2D") # Adjust path if your camera is named differently
 		
-		# Get the pixel dimensions of the background sprite
-		var rect = background.get_rect()
+		# 1. FORCE the camera to Arthur's position immediately
+		cam.global_position = player.global_position
 		
-		# Apply those dimensions to the camera limits
-		#cam.limit_left = int(rect.position.x)
-		#cam.limit_right = int(rect.end.x)
-		#cam.limit_top = int(rect.position.y)
-		#cam.limit_bottom = int(rect.end.y)
+		# 2. Tell the camera to forget its previous position (skips the "slide")
+		if cam.has_method("reset_smoothing"):
+			cam.reset_smoothing()
+
+		# 3. FIX THE LIMITS: 
+		# We use global_position because background.get_rect() is local to the sprite.
+		var rect = background.get_rect()
+		var scale = background.global_scale
+		
+		#cam.limit_left = int(background.global_position.x - (rect.size.x / 2) * scale.x)
+		#cam.limit_right = int(background.global_position.x + (rect.size.x / 2) * scale.x)
+		#cam.limit_top = int(background.global_position.y - (rect.size.y / 2) * scale.y)
+		#cam.limit_bottom = int(background.global_position.y + (rect.size.y / 2) * scale.y)
 
 func sync_room_state():
 	# 1. Sync all items in the room
 	var items_in_room = get_tree().get_nodes_in_group("world_items")
 	
 	for item in items_in_room:
-		if item.state_id != "":
-			if WorldState.is_item_picked(room_name, item.state_id):
-				item.queue_free() 
+		# PREVENT THE OVERLAP CRASH: Only look at items that belong to THIS room
+		if not is_ancestor_of(item):
+			continue 
+			
+		if "state_id" in item and item.state_id != "":
+			# PREVENT DICTIONARY CRASH: Check if the item actually exists in this room's data
+			if WorldState.rooms[room_name]["items"].has(item.state_id):
+				
+				# If it exists and is picked up, delete it
+				if WorldState.is_item_picked(room_name, item.state_id):
+					item.queue_free()
 				
 	# 2. Sync all enemies in the room
 	#var enemies_in_room = get_tree().get_nodes_in_group("enemies")
@@ -146,9 +161,12 @@ func spawn_player():
 	setup_camera_limits()
 	
 func setup_room_audio():
+	
 	# 1. Handle Background Music
 	if room_name == "SaveRoom":
 		SoundManager.play_safe()
+	elif room_name == "Library":
+		SoundManager.play_haunted()
 	else:
 		SoundManager.play_creepy()
 
@@ -165,5 +183,5 @@ func setup_room_audio():
 	else:
 		SoundManager.stop_mainhall_ambience()
 
-		
+
 		

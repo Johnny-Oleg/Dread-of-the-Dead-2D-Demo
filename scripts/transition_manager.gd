@@ -33,13 +33,14 @@ func fade_to_room(scene_path: String, spawn_id: String):
 	# 3. Fade to Black (using Godot 4 Tweens)
 	var tween = create_tween()
 	tween.tween_property(color_rect, "color:a", 1.0, 0.5) # Fade to alpha 1.0 over 0.5 seconds
+	SoundManager.start_door_open_ambience()
 	
 	# Wait for fade to finish
 	await tween.finished
 	
 	# 4. Swap the Scene!
 	#get_tree().change_scene_to_file(scene_path)
-	var main_node = get_tree().root.get_node("Main") # Make sure your root node is named "Main"
+	var main_node = get_tree().root.get_node("Main") # Make sure the root node is named "Main"
 	main_node.change_room(scene_path)
 	
 	# 5. The new scene takes a frame to load, so wait one frame

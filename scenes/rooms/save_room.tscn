@@ -78,7 +78,7 @@ polygon = PackedVector2Array(1, 514, 203, 514, 203, 460, 58, 460, 58, 142, 186, 
 [node name="Spawn_SaveRoom_Entrance" type="Marker2D" parent="." unique_id=1944074868 groups=["spawn_points"]]
 position = Vector2(258, 417)
 
-[node name="Corridor_North_West_Entrance" parent="." unique_id=2079185188 instance=ExtResource("8_w7kdh")]
+[node name="Corridor_North_West" parent="." unique_id=2079185188 instance=ExtResource("8_w7kdh")]
 position = Vector2(257, 500)
 target_room_path = "uid://6pk5x8bsnudw"
 target_door_id = "Corridor_North_West"

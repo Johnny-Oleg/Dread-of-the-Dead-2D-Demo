@@ -26,6 +26,8 @@ gradient = SubResource("Gradient_p2s1j")
 fill = 1
 fill_from = Vector2(0.5025381, 0.48730963)
 
+[sub_resource type="CanvasTexture" id="CanvasTexture_ba7xh"]
+
 [node name="Library" type="Node2D" unique_id=393312871]
 script = ExtResource("1_slb67")
 room_name = "Library"
@@ -50,6 +52,7 @@ item_data = ExtResource("4_uxmpq")
 state_id = "PistolAmmo_01"
 
 [node name="GreenMedicine_01" parent="YSort" unique_id=751566969 groups=["world_items"] instance=ExtResource("3_ba7xh")]
+z_index = -1
 position = Vector2(38, 448)
 scale = Vector2(0.04, 0.04)
 item_data = ExtResource("5_qmdcs")
@@ -213,5 +216,13 @@ position = Vector2(1000, 1036)
 [node name="Corridor_East" parent="." unique_id=2079185188 instance=ExtResource("9_w1h6y")]
 position = Vector2(995, 1143)
 scale = Vector2(2, 1)
-target_room_path = "uid://dorgmjunmif37"
+target_room_path = "uid://6pk5x8bsnudw"
 target_door_id = "Corridor_East"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=1084911668]
+self_modulate = Color(0, 0, 0, 1)
+offset_left = -218.0
+offset_top = -104.0
+offset_right = 1.0
+offset_bottom = 1275.0
+texture = SubResource("CanvasTexture_ba7xh")

@@ -6,6 +6,7 @@ extends CanvasLayer
 @onready var health_percent = global.player_health / global.player_max_health
 @onready var bar = $InventoryLayer/MainLayout/ProfileSection/PlayerSection/ConditionSection/HealthBar
 @onready var label = $InventoryLayer/MainLayout/ProfileSection/PlayerSection/ConditionSection/StatusLabel
+@onready var item_use_sfx = $InventoryLayer/UseItem
 	
 func _ready():
 	# Add this script to a group so slots can easily talk to it
@@ -111,6 +112,7 @@ func use_item(slot):
 		# Only heal if Arthur is actually hurt
 		if global.player_health < global.player_max_health:
 			global.player_health += item.healing_amount
+			item_use_sfx.play()
 			
 			# Clamp the health so it doesn't go over 1200
 			if global.player_health > global.player_max_health:
@@ -138,7 +140,8 @@ func use_item(slot):
 				
 				item.count -= take
 				global.current_ammo += take
-				
+				item_use_sfx.play()
+
 				print("Manually reloaded ", take, " bullets.")
 				
 				# If the ammo box is empty, throw it away
@@ -157,7 +160,7 @@ func use_item(slot):
 				print("Gun is already fully loaded.")
 		else:
 			print("This ammo doesn't fit the equipped weapon.")
-			
+
 	consolidate_inventory()
 	
 func consolidate_inventory():

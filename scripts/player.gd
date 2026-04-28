@@ -59,7 +59,8 @@ var reload_time_partial: float = 1.4
 var is_aiming: bool = false
 var is_running: bool = false
 var is_moving: bool = false
-var is_grabbed = false
+var is_grabbed: bool = false
+var is_dead: bool = false
 
 # =========================
 # ZOMBIE GRAB
@@ -85,34 +86,40 @@ var target_index: int = 0            # Which enemy we are currently locked onto
 # =========================
 func _physics_process(delta):
 	
-	if is_grabbed:
-		if Input.is_action_just_pressed("ui_accept"): # Or whatever your mash key is
-			struggle_count += 1
-			# Optional: shake the screen or play a struggle sound here
-	
-	# optional
-	debug_timer += delta
-
-	if debug_timer > 0.3:
-		debug_timer = 0
-		debug_print()
-	# ====================	
+	# 1. CHECK DEATH FIRST
 	if global.player_health <= 0:
 		trigger_game_over()
+		update_animation() # This will now play "dead" and return early
+		return # Stop everything else. No movement, no input.
+	
+	# 2. CHECK GAME STATE
 	if global.game_over or not global.game_started:
 		return
-
+		
+	# 3. NORMAL ALIVE LOGIC
 	handle_input()
 	handle_movement()
 	handle_aiming()
-	#update_animation()
+	
 	# SAFETY CHECK: Don't play walk/run/idle animations if we are in the grapple sprite!
 	if not is_grabbed:
 		update_animation()
+		
+	if is_grabbed:
+		if Input.is_action_just_pressed("ui_accept"): # Or whatever your mash key is
+			struggle_count += 1
 
 	move_and_slide()
 	
-	debug_print() # optional
+		
+	# optional
+	#debug_timer += delta
+#
+	#if debug_timer > 0.3:
+		#debug_timer = 0
+		#debug_print()
+	# ====================
+	#debug_print() # optional
 
 # =========================
 # INPUT
@@ -333,6 +340,11 @@ func update_animation():
 	# 4. Idle
 	# Reload > Aim > Move > Idle
 
+	if is_dead:
+		if sprite.animation != "dead":
+			sprite.play("dead")
+		return
+
 	if is_reloading:
 		play_reload_animation()
 		return
@@ -348,7 +360,7 @@ func update_animation():
 		else:
 			play_move_animation()
 			return
-
+	
 	play_idle_animation()
 
 # =========================
@@ -443,17 +455,16 @@ func get_8_direction_name(dir: Vector2) -> String:
 	return "down" # fallback
 
 # ================== optional
-func debug_print():
-
-	print(
+#func debug_print():
+#
+	#print(
 		#"MoveDir: ", move_dir,
 		#" | AimDir: ", aim_dir,
 		#" | Facing: ", last_facing_dir,
 		#" | Moving: ", is_moving,
 		#" | Aiming: ", is_aiming
-	)
+	#)
 	
-
 
 func _on_reload_timer_timeout() -> void:
 	finish_reload()
@@ -465,7 +476,7 @@ func play_reload_animation():
 		dir = aim_dir
 
 	var dir_name = get_4_direction_name(dir)
-	sprite.play("reload_" + dir_name) # Removed the duplicate line here
+	sprite.play("reload_" + dir_name)
 
 func start_reload():
 		
@@ -523,7 +534,6 @@ func finish_reload():
 
 	global.current_ammo += to_reload
 	global.reserve_ammo -= to_reload
-
 
 func _on_fire_timer_timeout() -> void:
 	can_shoot = true
@@ -633,6 +643,9 @@ func trigger_game_over():
 		return # Prevent this from firing 50 times a second
 		
 	sfx_died.play()
+	is_dead = true
+	sprite.play("dead")	
+		
 	global.game_over = true
 	global.player_died.emit() # SHOUT TO MAIN.GD!
 	

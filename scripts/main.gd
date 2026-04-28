@@ -84,6 +84,9 @@ func _on_player_died():
 	# 1. Show the quick "You Died" overlay (the Died node in your tree)
 	$UI/Died.visible = true 
 	
+	# --- Trigger the dramatic audio fade! ---
+	SoundManager.fade_out_all()
+	
 	# 2. Stop the world (Zombies, moaning, movement)
 	if current_room != null:
 		current_room.process_mode = PROCESS_MODE_DISABLED # Freezes the room
@@ -93,6 +96,7 @@ func _on_player_died():
 	
 	# 3. Wait for the dramatic pause
 	await get_tree().create_timer(3.0).timeout
+	
 	
 	# 4. Clean up and load the actual Game Over menu
 	if current_room != null: current_room.queue_free()

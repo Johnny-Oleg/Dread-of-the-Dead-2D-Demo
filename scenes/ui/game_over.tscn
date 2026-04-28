@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://cucp3cc76fo6e"]
 
+[ext_resource type="Script" uid="uid://b67k5skexswd4" path="res://scripts/game_over.gd" id="1_x6o8e"]
 [ext_resource type="Texture2D" uid="uid://cv8p4dwl5ixcg" path="res://assets/images/game_over.png" id="2_vfrx6"]
 [ext_resource type="AudioStream" uid="uid://clphmkgyxq8vr" path="res://assets/audio/bgm/title_bgm.mp3" id="3_o6b8n"]
 
@@ -55,6 +56,7 @@ shadow_offset = Vector2(0, 4)
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_unejy"]
 
 [node name="GameOver" type="Node2D" unique_id=182422922]
+script = ExtResource("1_x6o8e")
 
 [node name="Title" type="CanvasLayer" parent="." unique_id=147321385]
 

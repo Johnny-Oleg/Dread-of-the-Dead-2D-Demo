@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://q7dusjnyhae0" path="res://assets/sprites/player/danger_front_2.png" id="11_0bs3g"]
 [ext_resource type="Texture2D" uid="uid://dr61iadx5la0r" path="res://assets/sprites/player/idle_back.png" id="11_t8b0b"]
 [ext_resource type="Texture2D" uid="uid://bqxgvv5u4oktb" path="res://assets/sprites/player/hurt_down.png" id="12_0bs3g"]
+[ext_resource type="Texture2D" uid="uid://goaru3m3emrl" path="res://assets/sprites/player/dead.png" id="12_5jobd"]
 [ext_resource type="Texture2D" uid="uid://btosjfc02c16" path="res://assets/sprites/player/walk_front.png" id="12_7ta67"]
 [ext_resource type="Texture2D" uid="uid://dqgduxpjvslu8" path="res://assets/sprites/player/walk_up.png" id="13_jhk7o"]
 [ext_resource type="Texture2D" uid="uid://bbrdyc5nph4si" path="res://assets/sprites/player/idle_front_2.png" id="14_is16v"]
@@ -140,7 +141,7 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 6.0,
 "texture": ExtResource("10_7knsb")
 }],
 "loop": true,
@@ -161,6 +162,14 @@ animations = [{
 }],
 "loop": true,
 "name": &"danger_idle_up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_5jobd")
+}],
+"loop": true,
+"name": &"dead",
 "speed": 5.0
 }, {
 "frames": [{
@@ -491,6 +500,7 @@ texture_filter = 1
 position = Vector2(1, -2)
 sprite_frames = SubResource("SpriteFrames_qe8hj")
 animation = &"idle_down"
+autoplay = "idle_down"
 
 [node name="GrappleSprite" type="AnimatedSprite2D" parent="Body" unique_id=1709623858]
 visible = false
@@ -531,6 +541,7 @@ debug_color = Color(0.6509804, 0.5176471, 0.047058824, 0.41960785)
 visible = false
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=359109120]
+limit_smoothed = true
 position_smoothing_enabled = true
 
 [node name="ShootRay" type="RayCast2D" parent="." unique_id=1029114910]

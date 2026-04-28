@@ -14,10 +14,12 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 [application]
 
-config/name="DotD Castle Demo"
+config/name="Dread of the Dead Demo"
 run/main_scene="uid://di3if1iwu4h4e"
 config/use_hidden_project_data_directory=false
 config/features=PackedStringArray("4.6", "GL Compatibility")
+boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/image="uid://br8wpea5b5i02"
 config/icon="uid://6r0d3hupv2uo"
 config/macos_native_icon="res://icon.icns"
 config/windows_native_icon="res://icon.ico"
@@ -178,5 +180,6 @@ interact={
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"

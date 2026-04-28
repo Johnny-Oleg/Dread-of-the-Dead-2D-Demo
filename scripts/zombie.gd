@@ -13,7 +13,8 @@ enum State {
 	DEAD,
 	STUMBLED,
 	SKID,
-	WALL_SIT
+	WALL_SIT,
+	STANDING_UP
 }
 
 const STATE_NAMES = {
@@ -26,7 +27,8 @@ const STATE_NAMES = {
 	State.DEAD: "DEAD",
 	State.STUMBLED: "STUMBLED",
 	State.SKID: "SKID",
-	State.WALL_SIT: "WALL_SIT"
+	State.WALL_SIT: "WALL_SIT",
+	State.STANDING_UP: "STANDING_UP",
 }
 
 var current_state: State = State.IDLE
@@ -35,8 +37,8 @@ var current_state: State = State.IDLE
 # STATS
 # =========================
 var speed := 90.0
-var health := 1000
-var max_health := 1000
+var health := 1500
+var max_health := 1500
 
 var patrol_radius := 120.0
 var patrol_target: Vector2
@@ -83,6 +85,7 @@ var player: CharacterBody2D = null
 # READY
 # =========================
 func _ready():
+	#sprite.play("idle_down") # Force a safe default immediately
 	randomize()
 
 	health = [1500, 2000, 2000, 2500, 2500].pick_random()
@@ -112,6 +115,7 @@ func _physics_process(delta):
 		State.STUMBLED: handle_recovery(delta)
 		State.WALL_SIT: handle_recovery(delta)
 		State.DOWNED: return # Stops move_and_slide while on the ground
+		State.STANDING_UP: return # Stops move_and_slide while on the ground
 		State.DEAD: return # Stops move_and_slide while on the ground
 
 	if voice_cooldown > 0:
@@ -188,22 +192,36 @@ func change_state(new_state: State):
 				sfx_hurt.play()
 				voice_cooldown = 8.0 # Wait 8 seconds before making another sound
 			sprite.play("hurt_" + get_dir_string()) # Custom helper for 4-dir hurt anims
-			#sprite.play("hurt_down") # Custom helper for 4-dir hurt anims
 		
 		State.DOWNED:
 			sfx_shamble.stop() # <-- STOP SHAMBLING SOUND
 			velocity = Vector2.ZERO
 			sprite.play("downed_" + get_dir_string()) # Same as dead, no blood
-			#sprite.play("downed") # For downed animation
 			
 			# Turn off Layer 3 (Enemy) so a player can walk through
 			body_collision.set_deferred("disabled", true)
 			await get_tree().create_timer(10.0).timeout
 			
 			if current_state == State.DOWNED: 
-				change_state(State.IDLE)
-				# Turn Layer 3 back on when standing up naturally
-				body_collision.set_deferred("disabled", false)
+				# THE FIX: Go to the standing state instead of IDLE
+				change_state(State.STANDING_UP)
+		
+		State.STANDING_UP:
+			sfx_shamble.stop()
+			velocity = Vector2.ZERO
+			
+			# 1. Turn collision back on NOW so Arthur bumps into them as they rise
+			body_collision.set_deferred("disabled", false) 
+			
+			# 2. Play the animation
+			sprite.play("stand_up_" + get_dir_string())
+			
+			# 3. Wait for the animation to completely finish!
+			await sprite.animation_finished
+			
+			# 4. If they weren't killed while standing up, go back to normal
+			if current_state == State.STANDING_UP:
+				change_state(State.IDLE) # (Or CHASE, if you want them immediately aggro'd)
 		
 		State.DEAD:
 			sfx_shamble.stop() # <-- STOP SHAMBLING SOUND
@@ -458,7 +476,7 @@ func handle_attack(delta):
 	# 3. If still close and timer is 0, FORCE THE GRAB
 	if player.has_method("get_grabbed") and not player.is_grabbed:
 		player.get_grabbed(self)
-		attack_timer = 10.0 # Reset cooldown so it doesn't spam every frame
+		attack_timer = 6.0 # Reset cooldown so it doesn't spam every frame
 		sfx_bite.play()
 		
 # =========================
@@ -506,8 +524,12 @@ func take_damage(is_crit: bool = false):
 		if player != null: # Only face the player if we found him
 			last_direction = global_position.direction_to(player.global_position)
 		
-		change_state(State.CHASE)
-
+		# If they were on the ground, make them stand up first!
+		if was_downed or current_state == State.STUMBLED or current_state == State.WALL_SIT:
+			change_state(State.STANDING_UP)
+		else:
+			change_state(State.CHASE)
+			
 	# 3. Check for Death or Downed
 	if health <= 0:
 		die()
@@ -574,7 +596,7 @@ func spawn_blood_pool():
 			
 func update_animation():
 	# Do not overwrite the animation if we are in these specific states!
-	if current_state in [State.HURT, State.DOWNED, State.DEAD, State.STUMBLED, State.WALL_SIT]:
+	if current_state in [State.HURT, State.DOWNED, State.DEAD, State.STUMBLED, State.WALL_SIT, State.STANDING_UP]:
 		return
 	
 	var dir_str = get_dir_string()

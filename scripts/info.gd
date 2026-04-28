@@ -35,6 +35,9 @@ func _process(_delta):
 		enemy_state.text = "Enemy state: None"
 	
 func refresh_enemy_tracking():
+	if global.game_over:
+		return
+		
 	# Find the new zombies in the current room
 	#var fresh_zombies = get_tree().get_nodes_in_group("zombie")
 	## Link your UI labels to these new nodes

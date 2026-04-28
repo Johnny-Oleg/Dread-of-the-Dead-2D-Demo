@@ -1,10 +1,10 @@
-res://scenes/rooms/
-res://scripts/
-res://scenes/vfx/
+res://assets/images/
 res://assets/sprites/enemy/
+res://scripts/
 res://assets/sprites/player/
+res://scenes/rooms/
+res://scenes/vfx/
 res://resources/
 res://scenes/items/
-res://assets/images/
 res://scenes/ui/
 res://

@@ -6,6 +6,7 @@ extends Control
 @onready var amount_label = $AmountLabel
 @onready var highlight = $ActiveHighLight # The gray cursor frame!
 @onready var cursor_sfx = $Cursor
+
 var can_play_sfx = false
 
 func _ready():
@@ -74,3 +75,4 @@ func _gui_input(event):
 	if event.is_action_pressed("inventory_use"):
 		if current_item != null:
 			get_tree().call_group("inventory_ui", "use_item", self)
+			
