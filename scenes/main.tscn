@@ -166,6 +166,7 @@ script = ExtResource("6_choun")
 
 [node name="GameStart" type="Control" parent="UI/TitleScreen/Title" unique_id=1797696930]
 layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_right = -1112.0
@@ -242,6 +243,7 @@ text = "Exit"
 [node name="TitleMusic" type="AudioStreamPlayer2D" parent="UI/TitleScreen" unique_id=568060281]
 stream = ExtResource("6_85g3d")
 autoplay = true
+parameters/looping = true
 
 [node name="PickUp" type="CanvasLayer" parent="UI" unique_id=295829609]
 

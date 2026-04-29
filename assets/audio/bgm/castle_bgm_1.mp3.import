@@ -12,7 +12,7 @@ dest_files=["res://godot/imported/castle_bgm_1.mp3-769970c6575df70cff62a61592cb3
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

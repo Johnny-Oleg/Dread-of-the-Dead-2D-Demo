@@ -469,8 +469,6 @@ _data = {
 &"flash-right": SubResource("Animation_7hljr")
 }
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_gn53q"]
-
 [sub_resource type="Gradient" id="Gradient_80ff7"]
 offsets = PackedFloat32Array(0, 0.7669173)
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
@@ -550,8 +548,10 @@ collision_mask = 17
 collide_with_areas = true
 
 [node name="InteractionCast" type="ShapeCast2D" parent="." unique_id=870314131]
+position = Vector2(0, 20)
+scale = Vector2(2, 2)
 shape = SubResource("RectangleShape2D_gn53q")
-target_position = Vector2(33, 0)
+target_position = Vector2(0, 28.5)
 collision_mask = 64
 collide_with_areas = true
 collide_with_bodies = false
@@ -596,9 +596,6 @@ stream = ExtResource("56_rjrsu")
 
 [node name="Died" type="AudioStreamPlayer2D" parent="SoundEffects" unique_id=1299430538]
 stream = ExtResource("57_7hljr")
-
-[node name="PointLight2D" type="PointLight2D" parent="." unique_id=138336152]
-texture = SubResource("CompressedTexture2D_gn53q")
 
 [node name="MuzzlePosition" type="Node2D" parent="." unique_id=27178725]
 

@@ -50,6 +50,7 @@ folder_colors={
 [global_group]
 
 enemies=""
+game_ui=""
 
 [input]
 

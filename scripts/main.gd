@@ -65,9 +65,9 @@ func _on_start_game():
 	game_world.add_child(current_room) 
 	# --- LOGIC END ---
 
-	# 3. Spawn the Gameplay UI
-	current_ui = GAME_UI_SCENE.instantiate()
-	ui_layer.add_child(current_ui)
+	# 3. Spawn the Gameplay UI ONLY FOR TESTING
+	#current_ui = GAME_UI_SCENE.instantiate()
+	#ui_layer.add_child(current_ui)
 
 	# 4. SPAWN THE INVENTORY (But keep it hidden!)
 	inventory_instance = INVENTORY_SCENE.instantiate()

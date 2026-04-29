@@ -344,9 +344,9 @@ func can_see_player() -> bool:
 		return false 
 
 	# If we pass all 3 checks, the zombie sees a player! OPTIONAL
-	# Draw the debug line from the zombie (Vector2.ZERO) to a player's local position
-	debug_line.points = [Vector2.ZERO, to_local(player.global_position)]
-	debug_line.default_color = Color.BLUE
+	# TESTING Draw the debug line from the zombie (Vector2.ZERO) to a player's local position
+	#debug_line.points = [Vector2.ZERO, to_local(player.global_position)]
+	#debug_line.default_color = Color.BLUE
 	
 	return true
 
@@ -420,7 +420,6 @@ func handle_patrol(delta):
 
 	velocity = dir * speed
 	
-
 # =========================
 # CHASE
 # =========================
@@ -467,8 +466,6 @@ func handle_chase(delta):
 	if dist < 70: 
 		change_state(State.ATTACK)
 		
-	
-
 # =========================
 # ATTACK
 # =========================

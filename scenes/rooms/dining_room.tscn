@@ -60,11 +60,11 @@ item_data = ExtResource("5_nsgnh")
 state_id = "PistolAmmo_01"
 
 [node name="Zombie_01" parent="YSort" unique_id=493500758 instance=ExtResource("3_45k0p")]
-position = Vector2(657, 394)
+position = Vector2(657, 379)
 state_id = "Zombie_01"
 
 [node name="Zombie_02" parent="YSort" unique_id=1580677081 instance=ExtResource("3_45k0p")]
-position = Vector2(882, 385)
+position = Vector2(1276, 704)
 state_id = "Zombie_02"
 
 [node name="Foreground" type="Sprite2D" parent="YSort" unique_id=540954127]

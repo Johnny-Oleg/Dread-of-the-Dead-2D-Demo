@@ -8,3 +8,5 @@ res://scenes/main.tscn
 res://scenes/ui/inventory.tscn
 res://scripts/inventory.gd
 res://scripts/title_screen.gd
+res://scripts/main.gd
+res://scripts/sound_manager.gd

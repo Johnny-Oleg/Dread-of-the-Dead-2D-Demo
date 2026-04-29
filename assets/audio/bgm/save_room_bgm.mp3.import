@@ -12,7 +12,7 @@ dest_files=["res://godot/imported/save_room_bgm.mp3-9de3afadf46fe7f04262bd61e0ce
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0
