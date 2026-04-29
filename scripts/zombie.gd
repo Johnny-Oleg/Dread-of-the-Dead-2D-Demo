@@ -254,13 +254,23 @@ func get_shoved(shove_dir: Vector2):
 	change_state(State.SKID)
 
 	var space_state = get_world_2d().direct_space_state
-	var ideal_target = global_position + (shove_dir * 250.0) 
+	var ideal_target = global_position + (shove_dir * 100.0) 
 	var query = PhysicsRayQueryParameters2D.create(global_position, ideal_target)
 	
 	# Look for Walls (Layer 1) AND Enemies (Layer 3). 1 + 4 = 5.
 	query.collision_mask = 5 
 	# CRITICAL: Tell the RayCast to ignore THIS zombie, or it will just hit itself!
-	query.exclude = [self] 
+	#query.exclude = [self] 
+	
+	# --- THE FIXES ---
+	
+	# 1. Godot 4 requires RIDs for exclusions, not the Node itself
+	query.exclude = [get_rid()] 
+	
+	# 2. Force the raycast to detect bodies it is currently overlapping with!
+	query.hit_from_inside = true 
+	
+	# -----------------
 	
 	var result = space_state.intersect_ray(query)
 	var actual_target = ideal_target
@@ -273,14 +283,17 @@ func get_shoved(shove_dir: Vector2):
 		
 		# Did we hit a wall or a zombie?
 		# We check if the thing we hit has the "get_shoved" method
+		# Bulletproof check: Look at the collider, and just in case it hit a child Area2D, check the parent too!
 		if result.collider.has_method("get_shoved"):
 			hit_zombie = result.collider
+		elif result.collider.get_parent() != null and result.collider.get_parent().has_method("get_shoved"):
+			hit_zombie = result.collider.get_parent()
 		else:
 			hit_wall = true
 
 	# Perform the Tween slide
 	var tween = create_tween()
-	tween.tween_property(self, "global_position", actual_target, 0.4).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.tween_property(self, "global_position", actual_target,0.4).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	
 	await tween.finished
 	
@@ -291,7 +304,7 @@ func get_shoved(shove_dir: Vector2):
 		# We hit a zombie! We stumble, and we pass the shove to them!
 		change_state(State.STUMBLED)
 		hit_zombie.get_shoved(shove_dir) # Chain reaction!
-	elif randf() < 0.5:
+	elif randf() < 0.6:
 		change_state(State.STUMBLED)
 	else:
 		change_state(State.CHASE)
@@ -419,7 +432,7 @@ func handle_chase(delta):
 	var dist_to_player = global_position.distance_to(player.global_position)
 	
 	# Multiply vision range by 1.5 or 2.0 so the zombie doesn't instantly give up
-	if dist_to_player > vision_range * 1.5: 
+	if dist_to_player > vision_range * 2.0: 
 		change_state(State.IDLE)
 		return
 		
@@ -629,7 +642,7 @@ func _on_grab_area_body_entered(body: Node2D) -> void:
 			if attack_timer <= 0 and not body.is_grabbed:
 				## Pass this zombie instance so the player knows who is biting them
 				body.get_grabbed(self)
-				attack_timer = 10.0 # APPLY THE 10 SEC COOLDOWN HERE
+				attack_timer = 4.0 # APPLY THE 4 SEC COOLDOWN HERE
 				change_state(State.ATTACK) # Ensure zombie stops moving
 
 func handle_recovery(delta):

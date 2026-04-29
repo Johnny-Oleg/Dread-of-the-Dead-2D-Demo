@@ -392,7 +392,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fk42m"]
-size = Vector2(726, 456)
+size = Vector2(161, 131)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_d6g05"]
 radius = 63.0
@@ -427,7 +427,7 @@ collision_layer = 32
 collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=116142332]
-position = Vector2(8, -148)
+position = Vector2(3.5, 14.5)
 shape = SubResource("RectangleShape2D_fk42m")
 debug_color = Color(0.2784314, 0.6313726, 0.03529412, 0.41960785)
 

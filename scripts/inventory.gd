@@ -1,8 +1,8 @@
 extends CanvasLayer
 
 @onready var item_grid = $InventoryLayer/MainLayout/MarginContainer/ItemGrid
-@onready var item_name_label = $InventoryLayer/MainLayout/ProfileSection/EquippedWeapon/ItemName
-@onready var weapon_mag_label = $InventoryLayer/MainLayout/ProfileSection/EquippedWeapon/WeaponMag
+@onready var item_name_label = $InventoryLayer/MainLayout/ProfileSection/EquippedWeapon/MarginContainer/ItemName
+@onready var weapon_mag_label = $InventoryLayer/MainLayout/ProfileSection/EquippedWeapon/MarginContainer/WeaponMag
 @onready var health_percent = global.player_health / global.player_max_health
 @onready var bar = $InventoryLayer/MainLayout/ProfileSection/PlayerSection/ConditionSection/HealthBar
 @onready var label = $InventoryLayer/MainLayout/ProfileSection/PlayerSection/ConditionSection/StatusLabel

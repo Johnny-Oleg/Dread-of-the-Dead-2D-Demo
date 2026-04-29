@@ -23,6 +23,27 @@ corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 corner_detail = 6
 
+[sub_resource type="FontFile" id="FontFile_bfvro"]
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/24/0/ascent = 0.0
+cache/0/24/0/descent = 0.0
+cache/0/24/0/underline_position = 0.0
+cache/0/24/0/underline_thickness = 0.0
+cache/0/24/0/scale = 1.0
+
 [node name="Inventory" type="CanvasLayer" unique_id=1632828612 groups=["inventory_ui"]]
 layer = 101
 script = ExtResource("1_xeaml")
@@ -117,7 +138,7 @@ theme_override_font_sizes/font_size = 30
 text = "Fine"
 
 [node name="HealthBar" type="ProgressBar" parent="InventoryLayer/MainLayout/ProfileSection/PlayerSection/ConditionSection" unique_id=628604081]
-custom_minimum_size = Vector2(150, 0)
+custom_minimum_size = Vector2(150, 30)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -125,6 +146,7 @@ theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 1)
 theme_override_styles/fill = SubResource("StyleBoxFlat_bfvro")
 value = 100.0
 rounded = true
+show_percentage = false
 
 [node name="EquippedWeapon" type="VBoxContainer" parent="InventoryLayer/MainLayout/ProfileSection" unique_id=1853431335]
 custom_minimum_size = Vector2(440, 390)
@@ -132,7 +154,12 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="ItemName" type="Label" parent="InventoryLayer/MainLayout/ProfileSection/EquippedWeapon" unique_id=434031539]
+[node name="MarginContainer" type="MarginContainer" parent="InventoryLayer/MainLayout/ProfileSection/EquippedWeapon" unique_id=953897512]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_top = 10
+
+[node name="ItemName" type="Label" parent="InventoryLayer/MainLayout/ProfileSection/EquippedWeapon/MarginContainer" unique_id=434031539]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -144,7 +171,7 @@ text = "Colt M1911"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="WeaponIcon" type="TextureRect" parent="InventoryLayer/MainLayout/ProfileSection/EquippedWeapon" unique_id=887525800]
+[node name="WeaponIcon" type="TextureRect" parent="InventoryLayer/MainLayout/ProfileSection/EquippedWeapon/MarginContainer" unique_id=887525800]
 custom_minimum_size = Vector2(200, 130)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -152,13 +179,13 @@ size_flags_vertical = 4
 texture = ExtResource("3_5yy05")
 expand_mode = 1
 
-[node name="WeaponMag" type="Label" parent="InventoryLayer/MainLayout/ProfileSection/EquippedWeapon" unique_id=1683731414]
+[node name="WeaponMag" type="Label" parent="InventoryLayer/MainLayout/ProfileSection/EquippedWeapon/MarginContainer" unique_id=1683731414]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = SubResource("FontFile_bfvro")
 theme_override_font_sizes/font_size = 24
 text = "0"
 autowrap_mode = 3

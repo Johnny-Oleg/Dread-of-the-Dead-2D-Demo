@@ -7,7 +7,7 @@ signal exit_game
 @onready var exit_button = $Title/GameStart/VBoxContainer/ExitButton
 @onready var music = $TitleMusic
 
-@export var focus_color: Color = Color(1.0, 0.0, 0.0, 1.0) # Red (Change to fit your vibe!)
+@export var focus_color: Color = Color("330b07") # Red (Change to fit your vibe!)
 @export var default_color: Color = Color(1.0, 1.0, 1.0, 1.0) # White
 
 func _ready():

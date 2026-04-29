@@ -56,7 +56,7 @@ item_data = ExtResource("3_kbnu0")
 state_id = "PistolAmmo_01"
 
 [node name="Zombie_01" parent="YSort" unique_id=493500758 instance=ExtResource("5_2jiy2")]
-position = Vector2(1029, 378)
+position = Vector2(1036, 340)
 state_id = "Zombie_01"
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1999707493]
