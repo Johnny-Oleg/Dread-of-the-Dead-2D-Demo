@@ -1,6 +1,6 @@
 # Dread of the Dead
 
-![Dread of the Dead Cover Art](dotd-cover.png)
+![Dread of the Dead Cover Art](metadata/dotd-cover.png)
 
 A survival horror pixel art game inspired by the classic *Resident Evil* series, set during the 1940s. Built from the ground up using **Godot 4.6**. 
 
@@ -10,7 +10,7 @@ This short demo serves to prototype the core game mechanics, including explorati
 
 ## 📸 Gameplay
 
-![Gameplay Screenshot](screenshot1.png)
+![Gameplay Screenshot](metadata/screenshot1.png)
 
 ---
 
