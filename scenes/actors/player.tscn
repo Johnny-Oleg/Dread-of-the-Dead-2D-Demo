@@ -59,6 +59,7 @@
 [ext_resource type="AudioStream" uid="uid://dcskf2qvewlja" path="res://assets/audio/sfx/player_sfx/died_sfx.WAV" id="57_7hljr"]
 [ext_resource type="AudioStream" uid="uid://bj8dhm07q28eq" path="res://assets/audio/sfx/player_sfx/run_sfx.WAV" id="57_rjrsu"]
 [ext_resource type="AudioStream" uid="uid://dei0o1dkf4j2w" path="res://assets/audio/sfx/player_sfx/walk_sfx.WAV" id="58_7hljr"]
+[ext_resource type="AudioStream" uid="uid://ggow1dru8wfh" path="res://assets/audio/sfx/player_sfx/aim_switch.WAV" id="60_pi76d"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3vary"]
 size = Vector2(68, 65)
@@ -596,6 +597,9 @@ stream = ExtResource("56_rjrsu")
 
 [node name="Died" type="AudioStreamPlayer2D" parent="SoundEffects" unique_id=1299430538]
 stream = ExtResource("57_7hljr")
+
+[node name="AimSwitch" type="AudioStreamPlayer2D" parent="SoundEffects" unique_id=1244303223]
+stream = ExtResource("60_pi76d")
 
 [node name="MuzzlePosition" type="Node2D" parent="." unique_id=27178725]
 

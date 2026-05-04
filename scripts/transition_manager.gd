@@ -54,4 +54,7 @@ func fade_to_room(scene_path: String, spawn_id: String):
 	await fade_in.finished
 	get_tree().paused = false
 	
+	# --- NEW: FLUSH THE INPUT BUFFER ---
+	Input.flush_buffered_events()
+	
 	

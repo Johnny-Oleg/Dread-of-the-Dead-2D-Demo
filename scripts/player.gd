@@ -24,7 +24,7 @@ extends CharacterBody2D
 @onready var sfx_walk = $SoundEffects/Walk
 @onready var sfx_hurt = $SoundEffects/Hurt
 @onready var sfx_died = $SoundEffects/Died
-
+@onready var aim_switch = $SoundEffects/AimSwitch
 
 # =========================
 # MOVEMENT
@@ -77,7 +77,7 @@ var last_facing_dir: Vector2 = Vector2.DOWN
 var debug_timer := 0.0
 
 # Aiming Modes
-var is_auto_aim_enabled: bool = true # Toggled by 'Q'
+#var is_auto_aim_enabled: bool = true # Toggled by 'Q'
 var targets_in_room: Array = []      # List of all living enemies
 var target_index: int = 0            # Which enemy we are currently locked onto
 
@@ -128,7 +128,7 @@ func handle_input():
 	if is_grabbed:
 		return
 	
-	# Movement input NEW
+	# Movement input
 	move_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	is_moving = move_dir.length() > 0
 
@@ -142,13 +142,14 @@ func handle_input():
 		
 	# 1. Toggle Aim Mode (Q) - Unrestrained
 	if Input.is_action_just_pressed("auto_aim"):
-		is_auto_aim_enabled = !is_auto_aim_enabled
-		print("Auto-Aim: ", is_auto_aim_enabled)
+		global.is_auto_aim_enabled = !global.is_auto_aim_enabled # Reference global!
+		aim_switch.play() # Gives the player feedback!
+		print("Auto-Aim: ", global.is_auto_aim_enabled)
 
-	is_aiming = Input.is_action_pressed("aim")
+	#is_aiming = Input.is_action_pressed("aim")
 
 	# 2. Logic for Auto-Aiming
-	if is_auto_aim_enabled and is_aiming:
+	if global.is_auto_aim_enabled and is_aiming:
 		# Initial Snap: Refresh list and grab closest
 		if Input.is_action_just_pressed("aim"):
 			refresh_targets()
@@ -213,7 +214,7 @@ func handle_aiming():
 	var target_found = false
 
 	# MODE A: AUTO-AIM
-	if is_auto_aim_enabled and targets_in_room.size() > 0:
+	if global.is_auto_aim_enabled and targets_in_room.size() > 0:
 		var current_target = targets_in_room[target_index]
 		
 		# Double-check target is still valid/alive
@@ -344,6 +345,9 @@ func update_animation():
 		if sprite.animation != "dead":
 			sprite.play("dead")
 		return
+		
+	if is_grabbed:
+		return # Let the grapple logic handle visuals
 
 	if is_reloading:
 		play_reload_animation()
@@ -495,26 +499,25 @@ func start_reload():
 
 	# Choose reload time
 	var reload_time = global.pistol_stats["reload_time"]
-	var max_mag = global.pistol_stats.mag_size
-	var missing_ammo = max_mag - global.current_ammo
-
-	# Only reload if the gun isn't full AND we have spare bullets
-	if missing_ammo > 0 and global.reserve_ammo > 0:
-		# 1. Find the inventory
-		var inventory = get_tree().get_first_node_in_group("inventory_ui")
-		if inventory:
-			# 2. Ask the inventory to consume the .tres items
-			var ammo_gained = inventory.consume_ammo(missing_ammo)
-			
-			# 3. Add what we successfully grabbed to our gun
-			global.current_ammo += ammo_gained
-			print("Reloaded ", ammo_gained, " bullets.")
+	#var max_mag = global.pistol_stats.mag_size
+	#var missing_ammo = max_mag - global.current_ammo
+#
+	## Only reload if the gun isn't full AND we have spare bullets
+	#if missing_ammo > 0 and global.reserve_ammo > 0:
+		## 1. Find the inventory
+		#var inventory = get_tree().get_first_node_in_group("inventory_ui")
+		#if inventory:
+			## 2. Ask the inventory to consume the .tres items
+			#var ammo_gained = inventory.consume_ammo(missing_ammo)
+			#
+			## 3. Add what we successfully grabbed to our gun
+			#global.current_ammo += ammo_gained
+			#print("Reloaded ", ammo_gained, " bullets.")
 
 	if global.current_ammo == 0:
 		reload_time = 2.4 # empty reload override
 
 	reload_timer.start(reload_time)
-
 	play_reload_animation()
 	
 func cancel_reload():
@@ -529,11 +532,20 @@ func finish_reload():
 	can_shoot = true
 	sfx_pistol_reload.stop()
 
-	var needed = global.pistol_stats["mag_size"] - global.current_ammo
-	var to_reload = min(needed, global.reserve_ammo)
-
-	global.current_ammo += to_reload
-	global.reserve_ammo -= to_reload
+	#var needed = global.pistol_stats["mag_size"] - global.current_ammo
+	#var to_reload = min(needed, global.reserve_ammo)
+#
+	#global.current_ammo += to_reload
+	#global.reserve_ammo -= to_reload
+	
+	# ONLY do the math here
+	var missing_ammo = global.pistol_stats["mag_size"] - global.current_ammo
+	var inventory = get_tree().get_first_node_in_group("inventory_ui")
+	
+	if inventory:
+		var ammo_gained = inventory.consume_ammo(missing_ammo)
+		global.current_ammo += ammo_gained
+		print("Reload complete. Gained: ", ammo_gained)
 
 func _on_fire_timer_timeout() -> void:
 	can_shoot = true
@@ -552,8 +564,9 @@ func refresh_targets():
 	)
 	
 func get_grabbed(zombie: CharacterBody2D):
-	if is_grabbed: # Don't get double-grabbed
-		return 
+	# Check if already grabbed OR if currently invincible from a previous hit
+	if is_grabbed or not hurt_timer.is_stopped(): 
+		return
 
 	if is_reloading: 
 		cancel_reload()
@@ -657,15 +670,27 @@ func check_interaction():
 	# Force the cast to update its physics right now (good practice for instant button presses)
 	interaction_cast.force_shapecast_update() 
 	
-	if interaction_cast.is_colliding():
-		# Grab the first object the shape touched
-		var target = interaction_cast.get_collider(0)
-		
+	var count = interaction_cast.get_collision_count()
+	var main_scene = get_tree().current_scene
+	
+	for i in range(count):
+		var target = interaction_cast.get_collider(i)
+		# Prioritize pickups over doors/NPCs
 		if target.has_method("get_item_data"):
-			var main_scene = get_tree().current_scene
-			if main_scene.has_method("show_pickup_prompt"):
-				main_scene.show_pickup_prompt(target)
-				
+			main_scene.show_pickup_prompt(target)
+			return # Exit early once we find an item
+			
 		if target.has_method("interact"):
 			target.interact()
+	#if interaction_cast.is_colliding():
+		## Grab the first object the shape touched
+		#var target = interaction_cast.get_collider(0)
+		#
+		#if target.has_method("get_item_data"):
+			#var main_scene = get_tree().current_scene
+			#if main_scene.has_method("show_pickup_prompt"):
+				#main_scene.show_pickup_prompt(target)
+				#
+		#if target.has_method("interact"):
+			#target.interact()
 				

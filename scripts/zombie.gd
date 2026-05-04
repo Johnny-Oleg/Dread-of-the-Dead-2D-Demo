@@ -51,6 +51,7 @@ var patrol_timeout := 0.0
 
 var vision_range := 350.0
 var vision_angle := 90.0
+var vision_tick_timer := 0.0
 var voice_cooldown := 0.0
 var downed_cooldown := 0.0
 var recovery_timer: float = 0.0
@@ -125,6 +126,13 @@ func _physics_process(delta):
 		downed_cooldown -= delta
 		
 	move_and_slide()
+	
+	if current_state != State.DEAD:
+		for i in get_slide_collision_count():
+			var col = get_slide_collision(i)
+			if col.get_collider() is CharacterBody2D:
+				# Gently push away from other zombies to prevent stacking
+				velocity += col.get_normal() * 10
 	
 	# The "Bump" Mechanic
 	# Only bother checking if the zombie is unaware (Idle or Patrol)
@@ -239,6 +247,7 @@ func change_state(new_state: State):
 		State.STUMBLED:
 			sfx_shamble.stop() # <-- STOP SHAMBLING SOUND
 			velocity = Vector2.ZERO
+			nav_agent.set_velocity(Vector2.ZERO) # Stop the nav agent too
 			sprite.play("downed_" + get_dir_string())
 			recovery_timer = 3.0 # Stand up in 3 seconds
 			
@@ -384,26 +393,14 @@ func set_new_patrol_target():
 	patrol_timeout = 5.0
 
 func handle_patrol(delta):
-
-	#if can_see_player():
-		#change_state(State.CHASE)
-		#return
-#
-	#if nav_agent.is_navigation_finished():
-		#change_state(State.IDLE)
-		#return
-#
-	#var next_point = nav_agent.get_next_path_position()
-	#var dir = global_position.direction_to(next_point)
-#
-	#if dir.length() > 0:
-		#last_direction = dir
-#
-	#velocity = dir * speed
 	
-	if can_see_player():
-		change_state(State.CHASE)
-		return
+	vision_tick_timer += delta
+	
+	if vision_tick_timer >= 0.2: # Only check 5 times per second, not 60!
+		vision_tick_timer = 0.0
+		if can_see_player():
+			change_state(State.CHASE)
+			return
 
 	patrol_timeout -= delta
 	
@@ -417,8 +414,10 @@ func handle_patrol(delta):
 
 	if dir.length() > 0:
 		last_direction = dir
+		# Feed the agent the velocity instead of setting it directly!
+		nav_agent.set_velocity(dir * speed)
 
-	velocity = dir * speed
+	#velocity = dir * speed
 	
 # =========================
 # CHASE

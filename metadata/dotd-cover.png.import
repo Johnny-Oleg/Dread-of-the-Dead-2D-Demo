@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b1b6jeekaf4x5"
-path="res://godot/imported/dining_room_2.png-5d4d4c5381cdce535d4ba5eed7516d4c.ctex"
+uid="uid://bu3xo6pgr6t7j"
+path="res://godot/imported/dotd-cover.png-cddb1ce179e48410d589d101babf1ff0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/locations/dining_room_2.png"
-dest_files=["res://godot/imported/dining_room_2.png-5d4d4c5381cdce535d4ba5eed7516d4c.ctex"]
+source_file="res://metadata/dotd-cover.png"
+dest_files=["res://godot/imported/dotd-cover.png-cddb1ce179e48410d589d101babf1ff0.ctex"]
 
 [params]
 

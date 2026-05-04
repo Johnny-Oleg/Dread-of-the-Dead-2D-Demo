@@ -13,7 +13,7 @@
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_o6xl0"]
 texture = ExtResource("5_o6xl0")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_choun"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jkv2x"]
 bg_color = Color(1, 1, 1, 1)
 corner_radius_top_left = 16
 corner_radius_top_right = 16
@@ -23,24 +23,25 @@ shadow_size = 5
 shadow_offset = Vector2(0, 4)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ya4ey"]
-bg_color = Color(0.19881245, 0.04387869, 0.029060487, 1)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
-shadow_size = 5
-shadow_offset = Vector2(0, 4)
+bg_color = Color(0.2, 0.043137256, 0.02745098, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eb6dy"]
-bg_color = Color(0.5609549, 0.5609549, 0.5609549, 1)
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 6
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o6xl0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_choun"]
+bg_color = Color(1, 1, 1, 1)
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 shadow_size = 5
 shadow_offset = Vector2(0, 4)
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_trceg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o6xl0"]
 bg_color = Color(0.19881245, 0.04387869, 0.029060487, 1)
@@ -52,7 +53,7 @@ shadow_size = 5
 shadow_offset = Vector2(0, 4)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tipki"]
-bg_color = Color(0.5609549, 0.5609549, 0.5609549, 1)
+bg_color = Color(1, 1, 1, 1)
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
@@ -219,10 +220,10 @@ theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
 theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 30
-theme_override_styles/normal = SubResource("StyleBoxFlat_choun")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jkv2x")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_ya4ey")
 theme_override_styles/hover = SubResource("StyleBoxFlat_eb6dy")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_trceg")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_o6xl0")
 text = "Start Game"
 
 [node name="ExitButton" type="Button" parent="UI/TitleScreen/Title/GameStart/VBoxContainer" unique_id=330631871]

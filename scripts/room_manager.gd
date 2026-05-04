@@ -12,10 +12,18 @@ func _ready():
 	
 	WorldState.current_room_name = room_name
 	
-	setup_room_audio()
-	setup_camera_limits()
+	# 1. VISUALS & LOGIC INSTANTLY (This happens while the screen is still black!)
+	#spawn_player()
+	#sync_room_state()
+	
+	# WAIT FOR THE GAME/BROWSER TO SETTLE (CRITICAL breaks the camera smoothness)
+	await get_tree().create_timer(0.1).timeout
 	spawn_player()
 	sync_room_state()
+	setup_camera_limits()
+	
+	# Setup audio LAST, after the scene is physically present
+	setup_room_audio()
 	
 	# test ui optional DELETE later
 	# --- Tell the UI to update its enemy tracking ---
@@ -157,7 +165,7 @@ func spawn_player():
 		return
 
 	# 3. Force Camera Update
-	await get_tree().process_frame # Wait 1 frame for Arthur to "exist"
+	#await get_tree().process_frame # Wait 1 frame for Arthur to "exist"
 	setup_camera_limits()
 	
 func setup_room_audio():

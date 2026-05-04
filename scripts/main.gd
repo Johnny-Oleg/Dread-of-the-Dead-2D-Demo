@@ -23,6 +23,18 @@ var current_ui: Node = null
 var inventory_instance: Node = null # Keep track of the inventory
 var current_world_item: Area2D = null
 
+# 1. THE RAM CACHE
+# We just put the preloads in a simple array. We don't even need to name them.
+# Just by existing here, Godot forces the browser to load them into memory 
+# during the title screen!
+var _preloaded_rooms = [
+	preload("res://scenes/rooms/main_hall.tscn"),
+	preload("res://scenes/rooms/dining_room.tscn"),
+	preload("res://scenes/rooms/library.tscn"),
+	preload("res://scenes/rooms/save_room.tscn"),
+	preload("res://scenes/rooms/corridor.tscn")
+]
+
 func _ready():
 	global.game_started = false
 	
@@ -213,9 +225,9 @@ func change_room(path: String):
 	if current_room:
 		current_room.queue_free() # Delete old room
 	
+	# Because the rooms are cached in the array above, this load() is now 
+	# instantaneous, AND it natively understands the uid:// path!
 	var new_room_resource = load(path)
 	current_room = new_room_resource.instantiate()
 	game_world.add_child(current_room)
-	
-	
 	

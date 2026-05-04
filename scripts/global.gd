@@ -12,6 +12,7 @@ var game_over: bool = false
 signal player_died
 var player_health: float = 1200.0
 var player_max_health: float = 1200.0
+var is_auto_aim_enabled: bool = true
 
 # Danger threshold (30%)
 const DANGER_THRESHOLD: float = 0.3
