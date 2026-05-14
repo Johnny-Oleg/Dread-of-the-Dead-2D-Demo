@@ -15,7 +15,7 @@ dest_files=["res://godot/imported/fireplaces.png-f856b1b822ccf4fba264d1e69f056ef
 
 [params]
 
-compress/mode=0
+compress/mode=4
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -13,15 +13,6 @@ vertices = PackedVector2Array(63.03125, 453, 63.960938, 151.14844, 175.4375, 152
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 0, 3, 5), PackedInt32Array(6, 4, 5, 7), PackedInt32Array(7, 5, 8, 9)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(53, 463, 54, 141, 185, 143, 188, 208, 332, 208, 332, 171, 353, 171, 354, 207, 462, 207, 465, 463)])
 
-[sub_resource type="Gradient" id="Gradient_p2s1j"]
-offsets = PackedFloat32Array(0, 0.7669173)
-colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_w7kdh"]
-gradient = SubResource("Gradient_p2s1j")
-fill = 1
-fill_from = Vector2(0.5025381, 0.48730963)
-
 [node name="SaveRoom" type="Node2D" unique_id=1015672556]
 script = ExtResource("1_drs4g")
 room_name = "SaveRoom"
@@ -50,20 +41,15 @@ item_data = ExtResource("3_u76nd")
 state_id = "GreenMedicine_01"
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1895063901]
+visible = false
 color = Color(0.62967473, 0.62967485, 0.62967455, 1)
 
 [node name="OilLamp" type="Node2D" parent="." unique_id=553641971]
-
-[node name="PointLight2D" type="PointLight2D" parent="OilLamp" unique_id=691561879]
 visible = false
-position = Vector2(401.00003, 376)
-scale = Vector2(1.5, 1.5)
-color = Color(0.979243, 0.8462427, 0.39332092, 1)
-shadow_enabled = true
-texture = SubResource("GradientTexture2D_w7kdh")
 
 [node name="LightFlicker" parent="OilLamp" unique_id=151647620 instance=ExtResource("6_drs4g")]
 position = Vector2(311.00003, 114)
+shadow_enabled = false
 
 [node name="InvisibleWalls" type="StaticBody2D" parent="." unique_id=1685283553]
 

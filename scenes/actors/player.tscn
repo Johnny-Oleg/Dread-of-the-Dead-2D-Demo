@@ -602,17 +602,14 @@ stream = ExtResource("57_7hljr")
 stream = ExtResource("60_pi76d")
 
 [node name="MuzzlePosition" type="Node2D" parent="." unique_id=27178725]
-
-[node name="PointLight2D" type="PointLight2D" parent="MuzzlePosition" unique_id=2144049148]
 visible = false
-enabled = false
-color = Color(0.8348868, 0.625686, 7.70092e-07, 1)
 
 [node name="PointLight2D2" type="PointLight2D" parent="MuzzlePosition" unique_id=110514848]
+visible = false
 scale = Vector2(0.6, 0.6)
 enabled = false
 color = Color(0.979243, 0.8462427, 0.39332092, 1)
-shadow_enabled = true
+energy = 0.0
 texture = SubResource("GradientTexture2D_rjrsu")
 
 [connection signal="animation_finished" from="Body/GrappleSprite" to="." method="_on_grapple_sprite_animation_finished"]

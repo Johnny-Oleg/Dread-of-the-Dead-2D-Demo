@@ -15,7 +15,7 @@ dest_files=["res://godot/imported/corridor.png-7b36f7b967ba771b5058cbf35802b1d8.
 
 [params]
 
-compress/mode=0
+compress/mode=4
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

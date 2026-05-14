@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cv8p4dwl5ixcg"
-path="res://godot/imported/game_over.png-91438731c1e8801ff2af9656bc77d30c.ctex"
+path.s3tc="res://godot/imported/game_over.png-91438731c1e8801ff2af9656bc77d30c.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/images/game_over.png"
-dest_files=["res://godot/imported/game_over.png-91438731c1e8801ff2af9656bc77d30c.ctex"]
+dest_files=["res://godot/imported/game_over.png-91438731c1e8801ff2af9656bc77d30c.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

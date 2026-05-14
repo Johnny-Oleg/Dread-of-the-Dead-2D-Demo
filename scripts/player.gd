@@ -37,6 +37,7 @@ extends CharacterBody2D
 @export var fire_rate: float = 0.4
 var can_shoot: bool = true
 
+
 var muzzle_offsets = {
 	"up": Vector2(20, -77),
 	"up_right": Vector2(43, -70),
@@ -80,6 +81,13 @@ var debug_timer := 0.0
 #var is_auto_aim_enabled: bool = true # Toggled by 'Q'
 var targets_in_room: Array = []      # List of all living enemies
 var target_index: int = 0            # Which enemy we are currently locked onto
+# Keep the light on so the shader stays "warm" in the browser
+
+#func _ready():
+	#shoot_light.enabled = true
+	#shoot_light.energy = 0.01 # Almost invisible, but forces a draw call
+	#await get_tree().process_frame # Wait one frame for the GPU to see it
+	#shoot_light.energy = 0.0 # Now hide it completely
 
 # =========================
 # CORE LOOP
@@ -312,22 +320,20 @@ func apply_recoil():
 	#flash.rotation = aim_dir.angle()
 
 func flash_light():
-	var dir_string = get_8_direction_name(aim_dir)
-	
-	# Check if the string exists in our dictionary
-	if muzzle_offsets.has(dir_string):
-		# USE LOCAL POSITION, NOT GLOBAL! 
-		# This places it exactly X/Y pixels away from Arthur's center
-		shoot_light.position = muzzle_offsets[dir_string] 
-	
-	shoot_light.enabled = true
-	await get_tree().create_timer(0.05).timeout
-	shoot_light.enabled = false
-	
-	## Position is already handled by the AnimationPlayer!
-	#shoot_light.enabled = true
+	## 1. Update position if you aren't using AnimationPlayer for it
+	#var dir_string = get_8_direction_name(aim_dir)
+	#if muzzle_offsets.has(dir_string):
+		#shoot_light.position = muzzle_offsets[dir_string] 
+#
+	## 2. The Flash: Instant jump to 1.5 energy
+	#shoot_light.energy = 1.5
+	#
+	## 3. Wait for a tiny duration (Standard muzzle flash time)
 	#await get_tree().create_timer(0.05).timeout
-	#shoot_light.enabled = false
+	#
+	## 4. The Kill: Back to 0, but leave 'enabled' as TRUE
+	#shoot_light.energy = 0.0
+	pass
 
 # =========================
 # ANIMATION SYSTEM

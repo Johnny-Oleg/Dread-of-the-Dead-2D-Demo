@@ -1,9 +1,1 @@
 res://scenes/main.tscn
-res://scripts/room_manager.gd
-res://scripts/main.gd
-res://scripts/transition_manager.gd
-res://scripts/player.gd
-res://scenes/actors/player.tscn
-res://scripts/global.gd
-res://scripts/zombie.gd
-res://scenes/actors/zombie.tscn

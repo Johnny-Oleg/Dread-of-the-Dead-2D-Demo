@@ -47,7 +47,9 @@ func scan_ammo_reserves():
 	global.reserve_ammo = total_ammo
 	
 	# Update the equipped weapon mag label
-	weapon_mag_label.text = str(global.current_ammo) + " / " + str(global.reserve_ammo)
+	#weapon_mag_label.text = str(global.current_ammo) + " / " + str(global.reserve_ammo)
+	var clean_string = str(global.current_ammo) + "/" + str(global.reserve_ammo)
+	weapon_mag_label.text = clean_string.strip_edges()
 	
 func update_condition():
 	

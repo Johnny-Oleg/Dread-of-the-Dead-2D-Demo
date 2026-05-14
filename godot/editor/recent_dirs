@@ -1,4 +1,5 @@
 /Users/oleg/Desktop/Dread_of_the_Dead_Demo_WebBuild/
+res://
 res://assets/images/
 res://assets/sprites/enemy/
 res://scripts/
@@ -8,4 +9,3 @@ res://scenes/vfx/
 res://resources/
 res://scenes/items/
 res://scenes/ui/
-res://

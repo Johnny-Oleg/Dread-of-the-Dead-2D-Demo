@@ -2,20 +2,18 @@ extends PointLight2D
 
 @export var min_energy: float = 0.8
 @export var max_energy: float = 1.2
-@export var flicker_speed: float = 0.05
+@export var flicker_speed: float = 0.1 # Slowed down slightly for stability
 
-func _ready():
-	flicker()
+var target_energy: float = 1.0
+var time_passed: float = 0.0
 
-func flicker():
-	var tween = create_tween()
-	# Randomly pick a new brightness
-	var target_energy = randf_range(min_energy, max_energy)
+func _process(delta):
+	time_passed += delta
+	if time_passed >= flicker_speed:
+		target_energy = randf_range(min_energy, max_energy)
+		time_passed = 0.0
 	
-	# Smoothly transition to it
-	tween.tween_property(self, "energy", target_energy, flicker_speed)
-	
-	# Do it again when finished
-	tween.finished.connect(flicker)
+	# Smoothly move to the target without creating new objects
+	energy = lerp(energy, target_energy, delta * 10.0)
 	
 	

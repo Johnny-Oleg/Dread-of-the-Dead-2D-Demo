@@ -20,9 +20,7 @@ config/use_hidden_project_data_directory=false
 config/features=PackedStringArray("4.6", "GL Compatibility")
 boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/image="uid://br8wpea5b5i02"
-config/icon="uid://6r0d3hupv2uo"
-config/macos_native_icon="res://icon.icns"
-config/windows_native_icon="res://icon.ico"
+config/icon="uid://qdvt2rsxcrif"
 
 [autoload]
 

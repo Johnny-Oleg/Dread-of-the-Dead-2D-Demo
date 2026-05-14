@@ -59,58 +59,74 @@ scale = Vector2(0.8771622, 0.8771622)
 texture = ExtResource("6_7eq0f")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1450999934]
+visible = false
 color = Color(0.62967473, 0.62967485, 0.62967455, 1)
 
 [node name="BottomLight" type="Node2D" parent="." unique_id=21903203]
+visible = false
 
 [node name="LightFlicker" parent="BottomLight" unique_id=151647620 instance=ExtResource("4_7eq0f")]
 position = Vector2(285, 155)
+shadow_enabled = false
 
 [node name="LightFlicker10" parent="BottomLight" unique_id=1502740060 instance=ExtResource("4_7eq0f")]
 position = Vector2(418, 552)
+shadow_enabled = false
 
 [node name="LightFlicker11" parent="BottomLight" unique_id=504657547 instance=ExtResource("4_7eq0f")]
 position = Vector2(412.00003, 670)
+shadow_enabled = false
 
 [node name="LightFlicker12" parent="BottomLight" unique_id=964215872 instance=ExtResource("4_7eq0f")]
 position = Vector2(658, 836)
+shadow_enabled = false
 
 [node name="LightFlicker13" parent="BottomLight" unique_id=2096007102 instance=ExtResource("4_7eq0f")]
 position = Vector2(355, 833.00006)
+shadow_enabled = false
 
 [node name="LightFlicker14" parent="BottomLight" unique_id=1508044444 instance=ExtResource("4_7eq0f")]
 position = Vector2(54, 834)
+shadow_enabled = false
 
 [node name="LightFlicker2" parent="BottomLight" unique_id=1349747456 instance=ExtResource("4_7eq0f")]
 position = Vector2(470.00003, 154)
+shadow_enabled = false
 texture = SubResource("GradientTexture2D_bv60p")
 
 [node name="LightFlicker3" parent="BottomLight" unique_id=1455575931 instance=ExtResource("4_7eq0f")]
 position = Vector2(760, 370)
+shadow_enabled = false
 texture = SubResource("GradientTexture2D_bv60p")
 
 [node name="LightFlicker4" parent="BottomLight" unique_id=1473554041 instance=ExtResource("4_7eq0f")]
 position = Vector2(655, 375)
+shadow_enabled = false
 texture = SubResource("GradientTexture2D_bv60p")
 
 [node name="LightFlicker5" parent="BottomLight" unique_id=1869161796 instance=ExtResource("4_7eq0f")]
 position = Vector2(937, 363)
+shadow_enabled = false
 texture = SubResource("GradientTexture2D_bv60p")
 
 [node name="LightFlicker6" parent="BottomLight" unique_id=657719913 instance=ExtResource("4_7eq0f")]
 position = Vector2(1152, 362)
+shadow_enabled = false
 texture = SubResource("GradientTexture2D_bv60p")
 
 [node name="LightFlicker7" parent="BottomLight" unique_id=246166909 instance=ExtResource("4_7eq0f")]
 position = Vector2(1432, 362)
+shadow_enabled = false
 texture = SubResource("GradientTexture2D_bv60p")
 
 [node name="LightFlicker8" parent="BottomLight" unique_id=1702433728 instance=ExtResource("4_7eq0f")]
 position = Vector2(1644, 362)
+shadow_enabled = false
 texture = SubResource("GradientTexture2D_bv60p")
 
 [node name="LightFlicker9" parent="BottomLight" unique_id=2070473194 instance=ExtResource("4_7eq0f")]
 position = Vector2(1838.0001, 398.00003)
+shadow_enabled = false
 texture = SubResource("GradientTexture2D_bv60p")
 
 [node name="InvisibleWalls" type="StaticBody2D" parent="." unique_id=1956655978]

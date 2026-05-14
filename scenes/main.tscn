@@ -100,12 +100,15 @@ offset_bottom = 1250.0
 scale = Vector2(1.2217404, 1.2337446)
 texture = SubResource("CanvasTexture_85g3d")
 
+[node name="CanvasModulate" type="CanvasModulate" parent="GameWorld" unique_id=45552287]
+color = Color(0.62967473, 0.62967485, 0.62967455, 1)
+
 [node name="UI" type="Node2D" parent="." unique_id=1537198464]
 
 [node name="Died" type="CanvasLayer" parent="UI" unique_id=1554564802]
-visible = false
 
 [node name="TitleLogo" type="TextureRect" parent="UI/Died" unique_id=922915545]
+visible = false
 offset_left = 302.0
 offset_top = 162.0
 offset_right = 884.48157

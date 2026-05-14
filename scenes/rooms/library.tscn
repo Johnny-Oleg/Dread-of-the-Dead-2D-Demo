@@ -134,33 +134,41 @@ scale = Vector2(0.8771622, 0.8771622)
 texture = ExtResource("8_uxmpq")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=240839078]
+visible = false
 color = Color(0.62967473, 0.62967485, 0.62967455, 1)
 
 [node name="BottomLight" type="Node2D" parent="." unique_id=291792960]
+visible = false
 
 [node name="LightFlicker" parent="BottomLight" unique_id=151647620 instance=ExtResource("7_5dd8q")]
 position = Vector2(45, 185)
+shadow_enabled = false
 
 [node name="LightFlicker2" parent="BottomLight" unique_id=1727227075 instance=ExtResource("7_5dd8q")]
 position = Vector2(362, 184)
+shadow_enabled = false
 texture = SubResource("GradientTexture2D_orlim")
 
 [node name="LightFlicker3" parent="BottomLight" unique_id=400336390 instance=ExtResource("7_5dd8q")]
 position = Vector2(701, 375)
 scale = Vector2(1, 1)
+shadow_enabled = false
 texture = SubResource("GradientTexture2D_orlim")
 
 [node name="LightFlicker4" parent="BottomLight" unique_id=223061024 instance=ExtResource("7_5dd8q")]
 position = Vector2(1285, 365)
 scale = Vector2(1, 1)
+shadow_enabled = false
 texture = SubResource("GradientTexture2D_orlim")
 
 [node name="LightFlicker5" parent="BottomLight" unique_id=1039241111 instance=ExtResource("7_5dd8q")]
 position = Vector2(1949, 183)
 scale = Vector2(1, 1)
+shadow_enabled = false
 texture = SubResource("GradientTexture2D_orlim")
 
 [node name="Chandeliers" type="Node2D" parent="." unique_id=300435370]
+visible = false
 
 [node name="Chandelier1" type="Sprite2D" parent="Chandeliers" unique_id=775018979]
 position = Vector2(471.50003, 103.04849)
@@ -171,6 +179,7 @@ metadata/_edit_group_ = true
 [node name="LightFlicker" parent="Chandeliers" unique_id=1583260504 instance=ExtResource("7_5dd8q")]
 position = Vector2(473, 124.28234)
 scale = Vector2(2.5, 2.5)
+shadow_enabled = false
 texture = SubResource("GradientTexture2D_orlim")
 min_energy = 0.5
 max_energy = 1.5
@@ -185,6 +194,7 @@ metadata/_edit_group_ = true
 [node name="LightFlicker2" parent="Chandeliers" unique_id=1604898311 instance=ExtResource("7_5dd8q")]
 position = Vector2(857, 79.28235)
 scale = Vector2(2.5, 2.5)
+shadow_enabled = false
 texture = SubResource("GradientTexture2D_orlim")
 metadata/_edit_group_ = true
 
@@ -197,6 +207,7 @@ metadata/_edit_group_ = true
 [node name="LightFlicker3" parent="Chandeliers" unique_id=2031720146 instance=ExtResource("7_5dd8q")]
 position = Vector2(1328, 118.28234)
 scale = Vector2(2.5, 2.5)
+shadow_enabled = false
 texture = SubResource("GradientTexture2D_orlim")
 metadata/_edit_group_ = true
 

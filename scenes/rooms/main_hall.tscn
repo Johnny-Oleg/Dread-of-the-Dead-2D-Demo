@@ -13,15 +13,6 @@ vertices = PackedVector2Array(818.77344, 603.8281, 819.6719, 632.96875, 61, 631.
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4, 5), PackedInt32Array(6, 7, 8, 9), PackedInt32Array(10, 11, 12, 13, 0), PackedInt32Array(13, 14, 9, 0), PackedInt32Array(3, 15, 16), PackedInt32Array(5, 17, 10, 0), PackedInt32Array(18, 19, 20, 4, 3), PackedInt32Array(21, 22, 23), PackedInt32Array(24, 25, 18, 3, 16), PackedInt32Array(26, 27, 24, 16), PackedInt32Array(21, 23, 0, 9, 8, 28)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(15.979759, 219.7449, 305.89835, 221.2924, 308.18118, 334.25986, 515.15717, 334.25986, 515.15717, 223.61365, 722.8941, 223.61365, 722.8941, 205.04366, 916.9341, 206.59116, 919.2169, 253.01614, 959.5469, 253.01614, 959, 385, 972, 386, 973, 460, 967, 460, 970, 520, 959, 535, 959, 590, 890, 591, 829, 611, 830, 643, 51, 641, 51, 520, -8, 520, -8, 507, -50, 488, -49, 334, -46, 333, -44.895546, 259.9799, 15.218819, 259.9799)])
 
-[sub_resource type="Gradient" id="Gradient_nsgnh"]
-offsets = PackedFloat32Array(0, 0.7669173)
-colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_idonc"]
-gradient = SubResource("Gradient_nsgnh")
-fill = 1
-fill_from = Vector2(0.5025381, 0.48730963)
-
 [sub_resource type="Gradient" id="Gradient_873w3"]
 offsets = PackedFloat32Array(0, 0.7669173)
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
@@ -60,21 +51,16 @@ position = Vector2(1036, 340)
 state_id = "Zombie_01"
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1999707493]
+visible = false
 color = Color(0.62967473, 0.62967485, 0.62967455, 1)
 
 [node name="FirePlace" type="Node2D" parent="." unique_id=889973836]
-
-[node name="PointLight2D" type="PointLight2D" parent="FirePlace" unique_id=641919471]
 visible = false
-position = Vector2(731, 205.00002)
-scale = Vector2(3, 3)
-color = Color(0.979243, 0.8462427, 0.39332092, 1)
-shadow_enabled = true
-texture = SubResource("GradientTexture2D_idonc")
 
 [node name="LightFlicker" parent="FirePlace" unique_id=151647620 instance=ExtResource("7_kbnu0")]
 position = Vector2(962, 275)
 scale = Vector2(3, 3)
+shadow_enabled = false
 texture = SubResource("GradientTexture2D_pwc75")
 min_energy = 0.04
 max_energy = 2.0
